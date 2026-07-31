@@ -1534,6 +1534,11 @@ textarea.form-control {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     animation: scale-up 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
+
+  /* Hide empty placeholder select box on mobile/tablet */
+  .details-drawer.empty-state {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
