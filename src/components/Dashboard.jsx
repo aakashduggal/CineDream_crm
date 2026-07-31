@@ -6,9 +6,9 @@ const Dashboard = () => {
   const [logFilter, setLogFilter] = useState('ALL');
 
   const formatCurrency = (val) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'INR',
       maximumFractionDigits: 0
     }).format(val);
   };
@@ -68,7 +68,7 @@ const Dashboard = () => {
           <p style={{ fontSize: '12px', color: 'hsl(var(--text-secondary))' }}>Configure the target cap of the film production</p>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <label style={{ fontSize: '13px', fontWeight: '600', color: 'hsl(var(--text-secondary))' }}>Target Budget Cap ($):</label>
+          <label style={{ fontSize: '13px', fontWeight: '600', color: 'hsl(var(--text-secondary))' }}>Target Budget Cap (₹):</label>
           <input 
             type="number" 
             className="form-control" 
@@ -293,7 +293,7 @@ const Dashboard = () => {
                     <td style={{ fontSize: '12px' }}>{log.changeDescription}</td>
                     <td style={{ whiteSpace: 'nowrap' }}>
                       <span className={`effect-value ${log.budgetEffect > 0 ? 'positive' : log.budgetEffect < 0 ? 'negative' : 'neutral'}`}>
-                        {log.budgetEffect > 0 ? `+${formatCurrency(log.budgetEffect)}` : log.budgetEffect < 0 ? `-${formatCurrency(Math.abs(log.budgetEffect))}` : '$0'}
+                        {log.budgetEffect > 0 ? `+${formatCurrency(log.budgetEffect)}` : log.budgetEffect < 0 ? `-${formatCurrency(Math.abs(log.budgetEffect))}` : '₹0'}
                       </span>
                     </td>
                   </tr>

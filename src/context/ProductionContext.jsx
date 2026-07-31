@@ -6,7 +6,7 @@ const INITIAL_METADATA = {
   projectName: "Echoes of Cinedream",
   genre: "Sci-Fi Epic",
   director: "Denis Villeneuve Jr.",
-  budgetLimit: 25000000, // $25,000,000 Cap
+  budgetLimit: 25000000, // ₹25,000,000 Cap
   shootingDays: 90,
   startDate: "2026-08-15",
   endDate: "2026-11-15",
@@ -574,7 +574,7 @@ const INITIAL_AUDIT_LOG = [
     actionType: "UPDATE",
     module: "Actors",
     itemName: "Alexander Sterling",
-    changeDescription: "Updated actingFee from $1,000,000 to $1,200,000",
+    changeDescription: "Updated actingFee from ₹1,00,00,000 to ₹1,20,00,000",
     budgetEffect: 200000,
     previousTotal: 7774750,
     newTotal: 7974750
@@ -586,7 +586,7 @@ const INITIAL_AUDIT_LOG = [
     actionType: "ADD",
     module: "Equipment",
     itemName: "SkyPanel S60-C LED Light Kit (x4)",
-    changeDescription: "Added new lighting equipment rental at $800/day for 50 days",
+    changeDescription: "Added new lighting equipment rental at ₹800/day for 50 days",
     budgetEffect: 40000,
     previousTotal: 7974750,
     newTotal: 8014750

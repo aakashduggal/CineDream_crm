@@ -103,11 +103,11 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
 
             <span className="form-section-title">Financial Compensation</span>
             <div className="form-group">
-              <label className="form-label">Acting Fee ($)</label>
+              <label className="form-label">Acting Fee (₹)</label>
               <input type="number" name="actingFee" className="form-control" value={formData.actingFee || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Per-Day Rate ($)</label>
+              <label className="form-label">Per-Day Rate (₹)</label>
               <input type="number" name="perDayFee" className="form-control" value={formData.perDayFee || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -115,7 +115,7 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
               <input type="number" name="daysScheduled" className="form-control" value={formData.daysScheduled || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Paid Compensation ($)</label>
+              <label className="form-label">Paid Compensation (₹)</label>
               <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
             </div>
 
@@ -229,11 +229,11 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
 
             <span className="form-section-title">Financial Compensation</span>
             <div className="form-group">
-              <label className="form-label">Directing Fee ($)</label>
+              <label className="form-label">Directing Fee (₹)</label>
               <input type="number" name="directingFee" className="form-control" value={formData.directingFee || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Paid Amount ($)</label>
+              <label className="form-label">Paid Amount (₹)</label>
               <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
             </div>
 
@@ -299,7 +299,7 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
 
             <span className="form-section-title">Labor & Rates</span>
             <div className="form-group">
-              <label className="form-label">Daily Labor Rate ($)</label>
+              <label className="form-label">Daily Labor Rate (₹)</label>
               <input type="number" name="dailyRate" className="form-control" value={formData.dailyRate || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -307,7 +307,7 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
               <input type="number" name="daysScheduled" className="form-control" value={formData.daysScheduled || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Paid Labor ($)</label>
+              <label className="form-label">Paid Labor (₹)</label>
               <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -374,7 +374,7 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
 
             <span className="form-section-title">Lease & Rentals</span>
             <div className="form-group">
-              <label className="form-label">Rental Cost Per Day ($)</label>
+              <label className="form-label">Rental Cost Per Day (₹)</label>
               <input type="number" name="rentalCostPerDay" className="form-control" value={formData.rentalCostPerDay || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -382,7 +382,7 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
               <input type="number" name="daysRented" className="form-control" value={formData.daysRented || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Paid Rental ($)</label>
+              <label className="form-label">Paid Rental (₹)</label>
               <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -472,11 +472,11 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
 
             <span className="form-section-title">Travel Budget</span>
             <div className="form-group">
-              <label className="form-label">Transit Expense ($)</label>
+              <label className="form-label">Transit Expense (₹)</label>
               <input type="number" name="expenses" className="form-control" value={formData.expenses || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Paid Travel Cost ($)</label>
+              <label className="form-label">Paid Travel Cost (₹)</label>
               <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
             </div>
             <div className="form-group full-width">
@@ -527,7 +527,7 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
 
             <span className="form-section-title">Lodging Rates</span>
             <div className="form-group">
-              <label className="form-label">Nightly Hotel Rate ($)</label>
+              <label className="form-label">Nightly Hotel Rate (₹)</label>
               <input type="number" name="costPerDay" className="form-control" value={formData.costPerDay || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -535,7 +535,7 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
               <input type="number" name="totalDays" className="form-control" value={formData.totalDays || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Paid Booking ($)</label>
+              <label className="form-label">Paid Booking (₹)</label>
               <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -580,11 +580,11 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
 
             <span className="form-section-title">Status & Pricing</span>
             <div className="form-group">
-              <label className="form-label">Costume Price ($)</label>
+              <label className="form-label">Costume Price (₹)</label>
               <input type="number" name="cost" className="form-control" value={formData.cost || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Paid Price ($)</label>
+              <label className="form-label">Paid Price (₹)</label>
               <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -631,11 +631,11 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
 
             <span className="form-section-title">Pricing & Duration</span>
             <div className="form-group">
-              <label className="form-label">Rental Fee ($)</label>
+              <label className="form-label">Rental Fee (₹)</label>
               <input type="number" name="rentalFee" className="form-control" value={formData.rentalFee || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Paid Rental Fee ($)</label>
+              <label className="form-label">Paid Rental Fee (₹)</label>
               <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -687,11 +687,11 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
 
             <span className="form-section-title">Budget Details</span>
             <div className="form-group">
-              <label className="form-label">Flat Contract Salary ($)</label>
+              <label className="form-label">Flat Contract Salary (₹)</label>
               <input type="number" name="salary" className="form-control" value={formData.salary || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Daily Labor Rate ($)</label>
+              <label className="form-label">Daily Labor Rate (₹)</label>
               <input type="number" name="dailyRate" className="form-control" value={formData.dailyRate || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -699,7 +699,7 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
               <input type="number" name="daysScheduled" className="form-control" value={formData.daysScheduled || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Paid Labor ($)</label>
+              <label className="form-label">Paid Labor (₹)</label>
               <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
             </div>
             <div className="form-group full-width">
@@ -744,11 +744,11 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
 
             <span className="form-section-title">Contract Accounts</span>
             <div className="form-group">
-              <label className="form-label">Contract Value ($)</label>
+              <label className="form-label">Contract Value (₹)</label>
               <input type="number" name="contractValue" className="form-control" value={formData.contractValue || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Paid Amount ($)</label>
+              <label className="form-label">Paid Amount (₹)</label>
               <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
             </div>
             <div className="form-group full-width">
@@ -781,7 +781,7 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
 
             <span className="form-section-title">Lease Rates</span>
             <div className="form-group">
-              <label className="form-label">Rental Cost Per Day ($)</label>
+              <label className="form-label">Rental Cost Per Day (₹)</label>
               <input type="number" name="rentalCostPerDay" className="form-control" value={formData.rentalCostPerDay || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -789,7 +789,7 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
               <input type="number" name="daysRented" className="form-control" value={formData.daysRented || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Paid Rental Cost ($)</label>
+              <label className="form-label">Paid Rental Cost (₹)</label>
               <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -840,7 +840,7 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
 
             <span className="form-section-title">Pricing Details</span>
             <div className="form-group">
-              <label className="form-label">Cost Per Head ($)</label>
+              <label className="form-label">Cost Per Head (₹)</label>
               <input type="number" name="costPerHead" className="form-control" value={formData.costPerHead || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -848,7 +848,7 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
               <input type="number" name="days" className="form-control" value={formData.days || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Paid Catering ($)</label>
+              <label className="form-label">Paid Catering (₹)</label>
               <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
             </div>
             <div className="form-group full-width">
@@ -882,11 +882,11 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
 
             <span className="form-section-title">Accounts Cost</span>
             <div className="form-group">
-              <label className="form-label">Total Est. Cost ($)</label>
+              <label className="form-label">Total Est. Cost (₹)</label>
               <input type="number" name="cost" className="form-control" value={formData.cost || ''} onChange={handleChange} required />
             </div>
             <div className="form-group">
-              <label className="form-label">Paid Cost ($)</label>
+              <label className="form-label">Paid Cost (₹)</label>
               <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
             </div>
             <div className="form-group full-width">
