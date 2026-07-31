@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ProductionContext } from '../context/ProductionContext';
 
-const Header = () => {
+const Header = ({ onMenuClick }) => {
   const { metadata, budgetSummary } = useContext(ProductionContext);
 
   const formatCurrency = (value) => {
@@ -14,12 +14,17 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="header-project">
-        <h1>{metadata.projectName}</h1>
-        <p>
-          <span className="project-status"></span>
-          <span>In Production &bull; {metadata.genre} &bull; Dir: {metadata.director}</span>
-        </p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <button className="menu-toggle-btn" onClick={onMenuClick} title="Open Menu">
+          ☰
+        </button>
+        <div className="header-project">
+          <h1>{metadata.projectName}</h1>
+          <p>
+            <span className="project-status"></span>
+            <span>In Production &bull; {metadata.genre} &bull; Dir: {metadata.director}</span>
+          </p>
+        </div>
       </div>
 
       <div className="header-summary">

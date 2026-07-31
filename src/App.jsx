@@ -12,6 +12,7 @@ function MainAppContent() {
   const { isAuthenticated, login } = useContext(ProductionContext);
   const [activeModule, setActiveModule] = useState('Finance');
   const [selectedItemId, setSelectedItemId] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   
   // Form State
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -39,11 +40,24 @@ function MainAppContent() {
   return (
     <div className="app-layout">
       {/* Sidebar Navigation */}
-      <Sidebar activeModule={activeModule} setActiveModule={handleModuleChange} />
+      <Sidebar
+        activeModule={activeModule}
+        setActiveModule={(mod) => {
+          handleModuleChange(mod);
+          setIsSidebarOpen(false);
+        }}
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
+
+      {/* Sidebar Overlay Backdrop for Mobile */}
+      {isSidebarOpen && (
+        <div className="sidebar-overlay-backdrop" onClick={() => setIsSidebarOpen(false)}></div>
+      )}
 
       {/* Main Panel Viewport */}
       <div className="main-content">
-        <Header />
+        <Header onMenuClick={() => setIsSidebarOpen(true)} />
         
         <main className="content-body">
           {activeModule === 'Finance' ? (

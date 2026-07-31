@@ -18,7 +18,7 @@ const MODULES = [
   { id: 'Documents', label: 'Documents', icon: '📁' }
 ];
 
-const Sidebar = ({ activeModule, setActiveModule }) => {
+const Sidebar = ({ activeModule, setActiveModule, isSidebarOpen, setIsSidebarOpen }) => {
   const { data, metadata, logout } = useContext(ProductionContext);
 
   const getItemCount = (moduleId) => {
@@ -26,11 +26,14 @@ const Sidebar = ({ activeModule, setActiveModule }) => {
   };
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
       <div className="sidebar-brand">
         <h1 className="sidebar-logo">
           <span>🎬</span> CINEDREAM<span>CRM</span>
         </h1>
+        <button className="sidebar-close-btn" onClick={() => setIsSidebarOpen(false)} title="Close Menu">
+          ✕
+        </button>
       </div>
 
       <ul className="sidebar-menu">
