@@ -2,18 +2,18 @@ import React, { useContext } from 'react';
 import { ProductionContext } from '../context/ProductionContext';
 
 const MODULES = [
-  { id: 'Finance', label: 'Production Cost', icon: '📊' },
-  { id: 'Actors', label: 'Actors', icon: '🎭' },
-  { id: 'Technical Crew', label: 'Technical Crew', icon: '🛠️' },
-  { id: 'Travel', label: 'Travel', icon: '✈️' },
-  { id: 'Vendors', label: 'Vendors', icon: '🏢' }
+  { id: 'Finance', label: 'Production Cost' },
+  { id: 'Actors', label: 'Actors' },
+  { id: 'Technical Crew', label: 'Technical Crew' },
+  { id: 'Travel', label: 'Travel' },
+  { id: 'Vendors', label: 'Vendors' }
 ];
 
 const Sidebar = ({ activeModule, setActiveModule, isSidebarOpen, setIsSidebarOpen }) => {
   const { data, metadata, logout } = useContext(ProductionContext);
 
   const getItemCount = (moduleId) => {
-    return data[moduleId]?.length || 0;
+    return (data[moduleId] || []).length;
   };
 
   return (
@@ -38,7 +38,6 @@ const Sidebar = ({ activeModule, setActiveModule, isSidebarOpen, setIsSidebarOpe
               onClick={() => setActiveModule(mod.id)}
             >
               <div className="sidebar-item-label">
-                <span className="sidebar-icon">{mod.icon}</span>
                 <span>{mod.label}</span>
               </div>
               {count > 0 && mod.id !== 'Finance' && (

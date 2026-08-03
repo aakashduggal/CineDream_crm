@@ -13,6 +13,7 @@ function MainAppContent() {
   const [activeModule, setActiveModule] = useState('Finance');
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [financeSubTab, setFinanceSubTab] = useState('dashboard'); // 'dashboard' or 'ledger'
   
   // Form State
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -31,6 +32,9 @@ function MainAppContent() {
   const handleModuleChange = (moduleId) => {
     setActiveModule(moduleId);
     setSelectedItemId(null); // Reset detail selection
+    if (moduleId === 'Finance') {
+      setFinanceSubTab('dashboard');
+    }
   };
 
   if (!isAuthenticated) {
@@ -60,7 +64,44 @@ function MainAppContent() {
         <Header onMenuClick={() => setIsSidebarOpen(true)} />
         
         <main className="content-body">
-          {activeModule === 'Finance' ? (
+          {activeModule === 'Finance' && (
+            <div className="finance-tabs-container" style={{ display: 'flex', gap: '8px', marginBottom: '20px', background: 'rgba(92, 113, 94, 0.05)', padding: '6px', borderRadius: '12px', width: 'fit-content', border: '1px solid var(--glass-border)' }}>
+              <button 
+                onClick={() => { setFinanceSubTab('dashboard'); setSelectedItemId(null); }}
+                style={{
+                  background: financeSubTab === 'dashboard' ? '#5c715e' : 'transparent',
+                  color: financeSubTab === 'dashboard' ? 'white' : 'hsl(var(--text-secondary))',
+                  border: 'none',
+                  padding: '8px 20px',
+                  borderRadius: '8px',
+                  fontWeight: '700',
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  transition: 'var(--transition-smooth)'
+                }}
+              >
+                Cost Dashboard
+              </button>
+              <button 
+                onClick={() => { setFinanceSubTab('ledger'); setSelectedItemId(null); }}
+                style={{
+                  background: financeSubTab === 'ledger' ? '#5c715e' : 'transparent',
+                  color: financeSubTab === 'ledger' ? 'white' : 'hsl(var(--text-secondary))',
+                  border: 'none',
+                  padding: '8px 20px',
+                  borderRadius: '8px',
+                  fontWeight: '700',
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  transition: 'var(--transition-smooth)'
+                }}
+              >
+                Expenses Ledger
+              </button>
+            </div>
+          )}
+
+          {activeModule === 'Finance' && financeSubTab === 'dashboard' ? (
             <Dashboard />
           ) : (
             <div className="single-pane-wrapper">

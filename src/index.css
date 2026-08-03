@@ -379,50 +379,54 @@ button, input, select, textarea {
   background: var(--glass-bg);
   backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
-  padding: 24px;
-  border-radius: 16px;
+  padding: 16px 20px;
+  border-radius: 12px;
   transition: var(--transition-smooth);
   box-shadow: var(--glass-shadow);
 }
 
 .kpi-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   border-color: rgba(255,255,255,0.12);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 
 .kpi-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
+  margin-bottom: 8px;
   color: hsl(var(--text-secondary));
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .kpi-card-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
   background-color: rgba(255, 255, 255, 0.03);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 14px;
   border: 1px solid rgba(255,255,255,0.02);
 }
 
 .kpi-card-value {
   font-family: var(--font-title);
-  font-size: 32px;
-  font-weight: 700;
+  font-size: 22px;
+  font-weight: 800;
   letter-spacing: -0.5px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
+}
+
+.kpi-card-value.small-text {
+  font-size: 18px;
 }
 
 .kpi-card-footer {
-  font-size: 11px;
+  font-size: 10px;
   color: hsl(var(--text-muted));
   font-weight: 500;
 }
@@ -834,15 +838,16 @@ button, input, select, textarea {
 .item-avatar {
   width: 44px;
   height: 44px;
-  border-radius: 10px;
+  border-radius: 50%;
+  background-color: #5c715e;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   font-family: var(--font-title);
   color: white;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .item-avatar-img {
@@ -1012,13 +1017,14 @@ button, input, select, textarea {
 }
 
 .detail-avatar {
-  width: 68px;
-  height: 68px;
-  border-radius: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #5c715e;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
+  font-size: 16px;
   font-family: var(--font-title);
   font-weight: 700;
   color: white;
@@ -1026,8 +1032,6 @@ button, input, select, textarea {
 }
 
 .detail-avatar-img {
-  width: 68px;
-  height: 68px;
   border-radius: 18px;
   object-fit: cover;
 }

@@ -62,20 +62,44 @@ const Dashboard = () => {
   return (
     <div className="dashboard-grid">
       {/* Target Budget Editor */}
-      <div className="chart-card" style={{ padding: '16px 24px', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div>
-          <h2 style={{ fontFamily: 'var(--font-title)', fontSize: '18px', fontWeight: '600' }}>Overall Budget Settings</h2>
-          <p style={{ fontSize: '12px', color: 'hsl(var(--text-secondary))' }}>Configure the target cap of the film production</p>
+      <div className="chart-card" style={{ 
+        padding: '16px 24px', 
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent: 'space-between',
+        background: 'linear-gradient(135deg, rgba(92, 113, 94, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
+        border: '1px solid var(--glass-border)',
+        borderRadius: '16px',
+        marginBottom: '8px'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div>
+            <h2 style={{ fontFamily: 'var(--font-title)', fontSize: '16px', fontWeight: '800', margin: 0, color: 'hsl(var(--text-primary))' }}>Overall Budget Settings</h2>
+            <p style={{ fontSize: '11px', color: 'hsl(var(--text-secondary))', margin: 0 }}>Configure the target cap of the film production</p>
+          </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <label style={{ fontSize: '13px', fontWeight: '600', color: 'hsl(var(--text-secondary))' }}>Target Budget Cap (₹):</label>
-          <input 
-            type="number" 
-            className="form-control" 
-            style={{ width: '180px', fontFamily: 'var(--font-title)', fontSize: '16px', fontWeight: '700' }}
-            value={metadata.budgetLimit}
-            onChange={(e) => updateBudgetLimit(e.target.value)}
-          />
+          <label style={{ fontSize: '12px', fontWeight: '700', color: 'hsl(var(--text-secondary))', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Target Cap:</label>
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+            <span style={{ position: 'absolute', left: '12px', fontWeight: '700', color: '#5c715e' }}>₹</span>
+            <input 
+              type="number" 
+              className="form-control" 
+              style={{ 
+                width: '180px', 
+                paddingLeft: '24px', 
+                fontFamily: 'var(--font-title)', 
+                fontSize: '15px', 
+                fontWeight: '800', 
+                borderRadius: '8px', 
+                border: '1px solid var(--glass-border)', 
+                background: 'rgba(255, 255, 255, 0.05)', 
+                color: 'hsl(var(--text-primary))' 
+              }}
+              value={metadata.budgetLimit}
+              onChange={(e) => updateBudgetLimit(e.target.value)}
+            />
+          </div>
         </div>
       </div>
 
@@ -84,7 +108,6 @@ const Dashboard = () => {
         <div className="kpi-card accent">
           <div className="kpi-card-header">
             <span>Target Cap</span>
-            <div className="kpi-card-icon">🎯</div>
           </div>
           <div className="kpi-card-value">{formatCurrency(metadata.budgetLimit)}</div>
           <div className="kpi-card-footer">Maximum budget ceiling</div>
@@ -93,7 +116,6 @@ const Dashboard = () => {
         <div className="kpi-card amber">
           <div className="kpi-card-header">
             <span>Estimated Total</span>
-            <div className="kpi-card-icon">💸</div>
           </div>
           <div className="kpi-card-value">{formatCurrency(grandTotal)}</div>
           <div className="kpi-card-footer">Calculated from all modules</div>
@@ -102,7 +124,6 @@ const Dashboard = () => {
         <div className="kpi-card emerald">
           <div className="kpi-card-header">
             <span>Total Spent (Paid)</span>
-            <div className="kpi-card-icon">✅</div>
           </div>
           <div className="kpi-card-value">{formatCurrency(totalPaid)}</div>
           <div className="kpi-card-footer">{formatPercent(percentPaid)} of estimated budget paid</div>
@@ -111,7 +132,6 @@ const Dashboard = () => {
         <div className="kpi-card rose">
           <div className="kpi-card-header">
             <span>Pending Payments</span>
-            <div className="kpi-card-icon">⏳</div>
           </div>
           <div className="kpi-card-value">{formatCurrency(pendingPayments)}</div>
           <div className="kpi-card-footer">Remaining liabilities to vendors & cast</div>
@@ -120,39 +140,35 @@ const Dashboard = () => {
 
       {/* Time-based Estimates KPI Grid */}
       <div className="kpi-cards">
-        <div className="kpi-card">
+        <div className="kpi-card accent">
           <div className="kpi-card-header">
             <span>Daily Shooting Cost</span>
-            <div className="kpi-card-icon">🗓️</div>
           </div>
-          <div className="kpi-card-value" style={{ fontSize: '20px' }}>{formatCurrency(dailyProductionCost)}</div>
+          <div className="kpi-card-value">{formatCurrency(dailyProductionCost)}</div>
           <div className="kpi-card-footer">Est. cost per filming day</div>
         </div>
 
-        <div className="kpi-card">
+        <div className="kpi-card accent">
           <div className="kpi-card-header">
             <span>Weekly Shooting Cost</span>
-            <div className="kpi-card-icon">📅</div>
           </div>
-          <div className="kpi-card-value" style={{ fontSize: '20px' }}>{formatCurrency(weeklyProductionCost)}</div>
+          <div className="kpi-card-value">{formatCurrency(weeklyProductionCost)}</div>
           <div className="kpi-card-footer">Based on 6 filming days/week</div>
         </div>
 
-        <div className="kpi-card">
+        <div className="kpi-card accent">
           <div className="kpi-card-header">
             <span>Monthly Shooting Cost</span>
-            <div className="kpi-card-icon">💼</div>
           </div>
-          <div className="kpi-card-value" style={{ fontSize: '20px' }}>{formatCurrency(monthlyProductionCost)}</div>
+          <div className="kpi-card-value">{formatCurrency(monthlyProductionCost)}</div>
           <div className="kpi-card-footer">Based on 25 filming days/month</div>
         </div>
 
-        <div className="kpi-card">
+        <div className="kpi-card accent">
           <div className="kpi-card-header">
             <span>Avg Cost per Actor</span>
-            <div className="kpi-card-icon">🎭</div>
           </div>
-          <div className="kpi-card-value" style={{ fontSize: '20px' }}>{formatCurrency(costPerActor)}</div>
+          <div className="kpi-card-value">{formatCurrency(costPerActor)}</div>
           <div className="kpi-card-footer">Total Actor Cost / Active Cast</div>
         </div>
       </div>
@@ -226,9 +242,21 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div style={{ borderTop: '1px solid rgba(255,255,255,0.04)', paddingTop: '16px', width: '100%', textAlign: 'center' }}>
-              <div style={{ fontSize: '12px', color: 'hsl(var(--text-secondary))' }}>Variance Status</div>
-              <div style={{ fontFamily: 'var(--font-title)', fontSize: '18px', fontWeight: '700', marginTop: '4px', color: budgetVariance >= 0 ? 'hsl(var(--color-emerald))' : 'hsl(var(--color-rose))' }}>
+            <div style={{ borderTop: '1px solid rgba(255,255,255,0.04)', paddingTop: '16px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <span style={{ fontSize: '10px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', color: 'hsl(var(--text-muted))', marginBottom: '6px' }}>Variance Status</span>
+              <div style={{
+                background: budgetVariance >= 0 ? 'rgba(46, 125, 50, 0.08)' : 'rgba(211, 47, 47, 0.08)',
+                border: budgetVariance >= 0 ? '1px solid rgba(46, 125, 50, 0.15)' : '1px solid rgba(211, 47, 47, 0.15)',
+                color: budgetVariance >= 0 ? '#2e7d32' : '#d32f2f',
+                padding: '6px 16px',
+                borderRadius: '20px',
+                fontFamily: 'var(--font-title)',
+                fontSize: '13px',
+                fontWeight: '800',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px'
+              }}>
                 {budgetVariance >= 0 
                   ? `Under Budget by ${formatCurrency(budgetVariance)}`
                   : `Over Budget by ${formatCurrency(Math.abs(budgetVariance))}`

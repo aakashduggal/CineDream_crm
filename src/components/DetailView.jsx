@@ -58,7 +58,7 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
           </button>
           
           <div className="detail-avatar-section" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div className="detail-avatar" style={{ width: '44px', height: '44px', fontSize: '18px', borderRadius: '12px', background: 'linear-gradient(135deg, hsl(var(--color-indigo)), hsl(var(--bg-accent)))', flexShrink: 0 }}>
+            <div className="detail-avatar" style={{ flexShrink: 0 }}>
               {getInitials(name)}
             </div>
             <div className="detail-title-section" style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>

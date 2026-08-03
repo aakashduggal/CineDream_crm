@@ -159,10 +159,7 @@ const ModuleList = ({ activeModule, selectedItemId, setSelectedItemId, onAddNewC
                   onClick={() => setSelectedItemId(item.id)}
                 >
                   <div className="item-card-header">
-                    <div
-                      className="item-avatar"
-                      style={{ background: getAvatarGradient(item.id) }}
-                    >
+                    <div className="item-avatar">
                       {getInitials(name)}
                     </div>
 
