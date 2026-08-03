@@ -11,7 +11,7 @@ import Login from './components/Login';
 
 function MainAppContent() {
   const { isAuthenticated, login } = useContext(ProductionContext);
-  const [activeModule, setActiveModule] = useState('Finance');
+  const [activeModule, setActiveModule] = useState('Dashboard');
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [financeSubTab, setFinanceSubTab] = useState('dashboard'); // 'dashboard' or 'ledger'

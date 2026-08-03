@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect } from 'react';
 export const ProductionContext = createContext();
 
 const INITIAL_METADATA = {
-  projectName: "YEH DIL BEWAJAH (PROMO TEASER)",
+  projectName: "CINEDREAM CRM",
   genre: "Promo Teaser / Drama",
   director: "MR. MANAN PRATAP SINGH",
   budgetLimit: 2500000, // ₹25,00,000 Target Cap
@@ -11,7 +11,7 @@ const INITIAL_METADATA = {
   startDate: "2026-08-15",
   endDate: "2026-08-20",
   currentUser: "Mr. Manoj Kumar (Production Manager)",
-  version: 12
+  version: 13
 };
 
 const INITIAL_MOCK_DATA = {
@@ -400,7 +400,7 @@ export const ProductionProvider = ({ children }) => {
     const saved = localStorage.getItem('cinedream_crm_metadata');
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (parsed.projectName !== "YEH DIL BEWAJAH (PROMO TEASER)" || parsed.version !== 12) {
+      if (parsed.projectName !== "CINEDREAM CRM" || parsed.version !== 13) {
         localStorage.removeItem('cinedream_crm_data');
         localStorage.removeItem('cinedream_crm_metadata');
         localStorage.removeItem('cinedream_crm_logs');
@@ -419,7 +419,7 @@ export const ProductionProvider = ({ children }) => {
     const savedMetadata = localStorage.getItem('cinedream_crm_metadata');
     if (savedMetadata) {
       const parsedMeta = JSON.parse(savedMetadata);
-      if (parsedMeta.projectName !== "YEH DIL BEWAJAH (PROMO TEASER)" || parsedMeta.version !== 12) {
+      if (parsedMeta.projectName !== "CINEDREAM CRM" || parsedMeta.version !== 13) {
         return INITIAL_MOCK_DATA;
       }
     }
@@ -431,7 +431,7 @@ export const ProductionProvider = ({ children }) => {
     const savedMetadata = localStorage.getItem('cinedream_crm_metadata');
     if (savedMetadata) {
       const parsedMeta = JSON.parse(savedMetadata);
-      if (parsedMeta.projectName !== "YEH DIL BEWAJAH (PROMO TEASER)" || parsedMeta.version !== 12) {
+      if (parsedMeta.projectName !== "CINEDREAM CRM" || parsedMeta.version !== 13) {
         return INITIAL_AUDIT_LOG;
       }
     }
