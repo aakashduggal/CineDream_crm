@@ -11,7 +11,7 @@ const INITIAL_METADATA = {
   startDate: "2026-08-15",
   endDate: "2026-08-20",
   currentUser: "Mr. Manoj Kumar (Production Manager)",
-  version: 13
+  version: 14
 };
 
 const INITIAL_MOCK_DATA = {
@@ -312,6 +312,52 @@ const INITIAL_MOCK_DATA = {
       email: "vfx.artist@cinedreampromo.com",
       phone: "+91 99999 88888"
     }
+  ],
+  Equipment: [
+    {
+      id: "eq-1",
+      equipmentId: "EQ-01",
+      name: "Sony Venice Camera Package",
+      category: "Camera & Lenses",
+      model: "Sony Venice 2 (8K)",
+      rentalCostPerDay: 35000,
+      daysRented: 5,
+      status: "Confirmed",
+      supplier: "CineVision Rentals"
+    },
+    {
+      id: "eq-2",
+      equipmentId: "EQ-02",
+      name: "Lights & Grip Pack",
+      category: "Lighting & Grip",
+      model: "Arri Skypanels & Dolly",
+      rentalCostPerDay: 40000,
+      daysRented: 5,
+      status: "Confirmed",
+      supplier: "GripMaster Supplier"
+    }
+  ],
+  Documents: [
+    {
+      id: "doc-1",
+      documentId: "DOC-01",
+      title: "Lead Cast Agreement (Rahul Sharma)",
+      category: "Cast Agreement",
+      fileType: "PDF",
+      uploadDate: "2026-08-01",
+      status: "Signed",
+      signees: "Rahul Sharma & Producer"
+    },
+    {
+      id: "doc-2",
+      documentId: "DOC-02",
+      title: "DOP Camera Rental Contract",
+      category: "Equipment Lease",
+      fileType: "DOCX",
+      uploadDate: "2026-08-02",
+      status: "Pending",
+      signees: "CineVision & Producer"
+    }
   ]
 };
 
@@ -400,7 +446,7 @@ export const ProductionProvider = ({ children }) => {
     const saved = localStorage.getItem('cinedream_crm_metadata');
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (parsed.projectName !== "CINEDREAM CRM" || parsed.version !== 13) {
+      if (parsed.projectName !== "CINEDREAM CRM" || parsed.version !== 14) {
         localStorage.removeItem('cinedream_crm_data');
         localStorage.removeItem('cinedream_crm_metadata');
         localStorage.removeItem('cinedream_crm_logs');
@@ -419,7 +465,7 @@ export const ProductionProvider = ({ children }) => {
     const savedMetadata = localStorage.getItem('cinedream_crm_metadata');
     if (savedMetadata) {
       const parsedMeta = JSON.parse(savedMetadata);
-      if (parsedMeta.projectName !== "CINEDREAM CRM" || parsedMeta.version !== 13) {
+      if (parsedMeta.projectName !== "CINEDREAM CRM" || parsedMeta.version !== 14) {
         return INITIAL_MOCK_DATA;
       }
     }
@@ -431,7 +477,7 @@ export const ProductionProvider = ({ children }) => {
     const savedMetadata = localStorage.getItem('cinedream_crm_metadata');
     if (savedMetadata) {
       const parsedMeta = JSON.parse(savedMetadata);
-      if (parsedMeta.projectName !== "CINEDREAM CRM" || parsedMeta.version !== 13) {
+      if (parsedMeta.projectName !== "CINEDREAM CRM" || parsedMeta.version !== 14) {
         return INITIAL_AUDIT_LOG;
       }
     }

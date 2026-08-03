@@ -103,7 +103,7 @@ function MainAppContent() {
           )}
 
           {activeModule === 'Finance' && financeSubTab === 'dashboard' ? (
-            <Dashboard />
+            <Dashboard onEditClick={handleEditClick} onAddNewClick={handleAddNewClick} />
           ) : activeModule === 'Dashboard' ? (
             <BudgetTopsheet />
           ) : (

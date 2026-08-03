@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { ProductionContext } from '../context/ProductionContext';
 
-const Dashboard = () => {
+const Dashboard = ({ onEditClick, onAddNewClick }) => {
   const { data, auditLogs, budgetSummary, metadata, updateBudgetLimit } = useContext(ProductionContext);
   const [logFilter, setLogFilter] = useState('ALL');
 
@@ -105,75 +105,96 @@ const Dashboard = () => {
 
 
 
-      {/* Post-Production Service Categories */}
+      {/* Post-Production Categories Budget Planner Form */}
       <div className="chart-card">
-        <div className="chart-card-title">
-          <span>Post-Production Categories</span>
-          <span className="chart-card-subtitle">Overview of post-production deliverables & budget allocation</span>
+        <div className="chart-card-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <div>
+            <span>Post-Production Budget Planner</span>
+            <span className="chart-card-subtitle" style={{ display: 'block', marginTop: '4px' }}>Click 'Edit Details' to update budget and vendor contact info</span>
+          </div>
+          {onAddNewClick && (
+            <button className="btn-primary" onClick={onAddNewClick} style={{ padding: '6px 14px', fontSize: '13px' }}>
+              + Add New
+            </button>
+          )}
         </div>
         
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px', marginTop: '8px' }}>
-          {[
-            {
-              name: 'Picture Edit',
-              desc: 'Timeline assembly, sync audio locking, fine cuts, and promo cut master exports.'
-            },
-            {
-              name: 'Color Grading (DI)',
-              desc: 'DaVinci Resolve color passes, promo LUT styling, HDR grading, and DCP mastering.'
-            },
-            {
-              name: 'Sound Design',
-              desc: 'Foley recording, ambient audio layers, sound effects tracking, and soundscape design.'
-            },
-            {
-              name: 'Dubbing',
-              desc: 'Dialogue replacement recording, voice synchronization, and noise reduction cleanup.'
-            },
-            {
-              name: 'Atmos Mix',
-              desc: 'Dolby Atmos spatial surround mixing, multi-channel panning, and master audio printing.'
-            },
-            {
-              name: 'Music/Score',
-              desc: 'Original background score composition, music arrangements, foley sync, and track licensing.'
-            },
-            {
-              name: 'VFX/CGI',
-              desc: 'Matte paint cleanups, wire removals, logo animations, green screen overlays, and rotoscoping.'
-            }
-          ].map(cat => {
-            // Find total logged cost for this category
-            const categoryCost = (data.Finance || [])
-              .filter(item => item.category === cat.name)
-              .reduce((sum, item) => sum + (Number(item.cost) || 0), 0);
+        <div className="table-responsive" style={{
+          overflowX: 'auto',
+          marginTop: '12px',
+          borderRadius: '8px',
+          border: '1px solid var(--glass-border)'
+        }}>
+          <table style={{
+            width: '100%',
+            borderCollapse: 'collapse',
+            fontSize: '13px',
+            textAlign: 'left',
+            minWidth: '700px'
+          }}>
+            <thead>
+              <tr style={{ background: 'rgba(92, 113, 94, 0.08)', borderBottom: '1px solid var(--glass-border)' }}>
+                <th style={{ padding: '12px 16px', fontWeight: '700', color: 'hsl(var(--text-primary))' }}>Category</th>
+                <th style={{ padding: '12px 16px', fontWeight: '700', color: 'hsl(var(--text-primary))', width: '120px' }}>Per Day Cost</th>
+                <th style={{ padding: '12px 16px', fontWeight: '700', color: 'hsl(var(--text-primary))', width: '100px' }}>Work Days</th>
+                <th style={{ padding: '12px 16px', fontWeight: '700', color: 'hsl(var(--text-primary))', width: '120px' }}>Paid Amount</th>
+                <th style={{ padding: '12px 16px', fontWeight: '700', color: 'hsl(var(--text-primary))', width: '120px', textAlign: 'right' }}>Total Cost</th>
+                <th style={{ padding: '12px 16px', fontWeight: '700', color: 'hsl(var(--text-primary))', width: '100px', textAlign: 'center' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(() => {
+                const postProdCategories = ['Picture Edit', 'Color Grading (DI)', 'Sound Design', 'Dubbing', 'Atmos Mix', 'Music/Score', 'VFX/CGI'];
+                const plannerItems = (data.Finance || []).filter(item => postProdCategories.includes(item.category));
+                
+                if (plannerItems.length === 0) {
+                  return (
+                    <tr>
+                      <td colSpan="6" style={{ padding: '32px 16px', textAlign: 'center', color: 'hsl(var(--text-secondary))' }}>
+                        No post-production expenses added yet. Click "+ Add New" to start planning.
+                      </td>
+                    </tr>
+                  );
+                }
 
-            return (
-              <div 
-                key={cat.name} 
-                className="category-card" 
-                style={{ 
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '1px solid var(--glass-border)',
-                  borderRadius: '12px',
-                  padding: '16px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '8px',
-                  transition: 'var(--transition-smooth)'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <h4 style={{ margin: 0, fontSize: '13px', fontWeight: '800', color: 'hsl(var(--text-primary))' }}>{cat.name}</h4>
-                </div>
-                <p style={{ margin: 0, fontSize: '11px', color: 'hsl(var(--text-secondary))', lineHeight: '1.4', flex: 1 }}>{cat.desc}</p>
-                <div style={{ borderTop: '1px solid rgba(255,255,255,0.04)', paddingTop: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '11px', marginTop: '4px' }}>
-                  <span style={{ color: 'hsl(var(--text-muted))', fontWeight: '600' }}>Budget Spent:</span>
-                  <span style={{ fontFamily: 'var(--font-title)', fontWeight: '800', color: '#5c715e' }}>{formatCurrency(categoryCost)}</span>
-                </div>
-              </div>
-            );
-          })}
+                return plannerItems.map(finItem => {
+                  const cost = Number(finItem.perDayCost || 0) * Number(finItem.workingDays || 0);
+
+                  return (
+                    <tr key={finItem.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                      <td style={{ padding: '12px 16px', fontWeight: '600', color: 'hsl(var(--text-primary))' }}>
+                        {finItem.category}
+                        {finItem.itemName && (
+                          <div style={{ fontSize: '11px', color: 'hsl(var(--text-secondary))', marginTop: '2px', fontWeight: '400' }}>
+                            {finItem.itemName} {finItem.email ? `• ${finItem.email}` : ''}
+                          </div>
+                        )}
+                      </td>
+                      <td style={{ padding: '12px 16px' }}>{formatCurrency(finItem.perDayCost || 0)}</td>
+                      <td style={{ padding: '12px 16px' }}>{finItem.workingDays || 0}</td>
+                      <td style={{ padding: '12px 16px' }}>{formatCurrency(finItem.paidAmount || 0)}</td>
+                      <td style={{ padding: '12px 16px', textAlign: 'right', fontWeight: '700', fontFamily: 'var(--font-title)', color: '#5c715e' }}>
+                        {formatCurrency(cost)}
+                      </td>
+                      <td style={{ padding: '12px 16px', textAlign: 'center' }}>
+                        <button 
+                          className="action-btn"
+                          onClick={() => {
+                            if (finItem.id && onEditClick) {
+                              onEditClick(finItem);
+                            }
+                          }}
+                          style={{ padding: '6px 12px', fontSize: '11px' }}
+                        >
+                          ✏️ Edit Details
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                });
+              })()}
+            </tbody>
+          </table>
         </div>
       </div>
 

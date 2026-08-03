@@ -7,8 +7,10 @@ const MODULES = [
   { id: 'Actors', label: 'Actors' },
   { id: 'HOD', label: 'HOD' },
   { id: 'Technical Crew', label: 'Technical Crew' },
+  { id: 'Equipment', label: 'Equipment' },
   { id: 'Travel', label: 'Travel' },
-  { id: 'Vendors', label: 'Vendors' }
+  { id: 'Vendors', label: 'Vendors' },
+  { id: 'Documents', label: 'Documents' }
 ];
 
 const Sidebar = ({ activeModule, setActiveModule, isSidebarOpen, setIsSidebarOpen }) => {

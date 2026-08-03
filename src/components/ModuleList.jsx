@@ -175,6 +175,26 @@ const ModuleList = ({ activeModule, selectedItemId, setSelectedItemId, onAddNewC
           { label: 'Working Days', key: 'workingDays' },
           { label: 'Total Cost', key: 'total', isCostCalc: true }
         ];
+      case 'Equipment':
+        return [
+          { label: 'Equipment ID', key: 'equipmentId' },
+          { label: 'Name', key: 'name' },
+          { label: 'Category', key: 'category' },
+          { label: 'Model', key: 'model' },
+          { label: 'Rental Cost/Day', key: 'rentalCostPerDay', isCurrency: true },
+          { label: 'Days Rented', key: 'daysRented' },
+          { label: 'Supplier', key: 'supplier' }
+        ];
+      case 'Documents':
+        return [
+          { label: 'Document ID', key: 'documentId' },
+          { label: 'Title', key: 'title' },
+          { label: 'Category', key: 'category' },
+          { label: 'File Type', key: 'fileType' },
+          { label: 'Upload Date', key: 'uploadDate' },
+          { label: 'Signees', key: 'signees' },
+          { label: 'Status', key: 'status' }
+        ];
       default:
         return [
           { label: 'ID', key: 'id' },

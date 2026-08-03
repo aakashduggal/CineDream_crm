@@ -207,6 +207,32 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
     }
   }, [itemToEdit, activeModule]);
 
+  const handleFileUpload = (file) => {
+    // Format file size
+    let sizeStr = `${(file.size / (1024 * 1024)).toFixed(1)} MB`;
+    if (file.size < 1024 * 1024) {
+      sizeStr = `${(file.size / 1024).toFixed(0)} KB`;
+    }
+    
+    // Get file extension/type
+    const ext = file.name.split('.').pop().toUpperCase();
+    let type = 'Other';
+    if (ext === 'PDF') type = 'PDF';
+    else if (['PNG', 'JPG', 'JPEG', 'WEBP', 'GIF'].includes(ext)) type = 'Image';
+    else if (['DOC', 'DOCX'].includes(ext)) type = 'Word';
+    else if (['XLS', 'XLSX', 'CSV'].includes(ext)) type = 'Excel';
+    
+    // Auto fill metadata fields!
+    setFormData(prev => ({
+      ...prev,
+      title: file.name.substring(0, file.name.lastIndexOf('.')) || file.name,
+      fileType: type,
+      size: sizeStr,
+      uploadDate: new Date().toISOString().substring(0, 10),
+      fileName: file.name
+    }));
+  };
+
   const handleChange = (e) => {
     const { name, value, type } = e.target;
     setFormData(prev => ({
@@ -1059,6 +1085,51 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
             <div className="form-group full-width">
               <label className="form-label">Document Notes</label>
               <textarea name="notes" className="form-control" value={formData.notes || ''} onChange={handleChange}></textarea>
+            </div>
+
+            <div className="form-group full-width" style={{ gridColumn: 'span 2', marginTop: '16px' }}>
+              <label className="form-label" style={{ fontWeight: '700' }}>Upload Document File (PDF / Image)</label>
+              <div 
+                style={{
+                  border: '2px dashed var(--glass-border)',
+                  borderRadius: '12px',
+                  padding: '24px',
+                  textAlign: 'center',
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  cursor: 'pointer',
+                  transition: 'var(--transition-smooth)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+                onClick={() => document.getElementById('doc-file-upload').click()}
+                onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  const file = e.dataTransfer.files[0];
+                  if (file) handleFileUpload(file);
+                }}
+              >
+                <span style={{ fontSize: '32px' }}>📁</span>
+                <span style={{ fontWeight: '700', fontSize: '13px', color: 'hsl(var(--text-primary))' }}>
+                  {formData.fileName ? `Selected: ${formData.fileName}` : 'Drag & Drop PDF or Image here, or click to browse'}
+                </span>
+                <span style={{ fontSize: '11px', color: 'hsl(var(--text-muted))' }}>
+                  Supports PDF, PNG, JPG, JPEG (Max 10MB)
+                </span>
+                <input 
+                  type="file" 
+                  id="doc-file-upload" 
+                  accept=".pdf, image/*" 
+                  style={{ display: 'none' }} 
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) handleFileUpload(file);
+                  }}
+                />
+              </div>
             </div>
           </>
         );

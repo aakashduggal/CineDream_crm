@@ -768,8 +768,91 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
                   <span className="detail-info-label">File Storage Size</span>
                   <span className="detail-info-value">{item.size}</span>
                 </div>
+                {item.signees && (
+                  <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
+                    <span className="detail-info-label">Signees</span>
+                    <span className="detail-info-value">{item.signees}</span>
+                  </div>
+                )}
+                {item.status && (
+                  <div className="detail-info-item">
+                    <span className="detail-info-label">Status</span>
+                    <span className="detail-info-value" style={{ fontWeight: '700', color: 'hsl(var(--bg-accent))' }}>{item.status}</span>
+                  </div>
+                )}
               </div>
             </div>
+
+            {item.fileName && (
+              <div className="detail-section">
+                <span className="detail-section-title">File Attachment</span>
+                <div style={{
+                  border: '1px solid var(--glass-border)',
+                  borderRadius: '12px',
+                  padding: '16px',
+                  background: 'rgba(255,255,255,0.02)',
+                  marginTop: '10px'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                    <span style={{ fontSize: '24px' }}>
+                      {item.fileType === 'PDF' ? '📄' : item.fileType === 'Image' ? '🖼️' : '📁'}
+                    </span>
+                    <div>
+                      <h4 style={{ margin: 0, fontSize: '13px', fontWeight: '700', color: 'hsl(var(--text-primary))' }}>{item.fileName}</h4>
+                      <p style={{ margin: 0, fontSize: '11px', color: 'hsl(var(--text-secondary))' }}>{item.size || 'Size TBD'}</p>
+                    </div>
+                  </div>
+                  
+                  {item.fileType === 'PDF' && (
+                    <div style={{
+                      backgroundColor: 'rgba(255,255,255,0.03)',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                      borderRadius: '8px',
+                      padding: '16px',
+                      textAlign: 'center',
+                      fontSize: '12px'
+                    }}>
+                      <p style={{ margin: '0 0 12px 0', color: 'hsl(var(--text-secondary))' }}>Simulated PDF viewer loading contract credentials...</p>
+                      <button 
+                        className="action-btn" 
+                        onClick={() => alert(`Opening PDF file: ${item.fileName}`)}
+                        style={{ padding: '6px 16px', fontSize: '11px' }}
+                      >
+                        👁️ View Document
+                      </button>
+                    </div>
+                  )}
+
+                  {item.fileType === 'Image' && (
+                    <div style={{
+                      backgroundColor: 'rgba(255,255,255,0.03)',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                      borderRadius: '8px',
+                      padding: '12px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                    }}>
+                      <div style={{
+                        width: '100%',
+                        height: '150px',
+                        backgroundColor: '#eaeaea',
+                        borderRadius: '6px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        color: '#666',
+                        fontSize: '12px'
+                      }}>
+                        <span style={{ fontSize: '32px' }}>📷</span>
+                        <span>[ Simulated Image Attachment Preview ]</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </>
         )}
 
