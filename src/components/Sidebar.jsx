@@ -3,7 +3,7 @@ import { ProductionContext } from '../context/ProductionContext';
 
 const MODULES = [
   { id: 'Dashboard', label: 'Dashboard' },
-  { id: 'Finance', label: 'Production Cost' },
+  { id: 'Finance', label: 'Production Post' },
   { id: 'Actors', label: 'Actors' },
   { id: 'HOD', label: 'HOD' },
   { id: 'Technical Crew', label: 'Technical Crew' },
