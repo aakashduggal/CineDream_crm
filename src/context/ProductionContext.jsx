@@ -10,14 +10,18 @@ const INITIAL_METADATA = {
   shootingDays: 5,
   startDate: "2026-08-15",
   endDate: "2026-08-20",
-  currentUser: "Mr. Manoj Kumar (Production Manager)"
+  currentUser: "Mr. Manoj Kumar (Production Manager)",
+  version: 3
 };
 
 const INITIAL_MOCK_DATA = {
   Actors: [
     {
       id: "act-1",
+      castId: "CAST-01",
       name: "Rahul Sharma",
+      characterId: "CHAR-01",
+      characterName: "Aman",
       role: "Lead Actor",
       status: "Active",
       actingFee: 100000,
@@ -45,7 +49,10 @@ const INITIAL_MOCK_DATA = {
     },
     {
       id: "act-2",
+      castId: "CAST-02",
       name: "Priya Patel",
+      characterId: "CHAR-02",
+      characterName: "Riya",
       role: "Lead Actress",
       status: "Active",
       actingFee: 70000,
@@ -73,7 +80,10 @@ const INITIAL_MOCK_DATA = {
     },
     {
       id: "act-3",
+      castId: "CAST-03",
       name: "Vikram Malhotra",
+      characterId: "CHAR-03",
+      characterName: "Rajesh (Antagonist)",
       role: "Supporting Actor",
       status: "Active",
       actingFee: 30000,
@@ -101,7 +111,10 @@ const INITIAL_MOCK_DATA = {
     },
     {
       id: "act-4",
+      castId: "CAST-04",
       name: "Neha Sen",
+      characterId: "CHAR-04",
+      characterName: "Simran (Friend)",
       role: "Supporting Actress",
       status: "Active",
       actingFee: 10000,
@@ -129,11 +142,14 @@ const INITIAL_MOCK_DATA = {
     },
     {
       id: "act-5",
+      castId: "CAST-EXT",
       name: "Delhi Local Background Talents (15 Extras)",
+      characterId: "CHAR-EXT",
+      characterName: "Background Crowd",
       role: "Background Actors",
       status: "Completed",
       actingFee: 0,
-      perDayFee: 7500, // 15 extras * 500 per day = 7500
+      perDayFee: 7500,
       daysScheduled: 2,
       paidAmount: 15000,
       relationshipStatus: "N/A",
@@ -176,6 +192,7 @@ const INITIAL_MOCK_DATA = {
   "Technical Crew": [
     {
       id: "crew-1",
+      crewId: "CREW-DOP",
       name: "DOP & Camera Crew (Staff Package)",
       role: "Director of Photography & Staff",
       department: "Camera",
@@ -183,6 +200,9 @@ const INITIAL_MOCK_DATA = {
       dailyRate: 20000,
       daysScheduled: 5,
       paidAmount: 100000,
+      email: "dop.camcrew@cinedreampromo.com",
+      phone: "+91 98110 55566",
+      instagramId: "@dop_cam_crew",
       equipmentAssigned: "Sony Venice Camera Package",
       availability: "August 15 - August 20",
       certifications: "WICA Member",
@@ -191,6 +211,7 @@ const INITIAL_MOCK_DATA = {
     },
     {
       id: "crew-2",
+      crewId: "CREW-ART",
       name: "Art Director & Set Dressers",
       role: "Art Director & Team",
       department: "Art Department",
@@ -198,6 +219,9 @@ const INITIAL_MOCK_DATA = {
       dailyRate: 5000,
       daysScheduled: 4,
       paidAmount: 20000,
+      email: "artdirector.crew@gmail.com",
+      phone: "+91 99990 44433",
+      instagramId: "@art_crew_delhi",
       equipmentAssigned: "Set Construction Tools & Prop Kit",
       availability: "August 14 - August 18",
       certifications: "N/A",
@@ -206,6 +230,7 @@ const INITIAL_MOCK_DATA = {
     },
     {
       id: "crew-3",
+      crewId: "CREW-SOUND",
       name: "Sync Sound Recordist & Boom Operator",
       role: "Location Sound Recordist",
       department: "Sound",
@@ -213,6 +238,9 @@ const INITIAL_MOCK_DATA = {
       dailyRate: 2000,
       daysScheduled: 4,
       paidAmount: 8000,
+      email: "sound.recordist@cinedreampromo.com",
+      phone: "+91 98765 99887",
+      instagramId: "@sync_sound_crew",
       equipmentAssigned: "Sound Recordist Package (Zoom F8, Sennheiser Mics)",
       availability: "August 15 - August 19",
       certifications: "N/A",
@@ -221,6 +249,7 @@ const INITIAL_MOCK_DATA = {
     },
     {
       id: "crew-4",
+      crewId: "CREW-MAKEUP",
       name: "Makeup Artist & Hair Stylist",
       role: "Key Makeup & Hair Stylist",
       department: "Makeup",
@@ -228,6 +257,9 @@ const INITIAL_MOCK_DATA = {
       dailyRate: 2500,
       daysScheduled: 4,
       paidAmount: 10000,
+      email: "makeup.stylist@gmail.com",
+      phone: "+91 99110 77665",
+      instagramId: "@makeup_styling_crew",
       equipmentAssigned: "Professional Makeup Vanity Case",
       availability: "August 15 - August 19",
       certifications: "N/A",
@@ -281,6 +313,10 @@ const INITIAL_MOCK_DATA = {
       status: "Confirmed",
       expenses: 200000, // ₹8,000 per head * 25 pax = ₹2,00,000
       paidAmount: 200000,
+      hotelBooking: "Hotel Delhi Heights (10 Rooms)",
+      costumesTransit: "Cast Wardrobe Trunk #1 & #2",
+      cateringTransit: "Travel Catering Pack (25 Box lunches)",
+      pickupVehicle: "3 Innovas & 2 Cargo Cabs",
       notes: "Group tickets booked on Air India. 25 people including cast, director, and key crew."
     }
   ],
@@ -349,7 +385,10 @@ const INITIAL_MOCK_DATA = {
   Vendors: [
     {
       id: "vend-1",
+      vendorId: "VEND-01",
       name: "Modern Art Props & Rental House",
+      equipments: "Props, set setting furniture, art backdrops, Mehrauli decor elements",
+      description: "Main provider for set properties, decoration materials, and specialized furniture rentals in Delhi NCR.",
       serviceCategory: "Props & Set Decoration",
       contactPerson: "Ramesh Props Coordinator",
       phone: "+91 98765 43210",
@@ -394,6 +433,7 @@ const INITIAL_MOCK_DATA = {
   Finance: [
     {
       id: "fin-1",
+      financeId: "FIN-01",
       itemName: "Contingency Fund (10%)",
       category: "Contingency Backup",
       cost: 181500,
@@ -402,34 +442,93 @@ const INITIAL_MOCK_DATA = {
     },
     {
       id: "fin-2",
-      itemName: "Film Editing Package",
-      category: "Post-Production Costs",
+      financeId: "FIN-02",
+      itemName: "Picture Edit Work",
+      category: "Picture Edit",
+      perDayCost: 3000,
+      workingDays: 5,
       cost: 15000,
       paidAmount: 15000,
-      notes: "Flat contract package for promo cut editing, assembly, and formatting."
+      email: "editor@cinedreampromo.com",
+      phone: "+91 99999 88888",
+      notes: "Promo cut assembly and timeline locking."
     },
     {
       id: "fin-3",
-      itemName: "Music & Foley Sound Package",
-      category: "Post-Production Costs",
-      cost: 12000,
-      paidAmount: 12000,
-      notes: "Teaser background music track, sound design, foley record, and mastering."
-    },
-    {
-      id: "fin-4",
-      itemName: "Color Grading & DI Package",
-      category: "Post-Production Costs",
+      financeId: "FIN-03",
+      itemName: "Color Grading DI Suite",
+      category: "Color Grading (DI)",
+      perDayCost: 3000,
+      workingDays: 5,
       cost: 15000,
       paidAmount: 15000,
+      email: "colorist.di@cinedreampromo.com",
+      phone: "+91 99999 88888",
       notes: "DI grading, DaVinci mastering, and DCP promo package export."
     },
     {
+      id: "fin-4",
+      financeId: "FIN-04",
+      itemName: "Audio Sound Design Package",
+      category: "Sound Design",
+      perDayCost: 3000,
+      workingDays: 4,
+      cost: 12000,
+      paidAmount: 12000,
+      email: "sound.design@cinedreampromo.com",
+      phone: "+91 99999 88888",
+      notes: "Sfx overlays and foley record."
+    },
+    {
       id: "fin-5",
-      itemName: "VFX & Compositing Invoice",
-      category: "Post-Production Costs",
+      financeId: "FIN-05",
+      itemName: "Lead Cast Dubbing Session",
+      category: "Dubbing",
+      perDayCost: 2000,
+      workingDays: 2,
+      cost: 4000,
+      paidAmount: 4000,
+      email: "dubbing.studio@gmail.com",
+      phone: "+91 99999 88888",
+      notes: "Voice sync recording for promo teaser."
+    },
+    {
+      id: "fin-6",
+      financeId: "FIN-06",
+      itemName: "Dolby Atmos Surround Mixing",
+      category: "Atmos Mix",
+      perDayCost: 5000,
+      workingDays: 1,
+      cost: 5000,
+      paidAmount: 5000,
+      email: "atmos.mix@gmail.com",
+      phone: "+91 99999 88888",
+      notes: "Dolby Atmos spatial surround mix down."
+    },
+    {
+      id: "fin-7",
+      financeId: "FIN-07",
+      itemName: "Background Score Composition",
+      category: "Music/Score",
+      perDayCost: 3000,
+      workingDays: 4,
+      cost: 12000,
+      paidAmount: 12000,
+      email: "composer.score@gmail.com",
+      phone: "+91 99999 88888",
+      notes: "Teaser background music track."
+    },
+    {
+      id: "fin-8",
+      financeId: "FIN-08",
+      itemName: "VFX Screen Cleanup Suite",
+      category: "VFX/CGI",
+      perDayCost: 3000,
+      workingDays: 5,
       cost: 15000,
       paidAmount: 15000,
+      email: "vfx.artist@cinedreampromo.com",
+      phone: "+91 99999 88888",
       notes: "Screen cleanups, wire removals, logo overlays, and title animations."
     }
   ],
@@ -524,7 +623,9 @@ export const calculateItemCost = (module, item) => {
     case 'Catering':
       return Number(item.costPerHead || 0) * Number(item.headCount || 0) * Number(item.days || 0);
     case 'Finance':
-      return Number(item.cost || 0);
+      return item.perDayCost && item.workingDays 
+        ? Number(item.perDayCost || 0) * Number(item.workingDays || 0)
+        : Number(item.cost || 0);
     default:
       return 0;
   }
@@ -540,7 +641,7 @@ export const ProductionProvider = ({ children }) => {
     const saved = localStorage.getItem('cinedream_crm_metadata');
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (parsed.projectName !== "YEH DIL BEWAJAH (PROMO TEASER)") {
+      if (parsed.projectName !== "YEH DIL BEWAJAH (PROMO TEASER)" || parsed.version !== 3) {
         localStorage.removeItem('cinedream_crm_data');
         localStorage.removeItem('cinedream_crm_metadata');
         localStorage.removeItem('cinedream_crm_logs');
@@ -559,7 +660,7 @@ export const ProductionProvider = ({ children }) => {
     const savedMetadata = localStorage.getItem('cinedream_crm_metadata');
     if (savedMetadata) {
       const parsedMeta = JSON.parse(savedMetadata);
-      if (parsedMeta.projectName !== "YEH DIL BEWAJAH (PROMO TEASER)") {
+      if (parsedMeta.projectName !== "YEH DIL BEWAJAH (PROMO TEASER)" || parsedMeta.version !== 3) {
         return INITIAL_MOCK_DATA;
       }
     }
@@ -571,7 +672,7 @@ export const ProductionProvider = ({ children }) => {
     const savedMetadata = localStorage.getItem('cinedream_crm_metadata');
     if (savedMetadata) {
       const parsedMeta = JSON.parse(savedMetadata);
-      if (parsedMeta.projectName !== "YEH DIL BEWAJAH (PROMO TEASER)") {
+      if (parsedMeta.projectName !== "YEH DIL BEWAJAH (PROMO TEASER)" || parsedMeta.version !== 3) {
         return INITIAL_AUDIT_LOG;
       }
     }

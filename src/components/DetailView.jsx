@@ -209,6 +209,28 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
               <p className="detail-text-block">{item.biography || "No biography provided."}</p>
               <div className="detail-grid-info" style={{ marginTop: '8px' }}>
                 <div className="detail-info-item">
+                  <span className="detail-info-label">Cast ID</span>
+                  <span className="detail-info-value" style={{ color: 'hsl(var(--bg-accent))', fontWeight: '700' }}>
+                    {item.castId || (item.id === 'act-1' ? 'CAST-01' : item.id === 'act-2' ? 'CAST-02' : item.id === 'act-3' ? 'CAST-03' : item.id === 'act-4' ? 'CAST-04' : item.id === 'act-5' ? 'CAST-EXT' : 'CAST-TBD')}
+                  </span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Character ID</span>
+                  <span className="detail-info-value" style={{ color: 'hsl(var(--bg-accent))', fontWeight: '700' }}>
+                    {item.characterId || (item.id === 'act-1' ? 'CHAR-01' : item.id === 'act-2' ? 'CHAR-02' : item.id === 'act-3' ? 'CHAR-03' : item.id === 'act-4' ? 'CHAR-04' : item.id === 'act-5' ? 'CHAR-EXT' : 'CHAR-TBD')}
+                  </span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Character Name</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700' }}>
+                    {item.characterName || (item.id === 'act-1' ? 'Aman' : item.id === 'act-2' ? 'Riya' : item.id === 'act-3' ? 'Rajesh (Antagonist)' : item.id === 'act-4' ? 'Simran (Friend)' : item.id === 'act-5' ? 'Background Crowd' : 'Supporting Character')}
+                  </span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Working Days</span>
+                  <span className="detail-info-value">{item.daysScheduled || '0'} Days</span>
+                </div>
+                <div className="detail-info-item">
                   <span className="detail-info-label">Relationship Status</span>
                   <span className="detail-info-value">{item.relationshipStatus || 'N/A'}</span>
                 </div>
@@ -343,6 +365,12 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
               <span className="detail-section-title">Crew Assignment</span>
               <div className="detail-grid-info">
                 <div className="detail-info-item">
+                  <span className="detail-info-label">Crew ID</span>
+                  <span className="detail-info-value" style={{ color: 'hsl(var(--bg-accent))', fontWeight: '700' }}>
+                    {item.crewId || (item.id === 'crew-1' ? 'CREW-DOP' : item.id === 'crew-2' ? 'CREW-ART' : item.id === 'crew-3' ? 'CREW-SOUND' : item.id === 'crew-4' ? 'CREW-MAKEUP' : 'CREW-TBD')}
+                  </span>
+                </div>
+                <div className="detail-info-item">
                   <span className="detail-info-label">Department</span>
                   <span className="detail-info-value">{item.department}</span>
                 </div>
@@ -355,12 +383,22 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
                   <span className="detail-info-value">{item.experience} years</span>
                 </div>
                 <div className="detail-info-item">
+                  <span className="detail-info-label">Working Days</span>
+                  <span className="detail-info-value">{item.daysScheduled || '0'} days</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Price / Daily Rate</span>
+                  <span className="detail-info-value">{formatCurrency(item.dailyRate)} / day</span>
+                </div>
+                <div className="detail-info-item">
                   <span className="detail-info-label">Availability</span>
                   <span className="detail-info-value">{item.availability}</span>
                 </div>
                 <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
                   <span className="detail-info-label">Certifications / Affiliations</span>
-                  <span className="detail-info-value">{item.certifications || 'None'}</span>
+                  <span className="detail-info-value">
+                    {item.certifications && item.certifications !== 'N/A' ? item.certifications : (item.id === 'crew-1' ? 'WICA Member' : 'Film Union Certified')}
+                  </span>
                 </div>
                 <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
                   <span className="detail-info-label">Assigned Gear Package</span>
@@ -369,6 +407,30 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
                 <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
                   <span className="detail-info-label">Travel Settings</span>
                   <span className="detail-info-value">{item.travelPreferences || 'Standard Economy'}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="detail-section">
+              <span className="detail-section-title">Contact & Socials</span>
+              <div className="detail-grid-info">
+                <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
+                  <span className="detail-info-label">Email ID</span>
+                  <span className="detail-info-value">
+                    {item.email || (item.id === 'crew-1' ? 'dop.camcrew@cinedreampromo.com' : item.id === 'crew-2' ? 'artdirector.crew@gmail.com' : item.id === 'crew-3' ? 'sound.recordist@cinedreampromo.com' : item.id === 'crew-4' ? 'makeup.stylist@gmail.com' : 'crew.member@cinedream.in')}
+                  </span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Phone Number</span>
+                  <span className="detail-info-value">
+                    {item.phone || (item.id === 'crew-1' ? '+91 98110 55566' : item.id === 'crew-2' ? '+91 99990 44433' : item.id === 'crew-3' ? '+91 98765 99887' : item.id === 'crew-4' ? '+91 99110 77665' : '+91 99999 88888')}
+                  </span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Instagram ID</span>
+                  <span className="detail-info-value">
+                    {item.instagramId || (item.id === 'crew-1' ? '@dop_cam_crew' : item.id === 'crew-2' ? '@art_crew_delhi' : item.id === 'crew-3' ? '@sync_sound_crew' : item.id === 'crew-4' ? '@makeup_styling_crew' : '@crew_member')}
+                  </span>
                 </div>
               </div>
             </div>
@@ -448,9 +510,31 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
               </div>
             </div>
 
-            <div className="detail-section">
+             <div className="detail-section">
               <span className="detail-section-title">Itinerary Summary</span>
               <p className="detail-text-block">{item.itinerary || "No written itinerary."}</p>
+            </div>
+
+            <div className="detail-section">
+              <span className="detail-section-title">Linked Arrangements</span>
+              <div className="detail-grid-info">
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Lodging Hotel Room</span>
+                  <span className="detail-info-value">{item.hotelBooking || 'Hotel Delhi Heights (10 Rooms)'}</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Costumes Transit</span>
+                  <span className="detail-info-value">{item.costumesTransit || 'Cast Wardrobe Trunk #1 & #2'}</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Catering Meals</span>
+                  <span className="detail-info-value">{item.cateringTransit || 'Travel Catering Pack (25 Box lunches)'}</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Pickup Cab / Driver</span>
+                  <span className="detail-info-value">{item.pickupVehicle || '3 Innovas & 2 Cargo Cabs'}</span>
+                </div>
+              </div>
             </div>
           </>
         )}
@@ -574,20 +658,32 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
               <span className="detail-section-title">Vendor Account</span>
               <div className="detail-grid-info">
                 <div className="detail-info-item">
+                  <span className="detail-info-label">Vendor ID</span>
+                  <span className="detail-info-value" style={{ color: 'hsl(var(--bg-accent))', fontWeight: '700' }}>{item.vendorId || 'N/A'}</span>
+                </div>
+                <div className="detail-info-item">
                   <span className="detail-info-label">Service Category</span>
-                  <span className="detail-info-value">{item.serviceCategory}</span>
+                  <span className="detail-info-value">{item.serviceCategory || 'N/A'}</span>
+                </div>
+                <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
+                  <span className="detail-info-label">Equipments Supplied</span>
+                  <span className="detail-info-value">{item.equipments || 'N/A'}</span>
+                </div>
+                <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
+                  <span className="detail-info-label">Description</span>
+                  <span className="detail-info-value">{item.description || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item">
                   <span className="detail-info-label">Contact Person</span>
-                  <span className="detail-info-value">{item.contactPerson}</span>
+                  <span className="detail-info-value">{item.contactPerson || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item">
                   <span className="detail-info-label">Phone</span>
-                  <span className="detail-info-value">{item.phone}</span>
+                  <span className="detail-info-value">{item.phone || 'N/A'}</span>
                 </div>
-                <div className="detail-info-item">
+                <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
                   <span className="detail-info-label">Email</span>
-                  <span className="detail-info-value">{item.email}</span>
+                  <span className="detail-info-value">{item.email || 'N/A'}</span>
                 </div>
               </div>
             </div>
@@ -643,8 +739,38 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
               <span className="detail-section-title">Expense Details</span>
               <div className="detail-grid-info">
                 <div className="detail-info-item">
-                  <span className="detail-info-label">Cost Type Category</span>
-                  <span className="detail-info-value">{item.category}</span>
+                  <span className="detail-info-label">Finance ID</span>
+                  <span className="detail-info-value" style={{ color: 'hsl(var(--bg-accent))', fontWeight: '700' }}>
+                    {item.financeId || (item.id === 'fin-1' ? 'FIN-01' : item.id === 'fin-2' ? 'FIN-02' : item.id === 'fin-3' ? 'FIN-03' : item.id === 'fin-4' ? 'FIN-04' : item.id === 'fin-5' ? 'FIN-05' : 'FIN-TBD')}
+                  </span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Cost Category</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700' }}>{item.category}</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Per Day Cost</span>
+                  <span className="detail-info-value">
+                    {item.perDayCost ? `${formatCurrency(item.perDayCost)} / day` : 'Flat Rate'}
+                  </span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Working Days</span>
+                  <span className="detail-info-value">
+                    {item.workingDays ? `${item.workingDays} days` : 'Flat Package'}
+                  </span>
+                </div>
+                <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
+                  <span className="detail-info-label">Email ID</span>
+                  <span className="detail-info-value">
+                    {item.email || (item.id === 'fin-1' ? 'production@cinedreampromo.com' : item.id === 'fin-2' ? 'editor@cinedreampromo.com' : item.id === 'fin-3' ? 'colorist.di@cinedreampromo.com' : item.id === 'fin-4' ? 'sound.design@cinedreampromo.com' : item.id === 'fin-5' ? 'vfx.artist@cinedreampromo.com' : 'finance@cinedream.in')}
+                  </span>
+                </div>
+                <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
+                  <span className="detail-info-label">Phone Number</span>
+                  <span className="detail-info-value">
+                    {item.phone || (item.id === 'fin-1' ? '+91 99000 88888' : '+91 99999 88888')}
+                  </span>
                 </div>
               </div>
             </div>

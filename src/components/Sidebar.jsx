@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ProductionContext } from '../context/ProductionContext';
 
 const MODULES = [
-  { id: 'Finance', label: 'Finance (Dashboard)', icon: '📊' },
+  { id: 'Finance', label: 'Production Cost', icon: '📊' },
   { id: 'Actors', label: 'Actors', icon: '🎭' },
   { id: 'Directors', label: 'Directors', icon: '🎬' },
   { id: 'Technical Crew', label: 'Technical Crew', icon: '🛠️' },

@@ -1,6 +1,208 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ProductionContext } from '../context/ProductionContext';
 
+const getDefaultsForModule = (activeModule) => {
+  const common = {
+    status: activeModule === 'Equipment' ? 'Available' : activeModule === 'Travel' ? 'Booked' : 'Active',
+    paidAmount: 0
+  };
+
+  switch (activeModule) {
+    case 'Actors':
+      return {
+        ...common,
+        castId: `CAST-${Math.floor(100 + Math.random() * 900)}`,
+        characterId: `CHAR-${Math.floor(100 + Math.random() * 900)}`,
+        name: "Demo Actor Name",
+        characterName: "Demo Character",
+        role: "Supporting Actor",
+        actingFee: 30000,
+        perDayFee: 2000,
+        daysScheduled: 5,
+        paidAmount: 15000,
+        relationshipStatus: "Single",
+        availabilitySchedule: "August 15 - August 20",
+        contactInfoPhone: "+91 99999 88888",
+        contactInfoEmail: "actor.dummy@talentindia.in",
+        biography: "Experienced lead and character screen actor.",
+        contractDetails: "Shoot contract for promo teaser.",
+        foodPreferences: "Vegetarian",
+        dietaryRestrictions: "None",
+        costumeMeasurements: "Chest: 40\", Waist: 32\", Shoe: 9 UK",
+        makeupRequirements: "Standard grooming",
+        travelPreferences: "Economy Class",
+        accommodationPreferences: "Premium Hotel Room",
+        emergencyContact: "Emergency Contact - +91 99999 88888",
+        medicalInformation: "None",
+        socialMediaInstagram: "@actor_insta",
+        socialMediaTwitter: "@actor_tweets",
+        previousProjects: "Demo Movie (2025)",
+        awards: "None"
+      };
+    case 'Directors':
+      return {
+        ...common,
+        name: "Demo Director Name",
+        experience: 5,
+        directingFee: 50000,
+        paidAmount: 25000,
+        availability: "August 15 - August 20",
+        preferredCrew: "DOP, Art Team",
+        travelPreferences: "Business Class",
+        biography: "Experienced commercial director.",
+        contactInfoPhone: "+91 99999 88888",
+        contactInfoEmail: "director.dummy@gmail.com",
+        notes: "Flat package contract."
+      };
+    case 'Technical Crew':
+      return {
+        ...common,
+        crewId: `CREW-${Math.floor(100 + Math.random() * 900)}`,
+        name: "Demo Crew Name",
+        role: "Camera Operator",
+        department: "Camera",
+        experience: 5,
+        email: "crew.dummy@cinedream.in",
+        phone: "+91 99999 88888",
+        instagramId: "@dummy_crew_member",
+        dailyRate: 3000,
+        daysScheduled: 5,
+        paidAmount: 10000,
+        availability: "August 15 - August 20",
+        equipmentAssigned: "Lens Kit, Tripod",
+        certifications: "Camera Guild",
+        travelPreferences: "Local Transport",
+        notes: "Assists secondary camera units."
+      };
+    case 'Equipment':
+      return {
+        ...common,
+        status: 'Available',
+        name: "Demo Lens Package",
+        category: "Camera",
+        model: "Arri Signature Prime 35mm",
+        serialNumber: `SN-${Math.floor(10000 + Math.random() * 90000)}`,
+        rentalCostPerDay: 5000,
+        daysRented: 5,
+        paidAmount: 15000,
+        vendor: "Modern Rentals Ltd.",
+        specs: "PL Mount, T1.8 Aperture",
+        notes: "Standard lens kit."
+      };
+    case 'Travel':
+      return {
+        ...common,
+        status: 'Booked',
+        personName: "Demo Passenger",
+        role: "Lead Actor",
+        type: "Flight",
+        bookingNumber: `TX-${Math.floor(100000 + Math.random() * 900000)}`,
+        itinerary: "Flight Ind-983, Dep: 10:00 AM, Arr: 12:15 PM",
+        pickupLocation: "Mumbai Airport Terminal 2",
+        dropLocation: "Delhi IGI Airport Terminal 3",
+        time: "2026-08-15 10:00",
+        expenses: 8000,
+        paidAmount: 8000,
+        notes: "Premium seat, vegetarian meal request.",
+        hotelBooking: "Delhi Regency Hotel Room 402",
+        costumesTransit: "Bag #3 (Lead Actor Suit)",
+        cateringTransit: "Vegetarian Lunch Box",
+        pickupVehicle: "Toyota Innova DL-3C-CC-1234 (Satish)"
+      };
+    case 'Lodging & Boarding':
+      return {
+        ...common,
+        hotelName: "Delhi Regency Hotel",
+        roomNumber: "Room 402",
+        guestName: "Demo Guest",
+        costPerDay: 3000,
+        totalDays: 6,
+        paidAmount: 12000,
+        checkInDate: "2026-08-14",
+        checkOutDate: "2026-08-20",
+        notes: "Double bed, complimentary breakfast."
+      };
+    case 'Costumes':
+      return {
+        ...common,
+        status: 'Ready',
+        costumeName: "Lead Actor Casual Jacket",
+        character: "Aman",
+        cost: 5000,
+        paidAmount: 5000,
+        designer: "Style House Delhi",
+        size: "Medium",
+        notes: "Dry clean only."
+      };
+    case 'Locations':
+      return {
+        ...common,
+        status: 'Booked',
+        locationName: "Heritage Bungalow Mehrauli",
+        address: "Mehrauli Archeological Park, New Delhi",
+        rentalFee: 50000,
+        paidAmount: 30000,
+        contactPerson: "Rajesh Manager",
+        contactPhone: "+91 99999 88888",
+        notes: "Includes backup power supply."
+      };
+    case 'Vendors':
+      return {
+        ...common,
+        vendorId: `VEND-${Math.floor(100 + Math.random() * 900)}`,
+        name: "Demo Rentals Vendor",
+        equipments: "Lights and C-Stands",
+        description: "Supplier of heavy lighting gear rentals.",
+        serviceCategory: "Lights & Grips",
+        contactPerson: "Suresh Coordinator",
+        phone: "+91 99999 88888",
+        email: "suresh.rentals@gmail.com",
+        contractValue: 30000,
+        paidAmount: 15000,
+        notes: "Delivery to site by August 15 morning."
+      };
+    case 'Vehicles':
+      return {
+        ...common,
+        model: "Toyota Innova Crysta",
+        plateNumber: "DL-3C-CC-1234",
+        driverName: "Satish Driver",
+        driverContact: "+91 99999 88888",
+        rentalCostPerDay: 4000,
+        daysRented: 5,
+        paidAmount: 10000,
+        assignment: "Cast local transport",
+        notes: "Fuel charges included."
+      };
+    case 'Catering':
+      return {
+        ...common,
+        providerName: "Delhi Catering Services",
+        headCount: 50,
+        costPerHead: 200,
+        days: 5,
+        paidAmount: 30000,
+        notes: "Lunch and tea service package."
+      };
+    case 'Finance':
+      return {
+        ...common,
+        financeId: `FIN-${Math.floor(100 + Math.random() * 900)}`,
+        itemName: "Demo Post Expense",
+        category: "Picture Edit",
+        perDayCost: 3000,
+        workingDays: 5,
+        cost: 15000,
+        paidAmount: 10000,
+        email: "post.production@cinedream.in",
+        phone: "+91 99999 88888",
+        notes: "Post production billing."
+      };
+    default:
+      return common;
+  }
+};
+
 const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
   const { addItem, updateItem } = useContext(ProductionContext);
   const [formData, setFormData] = useState({});
@@ -22,14 +224,7 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
       setFormData(flatData);
     } else {
       // Set defaults
-      setFormData({
-        status: activeModule === 'Equipment' ? 'Available' : activeModule === 'Travel' ? 'Booked' : 'Active',
-        daysScheduled: 1,
-        daysRented: 1,
-        days: 1,
-        totalDays: 1,
-        paidAmount: 0
-      });
+      setFormData(getDefaultsForModule(activeModule));
     }
   }, [itemToEdit, activeModule]);
 
@@ -46,6 +241,12 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
 
     // Reconstruct nested structures
     const submission = { ...formData };
+    
+    if (activeModule === 'Finance') {
+      if (!submission.cost && submission.perDayCost && submission.workingDays) {
+        submission.cost = Number(submission.perDayCost) * Number(submission.workingDays);
+      }
+    }
     
     if (activeModule === 'Actors' || activeModule === 'Directors') {
       submission.contactInfo = {
@@ -84,12 +285,24 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
           <>
             <span className="form-section-title">Main Information</span>
             <div className="form-group">
+              <label className="form-label">Cast ID</label>
+              <input type="text" name="castId" className="form-control" placeholder="e.g. CAST-01" value={formData.castId || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
               <label className="form-label">Full Name *</label>
               <input type="text" name="name" className="form-control" value={formData.name || ''} onChange={handleChange} required />
             </div>
             <div className="form-group">
-              <label className="form-label">Character Role</label>
-              <input type="text" name="role" className="form-control" placeholder="e.g. Lead Actor (Hayes)" value={formData.role || ''} onChange={handleChange} />
+              <label className="form-label">Character ID</label>
+              <input type="text" name="characterId" className="form-control" placeholder="e.g. CHAR-01" value={formData.characterId || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Character Name</label>
+              <input type="text" name="characterName" className="form-control" placeholder="e.g. Aman" value={formData.characterName || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Character Role / Designation</label>
+              <input type="text" name="role" className="form-control" placeholder="e.g. Lead Actor" value={formData.role || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
               <label className="form-label">Activity Status</label>
@@ -111,7 +324,7 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
               <input type="number" name="perDayFee" className="form-control" value={formData.perDayFee || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Shooting Days Scheduled</label>
+              <label className="form-label">Working Days / Shoot Days</label>
               <input type="number" name="daysScheduled" className="form-control" value={formData.daysScheduled || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -270,6 +483,10 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
           <>
             <span className="form-section-title">Crew Specs</span>
             <div className="form-group">
+              <label className="form-label">Crew ID</label>
+              <input type="text" name="crewId" className="form-control" placeholder="e.g. CREW-01" value={formData.crewId || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
               <label className="form-label">Crew Name *</label>
               <input type="text" name="name" className="form-control" value={formData.name || ''} onChange={handleChange} required />
             </div>
@@ -297,13 +514,27 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
               <input type="number" name="experience" className="form-control" value={formData.experience || ''} onChange={handleChange} />
             </div>
 
+            <span className="form-section-title">Contact Information</span>
+            <div className="form-group">
+              <label className="form-label">Email ID</label>
+              <input type="email" name="email" className="form-control" placeholder="e.g. crew@cinedream.in" value={formData.email || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Phone Number</label>
+              <input type="text" name="phone" className="form-control" placeholder="e.g. +91 99999 88888" value={formData.phone || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Instagram ID</label>
+              <input type="text" name="instagramId" className="form-control" placeholder="e.g. @crew_insta" value={formData.instagramId || ''} onChange={handleChange} />
+            </div>
+
             <span className="form-section-title">Labor & Rates</span>
             <div className="form-group">
-              <label className="form-label">Daily Labor Rate (₹)</label>
+              <label className="form-label">Price / Daily Rate (₹)</label>
               <input type="number" name="dailyRate" className="form-control" value={formData.dailyRate || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Days Scheduled</label>
+              <label className="form-label">Working Days / Shoot Days</label>
               <input type="number" name="daysScheduled" className="form-control" value={formData.daysScheduled || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -468,6 +699,24 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
                 <option value="Completed">Completed</option>
                 <option value="Cancelled">Cancelled</option>
               </select>
+            </div>
+
+            <span className="form-section-title">Linked Arrangements</span>
+            <div className="form-group">
+              <label className="form-label">Lodging Hotel Room</label>
+              <input type="text" name="hotelBooking" className="form-control" placeholder="e.g. Delhi Regency Room 402" value={formData.hotelBooking || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Costumes Transit</label>
+              <input type="text" name="costumesTransit" className="form-control" placeholder="e.g. Bag #3 (Lead Actor Suit)" value={formData.costumesTransit || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Catering Meals</label>
+              <input type="text" name="cateringTransit" className="form-control" placeholder="e.g. Vegetarian Lunch Box" value={formData.cateringTransit || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Pickup Cab / Driver</label>
+              <input type="text" name="pickupVehicle" className="form-control" placeholder="e.g. Toyota Innova DL-3C-CC-1234 (Satish)" value={formData.pickupVehicle || ''} onChange={handleChange} />
             </div>
 
             <span className="form-section-title">Travel Budget</span>
@@ -714,8 +963,20 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
           <>
             <span className="form-section-title">Vendor Corporate Profile</span>
             <div className="form-group">
+              <label className="form-label">Vendor ID</label>
+              <input type="text" name="vendorId" className="form-control" placeholder="e.g. VEND-01" value={formData.vendorId || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
               <label className="form-label">Vendor Name *</label>
               <input type="text" name="name" className="form-control" value={formData.name || ''} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Equipments Supplied</label>
+              <input type="text" name="equipments" className="form-control" placeholder="e.g. Sony Venice, Dolly Panther" value={formData.equipments || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Description</label>
+              <input type="text" name="description" className="form-control" placeholder="e.g. Main equipment rentals supplier" value={formData.description || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
               <label className="form-label">Service Category</label>
@@ -734,17 +995,17 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
               </select>
             </div>
             <div className="form-group">
-              <label className="form-label">Mobile</label>
+              <label className="form-label">Contact Mobile</label>
               <input type="text" name="phone" className="form-control" value={formData.phone || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Email</label>
+              <label className="form-label">Email Address</label>
               <input type="email" name="email" className="form-control" value={formData.email || ''} onChange={handleChange} />
             </div>
 
             <span className="form-section-title">Contract Accounts</span>
             <div className="form-group">
-              <label className="form-label">Contract Value (₹)</label>
+              <label className="form-label">Contract Value / Price (₹)</label>
               <input type="number" name="contractValue" className="form-control" value={formData.contractValue || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
@@ -861,29 +1122,57 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
       case 'Finance':
         return (
           <>
-            <span className="form-section-title">Expense Log details</span>
+            <span className="form-section-title">Expense Line Profile</span>
             <div className="form-group">
-              <label className="form-label">Expense Line Name *</label>
-              <input type="text" name="itemName" className="form-control" value={formData.itemName || ''} onChange={handleChange} required />
+              <label className="form-label">Finance ID</label>
+              <input type="text" name="financeId" className="form-control" placeholder="e.g. FIN-01" value={formData.financeId || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Expense Category Type</label>
+              <label className="form-label">Expense Line Name *</label>
+              <input type="text" name="itemName" className="form-control" placeholder="e.g. Picture Edit Work" value={formData.itemName || ''} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Category</label>
               <select name="category" className="form-control" value={formData.category || ''} onChange={handleChange}>
-                <option value="Insurance">Insurance</option>
-                <option value="Permits & Licenses">Permits & Licenses</option>
-                <option value="Marketing & Promotion">Marketing & Promotion</option>
-                <option value="Post-Production Costs">Post-Production Costs</option>
-                <option value="Legal">Legal</option>
-                <option value="Taxes">Taxes</option>
-                <option value="General Overhead">General Overhead</option>
+                <option value="Picture Edit">Picture Edit</option>
+                <option value="Color Grading (DI)">Color Grading (DI)</option>
+                <option value="Sound Design">Sound Design</option>
+                <option value="Dubbing">Dubbing</option>
+                <option value="Atmos Mix">Atmos Mix</option>
+                <option value="Music/Score">Music/Score</option>
+                <option value="VFX/CGI">VFX/CGI</option>
+                <option value="Contingency Backup">Contingency Backup</option>
                 <option value="Other">Other</option>
               </select>
             </div>
-
-            <span className="form-section-title">Accounts Cost</span>
             <div className="form-group">
-              <label className="form-label">Total Est. Cost (₹)</label>
-              <input type="number" name="cost" className="form-control" value={formData.cost || ''} onChange={handleChange} required />
+              <label className="form-label">Email ID</label>
+              <input type="email" name="email" className="form-control" value={formData.email || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Phone Number</label>
+              <input type="text" name="phone" className="form-control" value={formData.phone || ''} onChange={handleChange} />
+            </div>
+
+            <span className="form-section-title">Budget Rates</span>
+            <div className="form-group">
+              <label className="form-label">Per Day Cost (₹)</label>
+              <input type="number" name="perDayCost" className="form-control" value={formData.perDayCost || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Working Days</label>
+              <input type="number" name="workingDays" className="form-control" value={formData.workingDays || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Total Estimated Cost (₹)</label>
+              <input 
+                type="number" 
+                name="cost" 
+                className="form-control" 
+                placeholder="Calculated or Flat rate" 
+                value={formData.cost || (formData.perDayCost && formData.workingDays ? formData.perDayCost * formData.workingDays : '')} 
+                onChange={handleChange} 
+              />
             </div>
             <div className="form-group">
               <label className="form-label">Paid Cost (₹)</label>
