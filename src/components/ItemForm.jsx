@@ -12,32 +12,15 @@ const getDefaultsForModule = (activeModule) => {
       return {
         ...common,
         castId: `CAST-${Math.floor(100 + Math.random() * 900)}`,
-        characterId: `CHAR-${Math.floor(100 + Math.random() * 900)}`,
         name: "Demo Actor Name",
-        characterName: "Demo Character",
         role: "Supporting Actor",
-        actingFee: 30000,
-        perDayFee: 2000,
+        characterName: "Demo Character",
+        email: "actor.dummy@talentindia.in",
+        phone: "+91 99999 88888",
+        instagramId: "@demo_actor",
         daysScheduled: 5,
-        paidAmount: 15000,
-        relationshipStatus: "Single",
-        availabilitySchedule: "August 15 - August 20",
-        contactInfoPhone: "+91 99999 88888",
-        contactInfoEmail: "actor.dummy@talentindia.in",
-        biography: "Experienced lead and character screen actor.",
-        contractDetails: "Shoot contract for promo teaser.",
-        foodPreferences: "Vegetarian",
-        dietaryRestrictions: "None",
-        costumeMeasurements: "Chest: 40\", Waist: 32\", Shoe: 9 UK",
-        makeupRequirements: "Standard grooming",
-        travelPreferences: "Economy Class",
-        accommodationPreferences: "Premium Hotel Room",
-        emergencyContact: "Emergency Contact - +91 99999 88888",
-        medicalInformation: "None",
-        socialMediaInstagram: "@actor_insta",
-        socialMediaTwitter: "@actor_tweets",
-        previousProjects: "Demo Movie (2025)",
-        awards: "None"
+        perDayFee: 2000,
+        paidAmount: 10000
       };
     case 'Directors':
       return {
@@ -54,6 +37,18 @@ const getDefaultsForModule = (activeModule) => {
         contactInfoEmail: "director.dummy@gmail.com",
         notes: "Flat package contract."
       };
+    case 'HOD':
+      return {
+        ...common,
+        crewId: `HOD-${Math.floor(100 + Math.random() * 900)}`,
+        name: "Demo HOD Name",
+        role: "Production Designer (Art HOD)",
+        department: "Art Department",
+        email: "hod.dummy@cinedream.in",
+        phone: "+91 99999 88888",
+        instagramId: "@dummy_hod_member",
+        daysScheduled: 5
+      };
     case 'Technical Crew':
       return {
         ...common,
@@ -61,18 +56,12 @@ const getDefaultsForModule = (activeModule) => {
         name: "Demo Crew Name",
         role: "Camera Operator",
         department: "Camera",
-        experience: 5,
         email: "crew.dummy@cinedream.in",
         phone: "+91 99999 88888",
         instagramId: "@dummy_crew_member",
-        dailyRate: 3000,
         daysScheduled: 5,
-        paidAmount: 10000,
-        availability: "August 15 - August 20",
-        equipmentAssigned: "Lens Kit, Tripod",
-        certifications: "Camera Guild",
-        travelPreferences: "Local Transport",
-        notes: "Assists secondary camera units."
+        price: 3000,
+        paidAmount: 15000
       };
     case 'Equipment':
       return {
@@ -153,13 +142,10 @@ const getDefaultsForModule = (activeModule) => {
         name: "Demo Rentals Vendor",
         equipments: "Lights and C-Stands",
         description: "Supplier of heavy lighting gear rentals.",
-        serviceCategory: "Lights & Grips",
-        contactPerson: "Suresh Coordinator",
-        phone: "+91 99999 88888",
+        price: 30000,
         email: "suresh.rentals@gmail.com",
-        contractValue: 30000,
-        paidAmount: 15000,
-        notes: "Delivery to site by August 15 morning."
+        contact: "+91 99999 88888",
+        paidAmount: 15000
       };
     case 'Vehicles':
       return {
@@ -248,22 +234,13 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
       }
     }
     
-    if (activeModule === 'Actors' || activeModule === 'Directors') {
+    if (activeModule === 'Directors') {
       submission.contactInfo = {
         phone: formData.contactInfoPhone || "",
         email: formData.contactInfoEmail || ""
       };
       delete submission.contactInfoPhone;
       delete submission.contactInfoEmail;
-
-      if (activeModule === 'Actors') {
-        submission.socialMedia = {
-          instagram: formData.socialMediaInstagram || "",
-          twitter: formData.socialMediaTwitter || ""
-        };
-        delete submission.socialMediaInstagram;
-        delete submission.socialMediaTwitter;
-      }
     } else if (activeModule === 'Production Team' && formData.contactInfoText !== undefined) {
       submission.contactInfo = formData.contactInfoText;
       delete submission.contactInfoText;
@@ -293,10 +270,6 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
               <input type="text" name="name" className="form-control" value={formData.name || ''} onChange={handleChange} required />
             </div>
             <div className="form-group">
-              <label className="form-label">Character ID</label>
-              <input type="text" name="characterId" className="form-control" placeholder="e.g. CHAR-01" value={formData.characterId || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
               <label className="form-label">Character Name</label>
               <input type="text" name="characterName" className="form-control" placeholder="e.g. Aman" value={formData.characterName || ''} onChange={handleChange} />
             </div>
@@ -304,112 +277,29 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
               <label className="form-label">Character Role / Designation</label>
               <input type="text" name="role" className="form-control" placeholder="e.g. Lead Actor" value={formData.role || ''} onChange={handleChange} />
             </div>
+
+            <span className="form-section-title">Contact & Socials</span>
             <div className="form-group">
-              <label className="form-label">Activity Status</label>
-              <select name="status" className="form-control" value={formData.status || ''} onChange={handleChange}>
-                <option value="Active">Active</option>
-                <option value="Scheduled">Scheduled</option>
-                <option value="Completed">Completed</option>
-                <option value="Idle">Idle</option>
-              </select>
+              <label className="form-label">Email ID</label>
+              <input type="email" name="email" className="form-control" placeholder="e.g. actor@talent.in" value={formData.email || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Phone Number</label>
+              <input type="text" name="phone" className="form-control" placeholder="e.g. +91 99999 88888" value={formData.phone || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Instagram ID</label>
+              <input type="text" name="instagramId" className="form-control" placeholder="e.g. @username" value={formData.instagramId || ''} onChange={handleChange} />
             </div>
 
             <span className="form-section-title">Financial Compensation</span>
             <div className="form-group">
-              <label className="form-label">Acting Fee (₹)</label>
-              <input type="number" name="actingFee" className="form-control" value={formData.actingFee || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Per-Day Rate (₹)</label>
+              <label className="form-label">PER DAY COST (₹)</label>
               <input type="number" name="perDayFee" className="form-control" value={formData.perDayFee || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Working Days / Shoot Days</label>
+              <label className="form-label">Working Days</label>
               <input type="number" name="daysScheduled" className="form-control" value={formData.daysScheduled || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Paid Compensation (₹)</label>
-              <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
-            </div>
-
-            <span className="form-section-title">Wardrobe & Style Specs</span>
-            <div className="form-group">
-              <label className="form-label">Costume Measurements</label>
-              <input type="text" name="costumeMeasurements" className="form-control" placeholder="Chest, Waist, Height, Shoes..." value={formData.costumeMeasurements || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Makeup Requirements</label>
-              <input type="text" name="makeupRequirements" className="form-control" placeholder="e.g., Hair extensions, scar prosthetics" value={formData.makeupRequirements || ''} onChange={handleChange} />
-            </div>
-
-            <span className="form-section-title">Logistics preferences</span>
-            <div className="form-group">
-              <label className="form-label">Food Preference</label>
-              <input type="text" name="foodPreferences" className="form-control" placeholder="e.g. Vegan, Halal" value={formData.foodPreferences || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Dietary Restrictions</label>
-              <input type="text" name="dietaryRestrictions" className="form-control" placeholder="Allergies, intolerances..." value={formData.dietaryRestrictions || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Travel Route Class</label>
-              <input type="text" name="travelPreferences" className="form-control" placeholder="e.g., First Class, Exec SUV" value={formData.travelPreferences || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Accommodation Style</label>
-              <input type="text" name="accommodationPreferences" className="form-control" placeholder="e.g., 5-Star Suite, Private Kitchen" value={formData.accommodationPreferences || ''} onChange={handleChange} />
-            </div>
-
-            <span className="form-section-title">Biography & Contacts</span>
-            <div className="form-group full-width">
-              <label className="form-label">Biography Overview</label>
-              <textarea name="biography" className="form-control" value={formData.biography || ''} onChange={handleChange}></textarea>
-            </div>
-            <div className="form-group">
-              <label className="form-label">Phone Contact</label>
-              <input type="text" name="contactInfoPhone" className="form-control" value={formData.contactInfoPhone || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Email Address</label>
-              <input type="email" name="contactInfoEmail" className="form-control" value={formData.contactInfoEmail || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Relationship Status</label>
-              <input type="text" name="relationshipStatus" className="form-control" value={formData.relationshipStatus || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Shooting Availability Window</label>
-              <input type="text" name="availabilitySchedule" className="form-control" placeholder="e.g. Aug 15 - Sep 10" value={formData.availabilitySchedule || ''} onChange={handleChange} />
-            </div>
-
-            <span className="form-section-title">Safety & Socials</span>
-            <div className="form-group">
-              <label className="form-label">Emergency Contact Name/No.</label>
-              <input type="text" name="emergencyContact" className="form-control" placeholder="Contact Name - +1 ..." value={formData.emergencyContact || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Medical Details / Allergies</label>
-              <input type="text" name="medicalInformation" className="form-control" placeholder="Blood type, chronic illnesses..." value={formData.medicalInformation || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Instagram profile handle</label>
-              <input type="text" name="socialMediaInstagram" className="form-control" placeholder="@username" value={formData.socialMediaInstagram || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Twitter / X handle</label>
-              <input type="text" name="socialMediaTwitter" className="form-control" placeholder="@username" value={formData.socialMediaTwitter || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group full-width">
-              <label className="form-label">Previous Project Highlights</label>
-              <input type="text" name="previousProjects" className="form-control" value={formData.previousProjects || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group full-width">
-              <label className="form-label">Key Awards & Honors</label>
-              <input type="text" name="awards" className="form-control" value={formData.awards || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group full-width">
-              <label className="form-label">Miscellaneous Notes</label>
-              <textarea name="notes" className="form-control" value={formData.notes || ''} onChange={handleChange}></textarea>
             </div>
           </>
         );
@@ -478,6 +368,60 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
           </>
         );
 
+      case 'HOD':
+        return (
+          <>
+            <span className="form-section-title">HOD Specs</span>
+            <div className="form-group">
+              <label className="form-label">Crew ID</label>
+              <input type="text" name="crewId" className="form-control" placeholder="e.g. HOD-01" value={formData.crewId || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">HOD Name *</label>
+              <input type="text" name="name" className="form-control" value={formData.name || ''} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Role</label>
+              <input type="text" name="role" className="form-control" placeholder="e.g. Director of Photography" value={formData.role || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Department</label>
+              <select name="department" className="form-control" value={formData.department || ''} onChange={handleChange}>
+                <option value="Camera">Camera</option>
+                <option value="Sound">Sound</option>
+                <option value="Lights">Lights</option>
+                <option value="Art">Art</option>
+                <option value="Editing">Editing</option>
+                <option value="Wardrobe">Wardrobe</option>
+                <option value="Makeup">Makeup</option>
+                <option value="Stunts">Stunts</option>
+                <option value="Production">Production</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <span className="form-section-title">Contact Information</span>
+            <div className="form-group">
+              <label className="form-label">Email ID</label>
+              <input type="email" name="email" className="form-control" placeholder="e.g. hod.member@cinedream.in" value={formData.email || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Phone Number</label>
+              <input type="text" name="phone" className="form-control" placeholder="e.g. +91 99999 88888" value={formData.phone || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Instagram ID</label>
+              <input type="text" name="instagramId" className="form-control" placeholder="e.g. @username" value={formData.instagramId || ''} onChange={handleChange} />
+            </div>
+
+            <span className="form-section-title">Working Details</span>
+            <div className="form-group">
+              <label className="form-label">Working Days</label>
+              <input type="number" name="daysScheduled" className="form-control" value={formData.daysScheduled || ''} onChange={handleChange} />
+            </div>
+          </>
+        );
+
       case 'Technical Crew':
         return (
           <>
@@ -509,10 +453,6 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
                 <option value="Other">Other</option>
               </select>
             </div>
-            <div className="form-group">
-              <label className="form-label">Experience (Years)</label>
-              <input type="number" name="experience" className="form-control" value={formData.experience || ''} onChange={handleChange} />
-            </div>
 
             <span className="form-section-title">Contact Information</span>
             <div className="form-group">
@@ -531,46 +471,11 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
             <span className="form-section-title">Labor & Rates</span>
             <div className="form-group">
               <label className="form-label">Price / Daily Rate (₹)</label>
-              <input type="number" name="dailyRate" className="form-control" value={formData.dailyRate || ''} onChange={handleChange} />
+              <input type="number" name="price" className="form-control" value={formData.price || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Working Days / Shoot Days</label>
+              <label className="form-label">Working Days</label>
               <input type="number" name="daysScheduled" className="form-control" value={formData.daysScheduled || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Paid Labor (₹)</label>
-              <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Availability Schedule</label>
-              <input type="text" name="availability" className="form-control" placeholder="Aug 15 - Oct 10" value={formData.availability || ''} onChange={handleChange} />
-            </div>
-
-            <span className="form-section-title">Equipment & Logistics</span>
-            <div className="form-group">
-              <label className="form-label">Equipment Assigned</label>
-              <input type="text" name="equipmentAssigned" className="form-control" placeholder="Assigned camera/sound kits..." value={formData.equipmentAssigned || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Certifications</label>
-              <input type="text" name="certifications" className="form-control" placeholder="OSHA, Guild memberships..." value={formData.certifications || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Travel Settings</label>
-              <input type="text" name="travelPreferences" className="form-control" placeholder="Premium Econ, rental car..." value={formData.travelPreferences || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Activity Status</label>
-              <select name="status" className="form-control" value={formData.status || ''} onChange={handleChange}>
-                <option value="Active">Active</option>
-                <option value="Scheduled">Scheduled</option>
-                <option value="Completed">Completed</option>
-                <option value="Idle">Idle</option>
-              </select>
-            </div>
-            <div className="form-group full-width">
-              <label className="form-label">Crew Notes</label>
-              <textarea name="notes" className="form-control" value={formData.notes || ''} onChange={handleChange}></textarea>
             </div>
           </>
         );
@@ -979,42 +884,16 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
               <input type="text" name="description" className="form-control" placeholder="e.g. Main equipment rentals supplier" value={formData.description || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Service Category</label>
-              <input type="text" name="serviceCategory" className="form-control" placeholder="e.g. Equipment, Catering, VFX" value={formData.serviceCategory || ''} onChange={handleChange} />
+              <label className="form-label">Price (₹)</label>
+              <input type="number" name="price" className="form-control" value={formData.price || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Contact Person</label>
-              <input type="text" name="contactPerson" className="form-control" value={formData.contactPerson || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Vendor Account Status</label>
-              <select name="status" className="form-control" value={formData.status || ''} onChange={handleChange}>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-                <option value="Completed">Completed</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label className="form-label">Contact Mobile</label>
-              <input type="text" name="phone" className="form-control" value={formData.phone || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Email Address</label>
+              <label className="form-label">Email ID</label>
               <input type="email" name="email" className="form-control" value={formData.email || ''} onChange={handleChange} />
             </div>
-
-            <span className="form-section-title">Contract Accounts</span>
             <div className="form-group">
-              <label className="form-label">Contract Value / Price (₹)</label>
-              <input type="number" name="contractValue" className="form-control" value={formData.contractValue || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Paid Amount (₹)</label>
-              <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group full-width">
-              <label className="form-label">General Terms Notes</label>
-              <textarea name="notes" className="form-control" value={formData.notes || ''} onChange={handleChange}></textarea>
+              <label className="form-label">Contact Number</label>
+              <input type="text" name="contact" className="form-control" placeholder="e.g. +91 99999 88888" value={formData.contact || ''} onChange={handleChange} />
             </div>
           </>
         );

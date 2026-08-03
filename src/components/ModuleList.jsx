@@ -22,38 +22,57 @@ const ModuleList = ({ activeModule, selectedItemId, setSelectedItemId, onAddNewC
   };
 
   const getItemSubtitle = (item) => {
+    let sub = '';
     switch (activeModule) {
       case 'Actors':
-        return item.role;
+        sub = item.role;
+        break;
       case 'Directors':
-        return `Experience: ${item.experience} years`;
+        sub = `Experience: ${item.experience} years`;
+        break;
+      case 'HOD':
+        sub = `${item.role} (${item.department})`;
+        break;
       case 'Technical Crew':
-        return `${item.role} (${item.department})`;
+        sub = `${item.role} (${item.department})`;
+        break;
       case 'Equipment':
-        return `${item.category} &bull; Model: ${item.model}`;
+        sub = `${item.category} &bull; Model: ${item.model}`;
+        break;
       case 'Travel':
-        return `${item.type} Booking (${item.bookingNumber})`;
+        sub = `${item.type} Booking (${item.bookingNumber})`;
+        break;
       case 'Lodging & Boarding':
-        return `${item.hotelName} &bull; Room: ${item.roomNumber || 'TBD'}`;
+        sub = `${item.hotelName} &bull; Room: ${item.roomNumber || 'TBD'}`;
+        break;
       case 'Costumes':
-        return `For: ${item.assignedActor || 'Unassigned'}`;
+        sub = `For: ${item.assignedActor || 'Unassigned'}`;
+        break;
       case 'Locations':
-        return item.address;
+        sub = item.address;
+        break;
       case 'Production Team':
-        return item.role;
+        sub = item.role;
+        break;
       case 'Vendors':
-        return item.serviceCategory;
+        sub = item.equipments;
+        break;
       case 'Vehicles':
-        return `${item.model} &bull; Driver: ${item.driverName}`;
+        sub = `${item.model} &bull; Driver: ${item.driverName}`;
+        break;
       case 'Catering':
-        return item.mealType || 'Daily Meals';
+        sub = item.mealType || 'Daily Meals';
+        break;
       case 'Finance':
-        return item.category;
+        sub = item.category;
+        break;
       case 'Documents':
-        return `${item.category} &bull; ${item.fileType} (${item.size})`;
+        sub = `${item.category} &bull; ${item.fileType} (${item.size})`;
+        break;
       default:
-        return '';
+        sub = '';
     }
+    return sub || '';
   };
 
   const getStatus = (item) => {

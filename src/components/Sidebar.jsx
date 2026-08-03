@@ -4,6 +4,7 @@ import { ProductionContext } from '../context/ProductionContext';
 const MODULES = [
   { id: 'Finance', label: 'Production Cost' },
   { id: 'Actors', label: 'Actors' },
+  { id: 'HOD', label: 'HOD' },
   { id: 'Technical Crew', label: 'Technical Crew' },
   { id: 'Travel', label: 'Travel' },
   { id: 'Vendors', label: 'Vendors' }

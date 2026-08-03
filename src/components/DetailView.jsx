@@ -130,16 +130,21 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
               {activeModule === 'Actors' && (
                 <>
                   <div className="detail-info-item">
-                    <span className="detail-info-label">Base Acting Fee</span>
-                    <span className="detail-info-value">{formatCurrency(item.actingFee)}</span>
-                  </div>
-                  <div className="detail-info-item">
-                    <span className="detail-info-label">Daily Shoots Rate</span>
+                    <span className="detail-info-label">Per-Day Cost</span>
                     <span className="detail-info-value">{formatCurrency(item.perDayFee)} / day</span>
                   </div>
                   <div className="detail-info-item">
-                    <span className="detail-info-label">Days Scheduled</span>
+                    <span className="detail-info-label">Working Days</span>
                     <span className="detail-info-value">{item.daysScheduled} days</span>
+                  </div>
+                </>
+              )}
+
+              {activeModule === 'HOD' && (
+                <>
+                  <div className="detail-info-item">
+                    <span className="detail-info-label">Working Days</span>
+                    <span className="detail-info-value">{item.daysScheduled || 0} days</span>
                   </div>
                 </>
               )}
@@ -147,11 +152,11 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
               {activeModule === 'Technical Crew' && (
                 <>
                   <div className="detail-info-item">
-                    <span className="detail-info-label">Daily Labor Rate</span>
-                    <span className="detail-info-value">{formatCurrency(item.dailyRate)} / day</span>
+                    <span className="detail-info-label">Daily Rate</span>
+                    <span className="detail-info-value">{formatCurrency(item.price)} / day</span>
                   </div>
                   <div className="detail-info-item">
-                    <span className="detail-info-label">Days Scheduled</span>
+                    <span className="detail-info-label">Working Days</span>
                     <span className="detail-info-value">{item.daysScheduled} days</span>
                   </div>
                 </>
@@ -237,118 +242,51 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
         {activeModule === 'Actors' && (
           <>
             <div className="detail-section">
-              <span className="detail-section-title">Biography & Personal Info</span>
-              <p className="detail-text-block">{item.biography || "No biography provided."}</p>
+              <span className="detail-section-title">Cast Profile Details</span>
               <div className="detail-grid-info" style={{ marginTop: '8px' }}>
                 <div className="detail-info-item">
                   <span className="detail-info-label">Cast ID</span>
                   <span className="detail-info-value" style={{ color: 'hsl(var(--bg-accent))', fontWeight: '700' }}>
-                    {item.castId || (item.id === 'act-1' ? 'CAST-01' : item.id === 'act-2' ? 'CAST-02' : item.id === 'act-3' ? 'CAST-03' : item.id === 'act-4' ? 'CAST-04' : item.id === 'act-5' ? 'CAST-EXT' : 'CAST-TBD')}
+                    {item.castId || 'N/A'}
                   </span>
                 </div>
                 <div className="detail-info-item">
-                  <span className="detail-info-label">Character ID</span>
-                  <span className="detail-info-value" style={{ color: 'hsl(var(--bg-accent))', fontWeight: '700' }}>
-                    {item.characterId || (item.id === 'act-1' ? 'CHAR-01' : item.id === 'act-2' ? 'CHAR-02' : item.id === 'act-3' ? 'CHAR-03' : item.id === 'act-4' ? 'CHAR-04' : item.id === 'act-5' ? 'CHAR-EXT' : 'CHAR-TBD')}
+                  <span className="detail-info-label">Full Name</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700' }}>
+                    {item.name || 'N/A'}
                   </span>
                 </div>
                 <div className="detail-info-item">
                   <span className="detail-info-label">Character Name</span>
                   <span className="detail-info-value" style={{ fontWeight: '700' }}>
-                    {item.characterName || (item.id === 'act-1' ? 'Aman' : item.id === 'act-2' ? 'Riya' : item.id === 'act-3' ? 'Rajesh (Antagonist)' : item.id === 'act-4' ? 'Simran (Friend)' : item.id === 'act-5' ? 'Background Crowd' : 'Supporting Character')}
+                    {item.characterName || 'N/A'}
                   </span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Role / Designation</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700' }}>
+                    {item.role || 'N/A'}
+                  </span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Email ID</span>
+                  <span className="detail-info-value">{item.email || 'N/A'}</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Phone Number</span>
+                  <span className="detail-info-value">{item.phone || 'N/A'}</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Instagram ID</span>
+                  <span className="detail-info-value">{item.instagramId || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item">
                   <span className="detail-info-label">Working Days</span>
                   <span className="detail-info-value">{item.daysScheduled || '0'} Days</span>
                 </div>
                 <div className="detail-info-item">
-                  <span className="detail-info-label">Relationship Status</span>
-                  <span className="detail-info-value">{item.relationshipStatus || 'N/A'}</span>
-                </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Schedule Availability</span>
-                  <span className="detail-info-value">{item.availabilitySchedule || 'N/A'}</span>
-                </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Phone</span>
-                  <span className="detail-info-value">{item.contactInfo?.phone || 'N/A'}</span>
-                </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Email</span>
-                  <span className="detail-info-value">{item.contactInfo?.email || 'N/A'}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="detail-section">
-              <span className="detail-section-title">Wardrobe & Styling</span>
-              <div className="detail-grid-info">
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Costume Measurements</span>
-                  <span className="detail-info-value" style={{ fontSize: '12px' }}>{item.costumeMeasurements || 'None recorded'}</span>
-                </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Makeup & Prosthetics</span>
-                  <span className="detail-info-value" style={{ fontSize: '12px' }}>{item.makeupRequirements || 'None recorded'}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="detail-section">
-              <span className="detail-section-title">Logistics Preferences</span>
-              <div className="detail-grid-info">
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Food & Meals</span>
-                  <span className="detail-info-value">{item.foodPreferences || 'Standard'}</span>
-                </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Dietary Restrictions</span>
-                  <span className="detail-info-value">{item.dietaryRestrictions || 'None'}</span>
-                </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Travel Route Class</span>
-                  <span className="detail-info-value">{item.travelPreferences || 'Standard Business'}</span>
-                </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Accommodation Style</span>
-                  <span className="detail-info-value">{item.accommodationPreferences || 'Standard Room'}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="detail-section">
-              <span className="detail-section-title">Emergency & Medical</span>
-              <div className="detail-grid-info">
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Emergency Contact</span>
-                  <span className="detail-info-value">{item.emergencyContact || 'N/A'}</span>
-                </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Medical & Allergies</span>
-                  <span className="detail-info-value">{item.medicalInformation || 'None declared'}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="detail-section">
-              <span className="detail-section-title">Socials & References</span>
-              <div className="detail-grid-info">
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Instagram</span>
-                  <span className="detail-info-value">{item.socialMedia?.instagram || 'N/A'}</span>
-                </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Twitter / X</span>
-                  <span className="detail-info-value">{item.socialMedia?.twitter || 'N/A'}</span>
-                </div>
-                <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
-                  <span className="detail-info-label">Previous Projects</span>
-                  <span className="detail-info-value">{item.previousProjects || 'N/A'}</span>
-                </div>
-                <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
-                  <span className="detail-info-label">Awards & Honors</span>
-                  <span className="detail-info-value">{item.awards || 'N/A'}</span>
+                  <span className="detail-info-label">PER DAY COST</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700', color: '#5c715e' }}>{formatCurrency(item.perDayFee)}</span>
                 </div>
               </div>
             </div>
@@ -390,79 +328,92 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
           </>
         )}
 
+        {/* HOD */}
+        {activeModule === 'HOD' && (
+          <>
+            <div className="detail-section">
+              <span className="detail-section-title">HOD Assignment Details</span>
+              <div className="detail-grid-info">
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Crew ID</span>
+                  <span className="detail-info-value" style={{ color: 'hsl(var(--bg-accent))', fontWeight: '700' }}>{item.crewId || 'N/A'}</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Full Name</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700' }}>{item.name || 'N/A'}</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Role</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700' }}>{item.role || 'N/A'}</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Department</span>
+                  <span className="detail-info-value">{item.department || 'N/A'}</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Email ID</span>
+                  <span className="detail-info-value">{item.email || 'N/A'}</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Phone Number</span>
+                  <span className="detail-info-value">{item.phone || 'N/A'}</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Instagram ID</span>
+                  <span className="detail-info-value">{item.instagramId || 'N/A'}</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Working Days</span>
+                  <span className="detail-info-value">{item.daysScheduled || '0'} Days</span>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
         {/* TECHNICAL CREW */}
         {activeModule === 'Technical Crew' && (
           <>
             <div className="detail-section">
-              <span className="detail-section-title">Crew Assignment</span>
+              <span className="detail-section-title">Crew Assignment Details</span>
               <div className="detail-grid-info">
                 <div className="detail-info-item">
                   <span className="detail-info-label">Crew ID</span>
                   <span className="detail-info-value" style={{ color: 'hsl(var(--bg-accent))', fontWeight: '700' }}>
-                    {item.crewId || (item.id === 'crew-1' ? 'CREW-DOP' : item.id === 'crew-2' ? 'CREW-ART' : item.id === 'crew-3' ? 'CREW-SOUND' : item.id === 'crew-4' ? 'CREW-MAKEUP' : 'CREW-TBD')}
+                    {item.crewId || 'N/A'}
                   </span>
                 </div>
                 <div className="detail-info-item">
-                  <span className="detail-info-label">Department</span>
-                  <span className="detail-info-value">{item.department}</span>
+                  <span className="detail-info-label">Full Name</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700' }}>{item.name || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item">
                   <span className="detail-info-label">Role</span>
-                  <span className="detail-info-value">{item.role}</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700' }}>{item.role || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item">
-                  <span className="detail-info-label">Experience</span>
-                  <span className="detail-info-value">{item.experience} years</span>
+                  <span className="detail-info-label">Department</span>
+                  <span className="detail-info-value">{item.department || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item">
-                  <span className="detail-info-label">Working Days</span>
-                  <span className="detail-info-value">{item.daysScheduled || '0'} days</span>
-                </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Price / Daily Rate</span>
-                  <span className="detail-info-value">{formatCurrency(item.dailyRate)} / day</span>
-                </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Availability</span>
-                  <span className="detail-info-value">{item.availability}</span>
-                </div>
-                <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
-                  <span className="detail-info-label">Certifications / Affiliations</span>
-                  <span className="detail-info-value">
-                    {item.certifications && item.certifications !== 'N/A' ? item.certifications : (item.id === 'crew-1' ? 'WICA Member' : 'Film Union Certified')}
-                  </span>
-                </div>
-                <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
-                  <span className="detail-info-label">Assigned Gear Package</span>
-                  <span className="detail-info-value">{item.equipmentAssigned || 'None'}</span>
-                </div>
-                <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
-                  <span className="detail-info-label">Travel Settings</span>
-                  <span className="detail-info-value">{item.travelPreferences || 'Standard Economy'}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="detail-section">
-              <span className="detail-section-title">Contact & Socials</span>
-              <div className="detail-grid-info">
-                <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
                   <span className="detail-info-label">Email ID</span>
-                  <span className="detail-info-value">
-                    {item.email || (item.id === 'crew-1' ? 'dop.camcrew@cinedreampromo.com' : item.id === 'crew-2' ? 'artdirector.crew@gmail.com' : item.id === 'crew-3' ? 'sound.recordist@cinedreampromo.com' : item.id === 'crew-4' ? 'makeup.stylist@gmail.com' : 'crew.member@cinedream.in')}
-                  </span>
+                  <span className="detail-info-value">{item.email || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item">
                   <span className="detail-info-label">Phone Number</span>
-                  <span className="detail-info-value">
-                    {item.phone || (item.id === 'crew-1' ? '+91 98110 55566' : item.id === 'crew-2' ? '+91 99990 44433' : item.id === 'crew-3' ? '+91 98765 99887' : item.id === 'crew-4' ? '+91 99110 77665' : '+91 99999 88888')}
-                  </span>
+                  <span className="detail-info-value">{item.phone || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item">
                   <span className="detail-info-label">Instagram ID</span>
-                  <span className="detail-info-value">
-                    {item.instagramId || (item.id === 'crew-1' ? '@dop_cam_crew' : item.id === 'crew-2' ? '@art_crew_delhi' : item.id === 'crew-3' ? '@sync_sound_crew' : item.id === 'crew-4' ? '@makeup_styling_crew' : '@crew_member')}
-                  </span>
+                  <span className="detail-info-value">{item.instagramId || 'N/A'}</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Working Days</span>
+                  <span className="detail-info-value">{item.daysScheduled || '0'} Days</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Price / Daily Rate</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700', color: '#5c715e' }}>{formatCurrency(item.price)}</span>
                 </div>
               </div>
             </div>
@@ -687,15 +638,15 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
         {activeModule === 'Vendors' && (
           <>
             <div className="detail-section">
-              <span className="detail-section-title">Vendor Account</span>
+              <span className="detail-section-title">Vendor Account Details</span>
               <div className="detail-grid-info">
                 <div className="detail-info-item">
                   <span className="detail-info-label">Vendor ID</span>
                   <span className="detail-info-value" style={{ color: 'hsl(var(--bg-accent))', fontWeight: '700' }}>{item.vendorId || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item">
-                  <span className="detail-info-label">Service Category</span>
-                  <span className="detail-info-value">{item.serviceCategory || 'N/A'}</span>
+                  <span className="detail-info-label">Vendor Name</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700' }}>{item.name || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
                   <span className="detail-info-label">Equipments Supplied</span>
@@ -706,16 +657,16 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
                   <span className="detail-info-value">{item.description || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item">
-                  <span className="detail-info-label">Contact Person</span>
-                  <span className="detail-info-value">{item.contactPerson || 'N/A'}</span>
+                  <span className="detail-info-label">Price</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700', color: '#5c715e' }}>{formatCurrency(item.price)}</span>
                 </div>
                 <div className="detail-info-item">
-                  <span className="detail-info-label">Phone</span>
-                  <span className="detail-info-value">{item.phone || 'N/A'}</span>
-                </div>
-                <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
-                  <span className="detail-info-label">Email</span>
+                  <span className="detail-info-label">Email ID</span>
                   <span className="detail-info-value">{item.email || 'N/A'}</span>
+                </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Contact Number</span>
+                  <span className="detail-info-value">{item.contact || 'N/A'}</span>
                 </div>
               </div>
             </div>

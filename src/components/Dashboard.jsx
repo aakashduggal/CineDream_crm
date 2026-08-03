@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { ProductionContext } from '../context/ProductionContext';
 
 const Dashboard = () => {
-  const { auditLogs, budgetSummary, metadata, updateBudgetLimit } = useContext(ProductionContext);
+  const { data, auditLogs, budgetSummary, metadata, updateBudgetLimit } = useContext(ProductionContext);
   const [logFilter, setLogFilter] = useState('ALL');
 
   const formatCurrency = (val) => {
@@ -170,6 +170,78 @@ const Dashboard = () => {
           </div>
           <div className="kpi-card-value">{formatCurrency(costPerActor)}</div>
           <div className="kpi-card-footer">Total Actor Cost / Active Cast</div>
+        </div>
+      </div>
+
+      {/* Post-Production Service Categories */}
+      <div className="chart-card">
+        <div className="chart-card-title">
+          <span>Post-Production Categories</span>
+          <span className="chart-card-subtitle">Overview of post-production deliverables & budget allocation</span>
+        </div>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px', marginTop: '8px' }}>
+          {[
+            {
+              name: 'Picture Edit',
+              desc: 'Timeline assembly, sync audio locking, fine cuts, and promo cut master exports.'
+            },
+            {
+              name: 'Color Grading (DI)',
+              desc: 'DaVinci Resolve color passes, promo LUT styling, HDR grading, and DCP mastering.'
+            },
+            {
+              name: 'Sound Design',
+              desc: 'Foley recording, ambient audio layers, sound effects tracking, and soundscape design.'
+            },
+            {
+              name: 'Dubbing',
+              desc: 'Dialogue replacement recording, voice synchronization, and noise reduction cleanup.'
+            },
+            {
+              name: 'Atmos Mix',
+              desc: 'Dolby Atmos spatial surround mixing, multi-channel panning, and master audio printing.'
+            },
+            {
+              name: 'Music/Score',
+              desc: 'Original background score composition, music arrangements, foley sync, and track licensing.'
+            },
+            {
+              name: 'VFX/CGI',
+              desc: 'Matte paint cleanups, wire removals, logo animations, green screen overlays, and rotoscoping.'
+            }
+          ].map(cat => {
+            // Find total logged cost for this category
+            const categoryCost = (data.Finance || [])
+              .filter(item => item.category === cat.name)
+              .reduce((sum, item) => sum + (Number(item.cost) || 0), 0);
+
+            return (
+              <div 
+                key={cat.name} 
+                className="category-card" 
+                style={{ 
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid var(--glass-border)',
+                  borderRadius: '12px',
+                  padding: '16px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '8px',
+                  transition: 'var(--transition-smooth)'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <h4 style={{ margin: 0, fontSize: '13px', fontWeight: '800', color: 'hsl(var(--text-primary))' }}>{cat.name}</h4>
+                </div>
+                <p style={{ margin: 0, fontSize: '11px', color: 'hsl(var(--text-secondary))', lineHeight: '1.4', flex: 1 }}>{cat.desc}</p>
+                <div style={{ borderTop: '1px solid rgba(255,255,255,0.04)', paddingTop: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '11px', marginTop: '4px' }}>
+                  <span style={{ color: 'hsl(var(--text-muted))', fontWeight: '600' }}>Budget Spent:</span>
+                  <span style={{ fontFamily: 'var(--font-title)', fontWeight: '800', color: '#5c715e' }}>{formatCurrency(categoryCost)}</span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
