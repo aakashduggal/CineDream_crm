@@ -4,18 +4,9 @@ import { ProductionContext } from '../context/ProductionContext';
 const MODULES = [
   { id: 'Finance', label: 'Production Cost', icon: '📊' },
   { id: 'Actors', label: 'Actors', icon: '🎭' },
-  { id: 'Directors', label: 'Directors', icon: '🎬' },
   { id: 'Technical Crew', label: 'Technical Crew', icon: '🛠️' },
-  { id: 'Equipment', label: 'Equipment', icon: '🎥' },
   { id: 'Travel', label: 'Travel', icon: '✈️' },
-  { id: 'Lodging & Boarding', label: 'Lodging & Boarding', icon: '🏨' },
-  { id: 'Costumes', label: 'Costumes', icon: '👔' },
-  { id: 'Locations', label: 'Locations', icon: '📍' },
-  { id: 'Production Team', label: 'Production Team', icon: '👥' },
-  { id: 'Vendors', label: 'Vendors', icon: '🏢' },
-  { id: 'Vehicles', label: 'Vehicles', icon: '🚚' },
-  { id: 'Catering', label: 'Catering', icon: '🍱' },
-  { id: 'Documents', label: 'Documents', icon: '📁' }
+  { id: 'Vendors', label: 'Vendors', icon: '🏢' }
 ];
 
 const Sidebar = ({ activeModule, setActiveModule, isSidebarOpen, setIsSidebarOpen }) => {

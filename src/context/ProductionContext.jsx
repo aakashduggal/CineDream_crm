@@ -11,7 +11,7 @@ const INITIAL_METADATA = {
   startDate: "2026-08-15",
   endDate: "2026-08-20",
   currentUser: "Mr. Manoj Kumar (Production Manager)",
-  version: 3
+  version: 4
 };
 
 const INITIAL_MOCK_DATA = {
@@ -172,23 +172,6 @@ const INITIAL_MOCK_DATA = {
       notes: "Coordinate directly with casting manager on set."
     }
   ],
-  Directors: [
-    {
-      id: "dir-1",
-      name: "MR. MANAN PRATAP SINGH & Direction Team",
-      experience: 12,
-      directingFee: 70000, // Flat package fee for Director + Team (3)
-      status: "Active",
-      availability: "August 15 - August 20",
-      preferredCrew: "DOP Crew & Staff, Art Coordinator",
-      travelPreferences: "Air Travel (Business)",
-      biography: "Award-winning commercial director specializing in music videos, promos, and narrative teasers.",
-      contactInfo: { phone: "+91 99000 88888", email: "manan@cinedreampromo.com" },
-      documents: ["Director_Agreement_Manan.pdf", "Teaser_Promo_Storyboard.pdf"],
-      notes: "Directs with 2 assistants (1st AD and 2nd AD). Dedicated package rate of ₹70,000.",
-      paidAmount: 70000
-    }
-  ],
   "Technical Crew": [
     {
       id: "crew-1",
@@ -267,38 +250,6 @@ const INITIAL_MOCK_DATA = {
       notes: "Provides hair and makeup for 4 main cast members on shoot days."
     }
   ],
-  Equipment: [
-    {
-      id: "equip-1",
-      name: "Sony Venice Camera Package",
-      category: "Camera",
-      model: "Sony Venice (Sony Venice II & Lens Mount)",
-      serialNumber: "SV-VEN-88092",
-      status: "Ready",
-      rentalCostPerDay: 35000,
-      daysRented: 5,
-      paidAmount: 175000,
-      maintenanceHistory: "Serviced and sensors cleaned on August 10, 2026.",
-      assignedProject: "YEH DIL BEWAJAH (Promo Teaser)",
-      operator: "DOP Crew",
-      notes: "Rental covers Sony Venice Camera Body, Cine lenses, tripod, and monitors."
-    },
-    {
-      id: "equip-2",
-      name: "Lights & Grip Pack (Dolly Panther, Drone)",
-      category: "Lighting & Grip",
-      model: "Dolly Panther Track, Drone DJI Inspire 3 & LED Setup",
-      serialNumber: "DPD-LIGHT-01",
-      status: "Ready",
-      rentalCostPerDay: 40000,
-      daysRented: 5,
-      paidAmount: 150000,
-      maintenanceHistory: "Drone battery and Dolly tracks checked August 12, 2026.",
-      assignedProject: "YEH DIL BEWAJAH (Promo Teaser)",
-      operator: "Lights Crew & Drone Pilot",
-      notes: "Includes Panther Dolly, DJI Drone, HMI lights, LED tubes, and stands."
-    }
-  ],
   Travel: [
     {
       id: "trav-1",
@@ -311,75 +262,13 @@ const INITIAL_MOCK_DATA = {
       dropLocation: "Delhi Hotel NCR (Mehrauli)",
       time: "2026-08-14 10:00",
       status: "Confirmed",
-      expenses: 200000, // ₹8,000 per head * 25 pax = ₹2,00,000
+      expenses: 200000,
       paidAmount: 200000,
       hotelBooking: "Hotel Delhi Heights (10 Rooms)",
       costumesTransit: "Cast Wardrobe Trunk #1 & #2",
       cateringTransit: "Travel Catering Pack (25 Box lunches)",
       pickupVehicle: "3 Innovas & 2 Cargo Cabs",
       notes: "Group tickets booked on Air India. 25 people including cast, director, and key crew."
-    }
-  ],
-  "Lodging & Boarding": [
-    {
-      id: "lodg-1",
-      personName: "Cast & Crew Lodging",
-      hotelName: "Hotel Delhi Heights",
-      roomNumber: "10 Rooms Allocated",
-      roomType: "10 Standard Rooms",
-      checkIn: "2026-08-14",
-      checkOut: "2026-08-20",
-      mealPlan: "All-Inclusive",
-      specialRequirements: "Requires standard double occupancy, laundry, and breakfast buffet.",
-      costPerDay: 30000, // 10 rooms * 3000 per room = 30000
-      totalDays: 6,
-      totalCost: 180000,
-      paidAmount: 150000,
-      status: "Booked",
-      notes: "10 rooms booked for 6 days to cover stay of outstation team."
-    }
-  ],
-  Costumes: [
-    {
-      id: "cost-1",
-      name: "Promotional Wardrobe Pack",
-      assignedActor: "Rahul Sharma & Cast",
-      measurements: "Fitted Measurements of 4 Main Actors",
-      designer: "Stylist & Wardrobe Coordinator",
-      cost: 25000,
-      fittingDate: "2026-08-12",
-      maintenanceStatus: "Steamed, ironed, and hung.",
-      returnStatus: "On Set",
-      status: "Ready",
-      notes: "Promo wardrobe collection for lead and supporting cast.",
-      paidAmount: 25000
-    }
-  ],
-  Locations: [
-    {
-      id: "loc-1",
-      name: "Delhi Heritage Bungalow (+ Electricity)",
-      address: "Mehrauli, New Delhi NCR",
-      rentalFee: 200000, // Flat cost: ₹50,000 per day for 4 days
-      contactPerson: "Delhi Location Coordinator",
-      status: "Approved",
-      durationDays: 4,
-      photos: [],
-      notes: "Booking covers heritage building rental, generator backup, and power electricity charges.",
-      paidAmount: 200000
-    }
-  ],
-  "Production Team": [
-    {
-      id: "prod-1",
-      name: "MR. MANOJ KUMAR & Staff",
-      role: "Production Manager & Staff (3)",
-      salary: 35000, // Flat package fee for 3 staff members
-      dailyRate: 0,
-      daysScheduled: 5,
-      paidAmount: 35000,
-      contactInfo: "manoj.kumar@cinedreamprod.com",
-      notes: "Production Manager plus 2 helpers. Handles cash, meals, local purchases, and coordination."
     }
   ],
   Vendors: [
@@ -398,36 +287,6 @@ const INITIAL_MOCK_DATA = {
       pendingAmount: 0,
       status: "Active",
       notes: "Supplied props, background items, furniture, and setting material for Mehrauli shoot."
-    }
-  ],
-  Vehicles: [
-    {
-      id: "veh-1",
-      model: "3 Innovas & 2 Cargo Vans Pack",
-      plateNumber: "DL-1C-AA-9908",
-      driverName: "Local Transport Desk",
-      driverContact: "+91 99999 88888",
-      rentalCostPerDay: 10000, // Package rate per day
-      daysRented: 5,
-      totalCost: 50000,
-      assignment: "On-Set Crew Transport & Cargo Shifting",
-      status: "Active",
-      notes: "Covers 3 passenger SUVs for cast/director travel and 2 loading vans for camera/light gear.",
-      paidAmount: 50000
-    }
-  ],
-  Catering: [
-    {
-      id: "cat-1",
-      catererName: "CineFood Catering Delhi",
-      mealType: "Breakfast, Lunch & High Tea Pack",
-      headCount: 50,
-      costPerHead: 200,
-      days: 5,
-      totalCost: 50000, // 200 * 50 * 5 = 50000
-      paidAmount: 50000,
-      status: "Active",
-      notes: "Standard craft services and buffet lunch on set at Mehrauli location."
     }
   ],
   Finance: [
@@ -530,28 +389,6 @@ const INITIAL_MOCK_DATA = {
       email: "vfx.artist@cinedreampromo.com",
       phone: "+91 99999 88888",
       notes: "Screen cleanups, wire removals, logo overlays, and title animations."
-    }
-  ],
-  Documents: [
-    {
-      id: "doc-1",
-      title: "Delhi NCR Heritage Site Permit",
-      category: "Permits",
-      fileType: "PDF",
-      uploadDate: "2026-08-01",
-      size: "3.2 MB",
-      status: "Approved",
-      notes: "Location shoot permission letter signed by Delhi Police and MCD."
-    },
-    {
-      id: "doc-2",
-      title: "Director Agreement - Manan Pratap Singh",
-      category: "Contracts",
-      fileType: "PDF",
-      uploadDate: "2026-08-02",
-      size: "5.4 MB",
-      status: "Signed",
-      notes: "Executed contract agreement for directing YEH DIL BEWAJAH promo teaser."
     }
   ]
 };

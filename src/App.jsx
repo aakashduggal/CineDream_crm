@@ -63,20 +63,22 @@ function MainAppContent() {
           {activeModule === 'Finance' ? (
             <Dashboard />
           ) : (
-            <div className="split-pane-wrapper">
-              <ModuleList
-                activeModule={activeModule}
-                selectedItemId={selectedItemId}
-                setSelectedItemId={setSelectedItemId}
-                onAddNewClick={handleAddNewClick}
-              />
-              
-              <DetailView
-                activeModule={activeModule}
-                selectedItemId={selectedItemId}
-                setSelectedItemId={setSelectedItemId}
-                onEditClick={handleEditClick}
-              />
+            <div className="single-pane-wrapper">
+              {selectedItemId ? (
+                <DetailView
+                  activeModule={activeModule}
+                  selectedItemId={selectedItemId}
+                  setSelectedItemId={setSelectedItemId}
+                  onEditClick={handleEditClick}
+                />
+              ) : (
+                <ModuleList
+                  activeModule={activeModule}
+                  selectedItemId={selectedItemId}
+                  setSelectedItemId={setSelectedItemId}
+                  onAddNewClick={handleAddNewClick}
+                />
+              )}
             </div>
           )}
         </main>

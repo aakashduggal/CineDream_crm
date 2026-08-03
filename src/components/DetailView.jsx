@@ -45,27 +45,59 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
 
   return (
     <div className="details-drawer">
-      {/* Header section of the Profile Drawer */}
+      {/* Header section of the Profile Page */}
       <div className="detail-header">
-        <div className="detail-header-actions">
-          <button className="icon-btn" onClick={() => onEditClick(item)} title="Edit Record">✏️</button>
-          <button className="icon-btn delete" onClick={handleDelete} title="Delete Record">🗑️</button>
-          <button className="icon-btn" onClick={() => setSelectedItemId(null)} title="Close Drawer">❌</button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <button 
+            className="icon-btn" 
+            onClick={() => setSelectedItemId(null)} 
+            title="Back to List"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}
+          >
+            ⬅️
+          </button>
+          
+          <div className="detail-avatar-section" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div className="detail-avatar" style={{ width: '44px', height: '44px', fontSize: '18px', borderRadius: '12px', background: 'linear-gradient(135deg, hsl(var(--color-indigo)), hsl(var(--bg-accent)))', flexShrink: 0 }}>
+              {getInitials(name)}
+            </div>
+            <div className="detail-title-section" style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+              <h3 className="detail-title" style={{ fontSize: '18px', fontWeight: '800', lineHeight: '1.2', margin: 0 }}>{name}</h3>
+              <span className="detail-subtitle" style={{ fontSize: '11px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span className={`badge ${(item.status || 'Active').toLowerCase().replace(' ', '-')}`} style={{ padding: '2px 8px', borderRadius: '6px' }}>
+                  {item.status || 'Active'}
+                </span>
+                {item.role && <span style={{ color: 'hsl(var(--text-muted))' }}>• {item.role}</span>}
+              </span>
+            </div>
+          </div>
         </div>
 
-        <div className="detail-avatar-section">
-          <div className="detail-avatar" style={{ background: 'linear-gradient(135deg, hsl(var(--color-indigo)), hsl(var(--bg-accent)))' }}>
-            {getInitials(name)}
-          </div>
-          <div className="detail-title-section">
-            <h3 className="detail-title">{name}</h3>
-            <span className="detail-subtitle">
-              <span className={`badge ${(item.status || 'Active').toLowerCase().replace(' ', '-')}`}>
-                {item.status || 'Active'}
-              </span>
-              {item.role && ` • ${item.role}`}
-            </span>
-          </div>
+        <div className="detail-header-actions" style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+          <button 
+            className="icon-btn" 
+            onClick={() => onEditClick(item)} 
+            title="Edit Record"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            ✏️
+          </button>
+          <button 
+            className="icon-btn delete" 
+            onClick={handleDelete} 
+            title="Delete Record"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            🗑️
+          </button>
+          <button 
+            className="icon-btn" 
+            onClick={() => setSelectedItemId(null)} 
+            title="Close Page"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            ❌
+          </button>
         </div>
       </div>
 
