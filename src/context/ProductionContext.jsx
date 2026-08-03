@@ -11,7 +11,7 @@ const INITIAL_METADATA = {
   startDate: "2026-08-15",
   endDate: "2026-08-20",
   currentUser: "Mr. Manoj Kumar (Production Manager)",
-  version: 9
+  version: 12
 };
 
 const INITIAL_MOCK_DATA = {
@@ -92,7 +92,9 @@ const INITIAL_MOCK_DATA = {
       email: "kabir.mehta@dopcine.in",
       phone: "+91 98220 11223",
       instagramId: "@kabirmehta_dop",
-      daysScheduled: 5
+      daysScheduled: 5,
+      price: 25000,
+      paidAmount: 100000
     },
     {
       id: "hod-2",
@@ -103,7 +105,9 @@ const INITIAL_MOCK_DATA = {
       email: "sanjay.art@designcraft.in",
       phone: "+91 99100 88776",
       instagramId: "@sanjayshar_design",
-      daysScheduled: 5
+      daysScheduled: 5,
+      price: 15000,
+      paidAmount: 75000
     },
     {
       id: "hod-3",
@@ -114,7 +118,9 @@ const INITIAL_MOCK_DATA = {
       email: "aarav.sound@studiohouse.in",
       phone: "+91 98765 22334",
       instagramId: "@aarav_sound_design",
-      daysScheduled: 5
+      daysScheduled: 5,
+      price: 10000,
+      paidAmount: 40000
     }
   ],
   "Technical Crew": [
@@ -174,22 +180,15 @@ const INITIAL_MOCK_DATA = {
   Travel: [
     {
       id: "trav-1",
-      personName: "Core Cast & Crew (25 Pax)",
-      role: "Cast & Crew Travel",
-      type: "Flight",
-      bookingNumber: "AI-DEL-908",
-      itinerary: "Mumbai (BOM) to Delhi (DEL) Round Trip",
-      pickupLocation: "BOM Airport Terminal 2",
-      dropLocation: "Delhi Hotel NCR (Mehrauli)",
-      time: "2026-08-14 10:00",
-      status: "Confirmed",
-      expenses: 200000,
-      paidAmount: 200000,
-      hotelBooking: "Hotel Delhi Heights (10 Rooms)",
-      costumesTransit: "Cast Wardrobe Trunk #1 & #2",
-      cateringTransit: "Travel Catering Pack (25 Box lunches)",
-      pickupVehicle: "3 Innovas & 2 Cargo Cabs",
-      notes: "Group tickets booked on Air India. 25 people including cast, director, and key crew."
+      travelId: "TRAV-01",
+      name: "Core Cast & Crew (25 Pax)",
+      travel: "Mumbai to Delhi Flight tickets (Air India group booking)",
+      lodgingAndBoarding: "Hotel Delhi Heights (10 Deluxe Rooms booked)",
+      costumes: "Cast Wardrobe Trunk #1 & #2 transit logistics",
+      catering: "Travel catering pack (25 boxed meals for transit day)",
+      vehicles: "3 Innovas & 2 Cargo Cabs for airport pickups",
+      price: 200000,
+      paidAmount: 200000
     }
   ],
   Vendors: [
@@ -230,9 +229,11 @@ const INITIAL_MOCK_DATA = {
       financeId: "FIN-01",
       itemName: "Contingency Fund (10%)",
       category: "Contingency Backup",
-      cost: 181500,
+      perDayCost: 181500,
+      workingDays: 1,
       paidAmount: 0,
-      notes: "Emergency contingency backup fund, calculated as 10% of total estimated cost."
+      email: "finance.office@cinedreampromo.com",
+      phone: "+91 99999 88888"
     },
     {
       id: "fin-2",
@@ -241,11 +242,9 @@ const INITIAL_MOCK_DATA = {
       category: "Picture Edit",
       perDayCost: 3000,
       workingDays: 5,
-      cost: 15000,
       paidAmount: 15000,
       email: "editor@cinedreampromo.com",
-      phone: "+91 99999 88888",
-      notes: "Promo cut assembly and timeline locking."
+      phone: "+91 99999 88888"
     },
     {
       id: "fin-3",
@@ -254,11 +253,9 @@ const INITIAL_MOCK_DATA = {
       category: "Color Grading (DI)",
       perDayCost: 3000,
       workingDays: 5,
-      cost: 15000,
       paidAmount: 15000,
       email: "colorist.di@cinedreampromo.com",
-      phone: "+91 99999 88888",
-      notes: "DI grading, DaVinci mastering, and DCP promo package export."
+      phone: "+91 99999 88888"
     },
     {
       id: "fin-4",
@@ -267,11 +264,9 @@ const INITIAL_MOCK_DATA = {
       category: "Sound Design",
       perDayCost: 3000,
       workingDays: 4,
-      cost: 12000,
       paidAmount: 12000,
       email: "sound.design@cinedreampromo.com",
-      phone: "+91 99999 88888",
-      notes: "Sfx overlays and foley record."
+      phone: "+91 99999 88888"
     },
     {
       id: "fin-5",
@@ -280,11 +275,9 @@ const INITIAL_MOCK_DATA = {
       category: "Dubbing",
       perDayCost: 2000,
       workingDays: 2,
-      cost: 4000,
       paidAmount: 4000,
       email: "dubbing.studio@gmail.com",
-      phone: "+91 99999 88888",
-      notes: "Voice sync recording for promo teaser."
+      phone: "+91 99999 88888"
     },
     {
       id: "fin-6",
@@ -293,11 +286,9 @@ const INITIAL_MOCK_DATA = {
       category: "Atmos Mix",
       perDayCost: 5000,
       workingDays: 1,
-      cost: 5000,
       paidAmount: 5000,
       email: "atmos.mix@gmail.com",
-      phone: "+91 99999 88888",
-      notes: "Dolby Atmos spatial surround mix down."
+      phone: "+91 99999 88888"
     },
     {
       id: "fin-7",
@@ -306,11 +297,9 @@ const INITIAL_MOCK_DATA = {
       category: "Music/Score",
       perDayCost: 3000,
       workingDays: 4,
-      cost: 12000,
       paidAmount: 12000,
       email: "composer.score@gmail.com",
-      phone: "+91 99999 88888",
-      notes: "Teaser background music track."
+      phone: "+91 99999 88888"
     },
     {
       id: "fin-8",
@@ -319,11 +308,9 @@ const INITIAL_MOCK_DATA = {
       category: "VFX/CGI",
       perDayCost: 3000,
       workingDays: 5,
-      cost: 15000,
       paidAmount: 15000,
       email: "vfx.artist@cinedreampromo.com",
-      phone: "+91 99999 88888",
-      notes: "Screen cleanups, wire removals, logo overlays, and title animations."
+      phone: "+91 99999 88888"
     }
   ]
 };
@@ -381,7 +368,7 @@ export const calculateItemCost = (module, item) => {
     case 'Equipment':
       return Number(item.rentalCostPerDay || 0) * Number(item.daysRented || 0);
     case 'Travel':
-      return Number(item.expenses || 0);
+      return Number(item.price || item.expenses || 0);
     case 'Lodging & Boarding':
       return Number(item.costPerDay || 0) * Number(item.totalDays || 0);
     case 'Costumes':
@@ -397,9 +384,7 @@ export const calculateItemCost = (module, item) => {
     case 'Catering':
       return Number(item.costPerHead || 0) * Number(item.headCount || 0) * Number(item.days || 0);
     case 'Finance':
-      return item.perDayCost && item.workingDays 
-        ? Number(item.perDayCost || 0) * Number(item.workingDays || 0)
-        : Number(item.cost || 0);
+      return Number(item.perDayCost || 0) * Number(item.workingDays || 0);
     default:
       return 0;
   }
@@ -415,7 +400,7 @@ export const ProductionProvider = ({ children }) => {
     const saved = localStorage.getItem('cinedream_crm_metadata');
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (parsed.projectName !== "YEH DIL BEWAJAH (PROMO TEASER)" || parsed.version !== 9) {
+      if (parsed.projectName !== "YEH DIL BEWAJAH (PROMO TEASER)" || parsed.version !== 12) {
         localStorage.removeItem('cinedream_crm_data');
         localStorage.removeItem('cinedream_crm_metadata');
         localStorage.removeItem('cinedream_crm_logs');
@@ -434,7 +419,7 @@ export const ProductionProvider = ({ children }) => {
     const savedMetadata = localStorage.getItem('cinedream_crm_metadata');
     if (savedMetadata) {
       const parsedMeta = JSON.parse(savedMetadata);
-      if (parsedMeta.projectName !== "YEH DIL BEWAJAH (PROMO TEASER)" || parsedMeta.version !== 9) {
+      if (parsedMeta.projectName !== "YEH DIL BEWAJAH (PROMO TEASER)" || parsedMeta.version !== 12) {
         return INITIAL_MOCK_DATA;
       }
     }
@@ -446,7 +431,7 @@ export const ProductionProvider = ({ children }) => {
     const savedMetadata = localStorage.getItem('cinedream_crm_metadata');
     if (savedMetadata) {
       const parsedMeta = JSON.parse(savedMetadata);
-      if (parsedMeta.projectName !== "YEH DIL BEWAJAH (PROMO TEASER)" || parsedMeta.version !== 9) {
+      if (parsedMeta.projectName !== "YEH DIL BEWAJAH (PROMO TEASER)" || parsedMeta.version !== 12) {
         return INITIAL_AUDIT_LOG;
       }
     }

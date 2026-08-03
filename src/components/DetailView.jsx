@@ -143,8 +143,12 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
               {activeModule === 'HOD' && (
                 <>
                   <div className="detail-info-item">
+                    <span className="detail-info-label">Daily Rate</span>
+                    <span className="detail-info-value">{formatCurrency(item.price)} / day</span>
+                  </div>
+                  <div className="detail-info-item">
                     <span className="detail-info-label">Working Days</span>
-                    <span className="detail-info-value">{item.daysScheduled || 0} days</span>
+                    <span className="detail-info-value">{item.daysScheduled} days</span>
                   </div>
                 </>
               )}
@@ -366,6 +370,10 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
                   <span className="detail-info-label">Working Days</span>
                   <span className="detail-info-value">{item.daysScheduled || '0'} Days</span>
                 </div>
+                <div className="detail-info-item">
+                  <span className="detail-info-label">Price / Daily Rate</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700', color: '#5c715e' }}>{formatCurrency(item.price)}</span>
+                </div>
               </div>
             </div>
           </>
@@ -457,65 +465,39 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
         )}
 
         {/* TRAVEL */}
+        {/* TRAVEL */}
         {activeModule === 'Travel' && (
           <>
             <div className="detail-section">
               <span className="detail-section-title">Logistics Details</span>
               <div className="detail-grid-info">
                 <div className="detail-info-item">
-                  <span className="detail-info-label">Passenger / Cargo</span>
-                  <span className="detail-info-value">{item.personName}</span>
+                  <span className="detail-info-label">Travel ID</span>
+                  <span className="detail-info-value" style={{ color: 'hsl(var(--bg-accent))', fontWeight: '700' }}>{item.travelId || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item">
-                  <span className="detail-info-label">Affiliated Role</span>
-                  <span className="detail-info-value">{item.role}</span>
-                </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Transit Mode</span>
-                  <span className="detail-info-value">{item.type}</span>
-                </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Booking Reference</span>
-                  <span className="detail-info-value">{item.bookingNumber}</span>
+                  <span className="detail-info-label">Passenger / Group</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700' }}>{item.name || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
-                  <span className="detail-info-label">Departure / Time</span>
-                  <span className="detail-info-value">{item.time}</span>
+                  <span className="detail-info-label">Travel Details</span>
+                  <span className="detail-info-value">{item.travel || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
-                  <span className="detail-info-label">Pickup Point</span>
-                  <span className="detail-info-value">{item.pickupLocation}</span>
+                  <span className="detail-info-label">Lodging & Boarding</span>
+                  <span className="detail-info-value">{item.lodgingAndBoarding || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
-                  <span className="detail-info-label">Destination Address</span>
-                  <span className="detail-info-value">{item.dropLocation}</span>
+                  <span className="detail-info-label">Costumes</span>
+                  <span className="detail-info-value">{item.costumes || 'N/A'}</span>
                 </div>
-              </div>
-            </div>
-
-             <div className="detail-section">
-              <span className="detail-section-title">Itinerary Summary</span>
-              <p className="detail-text-block">{item.itinerary || "No written itinerary."}</p>
-            </div>
-
-            <div className="detail-section">
-              <span className="detail-section-title">Linked Arrangements</span>
-              <div className="detail-grid-info">
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Lodging Hotel Room</span>
-                  <span className="detail-info-value">{item.hotelBooking || 'Hotel Delhi Heights (10 Rooms)'}</span>
+                <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
+                  <span className="detail-info-label">Catering</span>
+                  <span className="detail-info-value">{item.catering || 'N/A'}</span>
                 </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Costumes Transit</span>
-                  <span className="detail-info-value">{item.costumesTransit || 'Cast Wardrobe Trunk #1 & #2'}</span>
-                </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Catering Meals</span>
-                  <span className="detail-info-value">{item.cateringTransit || 'Travel Catering Pack (25 Box lunches)'}</span>
-                </div>
-                <div className="detail-info-item">
-                  <span className="detail-info-label">Pickup Cab / Driver</span>
-                  <span className="detail-info-value">{item.pickupVehicle || '3 Innovas & 2 Cargo Cabs'}</span>
+                <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
+                  <span className="detail-info-label">Vehicles</span>
+                  <span className="detail-info-value">{item.vehicles || 'N/A'}</span>
                 </div>
               </div>
             </div>
@@ -724,35 +706,39 @@ const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditCli
                 <div className="detail-info-item">
                   <span className="detail-info-label">Finance ID</span>
                   <span className="detail-info-value" style={{ color: 'hsl(var(--bg-accent))', fontWeight: '700' }}>
-                    {item.financeId || (item.id === 'fin-1' ? 'FIN-01' : item.id === 'fin-2' ? 'FIN-02' : item.id === 'fin-3' ? 'FIN-03' : item.id === 'fin-4' ? 'FIN-04' : item.id === 'fin-5' ? 'FIN-05' : 'FIN-TBD')}
+                    {item.financeId || 'N/A'}
                   </span>
                 </div>
                 <div className="detail-info-item">
+                  <span className="detail-info-label">Expense Name</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700' }}>{item.itemName || 'N/A'}</span>
+                </div>
+                <div className="detail-info-item">
                   <span className="detail-info-label">Cost Category</span>
-                  <span className="detail-info-value" style={{ fontWeight: '700' }}>{item.category}</span>
+                  <span className="detail-info-value" style={{ fontWeight: '700' }}>{item.category || 'N/A'}</span>
                 </div>
                 <div className="detail-info-item">
                   <span className="detail-info-label">Per Day Cost</span>
                   <span className="detail-info-value">
-                    {item.perDayCost ? `${formatCurrency(item.perDayCost)} / day` : 'Flat Rate'}
+                    {formatCurrency(item.perDayCost)}
                   </span>
                 </div>
                 <div className="detail-info-item">
                   <span className="detail-info-label">Working Days</span>
                   <span className="detail-info-value">
-                    {item.workingDays ? `${item.workingDays} days` : 'Flat Package'}
+                    {item.workingDays ? `${item.workingDays} Days` : '0 Days'}
                   </span>
                 </div>
                 <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
                   <span className="detail-info-label">Email ID</span>
                   <span className="detail-info-value">
-                    {item.email || (item.id === 'fin-1' ? 'production@cinedreampromo.com' : item.id === 'fin-2' ? 'editor@cinedreampromo.com' : item.id === 'fin-3' ? 'colorist.di@cinedreampromo.com' : item.id === 'fin-4' ? 'sound.design@cinedreampromo.com' : item.id === 'fin-5' ? 'vfx.artist@cinedreampromo.com' : 'finance@cinedream.in')}
+                    {item.email || 'N/A'}
                   </span>
                 </div>
                 <div className="detail-info-item" style={{ gridColumn: 'span 2' }}>
                   <span className="detail-info-label">Phone Number</span>
                   <span className="detail-info-value">
-                    {item.phone || (item.id === 'fin-1' ? '+91 99000 88888' : '+91 99999 88888')}
+                    {item.phone || 'N/A'}
                   </span>
                 </div>
               </div>

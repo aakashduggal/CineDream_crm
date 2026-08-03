@@ -47,7 +47,9 @@ const getDefaultsForModule = (activeModule) => {
         email: "hod.dummy@cinedream.in",
         phone: "+91 99999 88888",
         instagramId: "@dummy_hod_member",
-        daysScheduled: 5
+        daysScheduled: 5,
+        price: 15000,
+        paidAmount: 75000
       };
     case 'Technical Crew':
       return {
@@ -81,22 +83,15 @@ const getDefaultsForModule = (activeModule) => {
     case 'Travel':
       return {
         ...common,
-        status: 'Booked',
-        personName: "Demo Passenger",
-        role: "Lead Actor",
-        type: "Flight",
-        bookingNumber: `TX-${Math.floor(100000 + Math.random() * 900000)}`,
-        itinerary: "Flight Ind-983, Dep: 10:00 AM, Arr: 12:15 PM",
-        pickupLocation: "Mumbai Airport Terminal 2",
-        dropLocation: "Delhi IGI Airport Terminal 3",
-        time: "2026-08-15 10:00",
-        expenses: 8000,
-        paidAmount: 8000,
-        notes: "Premium seat, vegetarian meal request.",
-        hotelBooking: "Delhi Regency Hotel Room 402",
-        costumesTransit: "Bag #3 (Lead Actor Suit)",
-        cateringTransit: "Vegetarian Lunch Box",
-        pickupVehicle: "Toyota Innova DL-3C-CC-1234 (Satish)"
+        travelId: `TRAV-${Math.floor(100 + Math.random() * 900)}`,
+        name: "Demo Passenger / Group",
+        travel: "Flights booked on Indigo",
+        lodgingAndBoarding: "Delhi Heights Hotel (1 Room)",
+        costumes: "Cast Wardrobe Suitcase #1",
+        catering: "Lunch box catering pack",
+        vehicles: "Innova taxi pick up",
+        price: 15000,
+        paidAmount: 15000
       };
     case 'Lodging & Boarding':
       return {
@@ -178,11 +173,9 @@ const getDefaultsForModule = (activeModule) => {
         category: "Picture Edit",
         perDayCost: 3000,
         workingDays: 5,
-        cost: 15000,
         paidAmount: 10000,
         email: "post.production@cinedream.in",
-        phone: "+91 99999 88888",
-        notes: "Post production billing."
+        phone: "+91 99999 88888"
       };
     default:
       return common;
@@ -414,10 +407,18 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
               <input type="text" name="instagramId" className="form-control" placeholder="e.g. @username" value={formData.instagramId || ''} onChange={handleChange} />
             </div>
 
-            <span className="form-section-title">Working Details</span>
+            <span className="form-section-title">Working & Rates Details</span>
             <div className="form-group">
               <label className="form-label">Working Days</label>
               <input type="number" name="daysScheduled" className="form-control" value={formData.daysScheduled || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Price / Daily Rate (₹)</label>
+              <input type="number" name="price" className="form-control" value={formData.price || ''} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Paid Labor (₹)</label>
+              <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
             </div>
           </>
         );
@@ -556,86 +557,42 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
           <>
             <span className="form-section-title">Transit Details</span>
             <div className="form-group">
-              <label className="form-label">Passenger / Cargo Name *</label>
-              <input type="text" name="personName" className="form-control" value={formData.personName || ''} onChange={handleChange} required />
+              <label className="form-label">Travel ID</label>
+              <input type="text" name="travelId" className="form-control" placeholder="e.g. TRAV-01" value={formData.travelId || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Affiliated Role</label>
-              <input type="text" name="role" className="form-control" placeholder="e.g. Lead Actor, Crew, Equipment" value={formData.role || ''} onChange={handleChange} />
+              <label className="form-label">Passenger / Group Name *</label>
+              <input type="text" name="name" className="form-control" value={formData.name || ''} onChange={handleChange} required />
             </div>
-            <div className="form-group">
-              <label className="form-label">Transit Mode Type</label>
-              <select name="type" className="form-control" value={formData.type || ''} onChange={handleChange}>
-                <option value="Flight">Flight</option>
-                <option value="Train">Train</option>
-                <option value="Cab">Cab</option>
-                <option value="Freight">Freight</option>
-                <option value="Helicopter">Helicopter</option>
-                <option value="Boat">Boat</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label className="form-label">Booking Ticket Number</label>
-              <input type="text" name="bookingNumber" className="form-control" value={formData.bookingNumber || ''} onChange={handleChange} />
-            </div>
-
-            <span className="form-section-title">Itinerary & Schedule</span>
             <div className="form-group full-width">
-              <label className="form-label">Itinerary Description</label>
-              <textarea name="itinerary" className="form-control" placeholder="Flight routes, transfer timings..." value={formData.itinerary || ''} onChange={handleChange}></textarea>
+              <label className="form-label">Travel Details</label>
+              <textarea name="travel" className="form-control" placeholder="Flights, train tickets, bookings..." value={formData.travel || ''} onChange={handleChange}></textarea>
             </div>
-            <div className="form-group">
-              <label className="form-label">Pickup Address/Lounge</label>
-              <input type="text" name="pickupLocation" className="form-control" value={formData.pickupLocation || ''} onChange={handleChange} />
+            <div className="form-group full-width">
+              <label className="form-label">Lodging & Boarding</label>
+              <textarea name="lodgingAndBoarding" className="form-control" placeholder="Hotel bookings, room stays, boarding details..." value={formData.lodgingAndBoarding || ''} onChange={handleChange}></textarea>
             </div>
-            <div className="form-group">
-              <label className="form-label">Drop Destination Address</label>
-              <input type="text" name="dropLocation" className="form-control" value={formData.dropLocation || ''} onChange={handleChange} />
+            <div className="form-group full-width">
+              <label className="form-label">Costumes</label>
+              <textarea name="costumes" className="form-control" placeholder="Costume logistics, transit bags, wardrobe trunks..." value={formData.costumes || ''} onChange={handleChange}></textarea>
             </div>
-            <div className="form-group">
-              <label className="form-label">Departure Time</label>
-              <input type="text" name="time" className="form-control" placeholder="YYYY-MM-DD HH:MM" value={formData.time || ''} onChange={handleChange} />
+            <div className="form-group full-width">
+              <label className="form-label">Catering</label>
+              <textarea name="catering" className="form-control" placeholder="Meals, catering sets, food packs..." value={formData.catering || ''} onChange={handleChange}></textarea>
             </div>
-            <div className="form-group">
-              <label className="form-label">Transit Status</label>
-              <select name="status" className="form-control" value={formData.status || ''} onChange={handleChange}>
-                <option value="Booked">Booked</option>
-                <option value="In Transit">In Transit</option>
-                <option value="Completed">Completed</option>
-                <option value="Cancelled">Cancelled</option>
-              </select>
+            <div className="form-group full-width">
+              <label className="form-label">Vehicles</label>
+              <textarea name="vehicles" className="form-control" placeholder="Cab details, drivers assigned, vehicles pick up..." value={formData.vehicles || ''} onChange={handleChange}></textarea>
             </div>
 
-            <span className="form-section-title">Linked Arrangements</span>
+            <span className="form-section-title">Logistics Budget</span>
             <div className="form-group">
-              <label className="form-label">Lodging Hotel Room</label>
-              <input type="text" name="hotelBooking" className="form-control" placeholder="e.g. Delhi Regency Room 402" value={formData.hotelBooking || ''} onChange={handleChange} />
+              <label className="form-label">Total Price / Cost (₹)</label>
+              <input type="number" name="price" className="form-control" value={formData.price || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Costumes Transit</label>
-              <input type="text" name="costumesTransit" className="form-control" placeholder="e.g. Bag #3 (Lead Actor Suit)" value={formData.costumesTransit || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Catering Meals</label>
-              <input type="text" name="cateringTransit" className="form-control" placeholder="e.g. Vegetarian Lunch Box" value={formData.cateringTransit || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Pickup Cab / Driver</label>
-              <input type="text" name="pickupVehicle" className="form-control" placeholder="e.g. Toyota Innova DL-3C-CC-1234 (Satish)" value={formData.pickupVehicle || ''} onChange={handleChange} />
-            </div>
-
-            <span className="form-section-title">Travel Budget</span>
-            <div className="form-group">
-              <label className="form-label">Transit Expense (₹)</label>
-              <input type="number" name="expenses" className="form-control" value={formData.expenses || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Paid Travel Cost (₹)</label>
+              <label className="form-label">Paid Amount (₹)</label>
               <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group full-width">
-              <label className="form-label">Logistical Notes</label>
-              <textarea name="notes" className="form-control" value={formData.notes || ''} onChange={handleChange}></textarea>
             </div>
           </>
         );
@@ -1043,23 +1000,8 @@ const ItemForm = ({ activeModule, itemToEdit, onClose }) => {
               <input type="number" name="workingDays" className="form-control" value={formData.workingDays || ''} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label className="form-label">Total Estimated Cost (₹)</label>
-              <input 
-                type="number" 
-                name="cost" 
-                className="form-control" 
-                placeholder="Calculated or Flat rate" 
-                value={formData.cost || (formData.perDayCost && formData.workingDays ? formData.perDayCost * formData.workingDays : '')} 
-                onChange={handleChange} 
-              />
-            </div>
-            <div className="form-group">
               <label className="form-label">Paid Cost (₹)</label>
               <input type="number" name="paidAmount" className="form-control" value={formData.paidAmount || ''} onChange={handleChange} />
-            </div>
-            <div className="form-group full-width">
-              <label className="form-label">Transaction Notes</label>
-              <textarea name="notes" className="form-control" value={formData.notes || ''} onChange={handleChange}></textarea>
             </div>
           </>
         );

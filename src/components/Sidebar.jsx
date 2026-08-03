@@ -6,6 +6,7 @@ const MODULES = [
   { id: 'Actors', label: 'Actors' },
   { id: 'HOD', label: 'HOD' },
   { id: 'Technical Crew', label: 'Technical Crew' },
+  { id: 'Dashboard', label: 'Dashboard' },
   { id: 'Travel', label: 'Travel' },
   { id: 'Vendors', label: 'Vendors' }
 ];

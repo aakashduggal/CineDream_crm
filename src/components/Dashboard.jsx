@@ -103,75 +103,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* KPI Cards Grid */}
-      <div className="kpi-cards">
-        <div className="kpi-card accent">
-          <div className="kpi-card-header">
-            <span>Target Cap</span>
-          </div>
-          <div className="kpi-card-value">{formatCurrency(metadata.budgetLimit)}</div>
-          <div className="kpi-card-footer">Maximum budget ceiling</div>
-        </div>
 
-        <div className="kpi-card amber">
-          <div className="kpi-card-header">
-            <span>Estimated Total</span>
-          </div>
-          <div className="kpi-card-value">{formatCurrency(grandTotal)}</div>
-          <div className="kpi-card-footer">Calculated from all modules</div>
-        </div>
-
-        <div className="kpi-card emerald">
-          <div className="kpi-card-header">
-            <span>Total Spent (Paid)</span>
-          </div>
-          <div className="kpi-card-value">{formatCurrency(totalPaid)}</div>
-          <div className="kpi-card-footer">{formatPercent(percentPaid)} of estimated budget paid</div>
-        </div>
-
-        <div className="kpi-card rose">
-          <div className="kpi-card-header">
-            <span>Pending Payments</span>
-          </div>
-          <div className="kpi-card-value">{formatCurrency(pendingPayments)}</div>
-          <div className="kpi-card-footer">Remaining liabilities to vendors & cast</div>
-        </div>
-      </div>
-
-      {/* Time-based Estimates KPI Grid */}
-      <div className="kpi-cards">
-        <div className="kpi-card accent">
-          <div className="kpi-card-header">
-            <span>Daily Shooting Cost</span>
-          </div>
-          <div className="kpi-card-value">{formatCurrency(dailyProductionCost)}</div>
-          <div className="kpi-card-footer">Est. cost per filming day</div>
-        </div>
-
-        <div className="kpi-card accent">
-          <div className="kpi-card-header">
-            <span>Weekly Shooting Cost</span>
-          </div>
-          <div className="kpi-card-value">{formatCurrency(weeklyProductionCost)}</div>
-          <div className="kpi-card-footer">Based on 6 filming days/week</div>
-        </div>
-
-        <div className="kpi-card accent">
-          <div className="kpi-card-header">
-            <span>Monthly Shooting Cost</span>
-          </div>
-          <div className="kpi-card-value">{formatCurrency(monthlyProductionCost)}</div>
-          <div className="kpi-card-footer">Based on 25 filming days/month</div>
-        </div>
-
-        <div className="kpi-card accent">
-          <div className="kpi-card-header">
-            <span>Avg Cost per Actor</span>
-          </div>
-          <div className="kpi-card-value">{formatCurrency(costPerActor)}</div>
-          <div className="kpi-card-footer">Total Actor Cost / Active Cast</div>
-        </div>
-      </div>
 
       {/* Post-Production Service Categories */}
       <div className="chart-card">

@@ -40,7 +40,7 @@ const ModuleList = ({ activeModule, selectedItemId, setSelectedItemId, onAddNewC
         sub = `${item.category} &bull; Model: ${item.model}`;
         break;
       case 'Travel':
-        sub = `${item.type} Booking (${item.bookingNumber})`;
+        sub = item.travel;
         break;
       case 'Lodging & Boarding':
         sub = `${item.hotelName} &bull; Room: ${item.roomNumber || 'TBD'}`;
@@ -119,6 +119,70 @@ const ModuleList = ({ activeModule, selectedItemId, setSelectedItemId, onAddNewC
     return gradients[sum % gradients.length];
   };
 
+  const getTableColumns = () => {
+    switch (activeModule) {
+      case 'Actors':
+        return [
+          { label: 'Cast ID', key: 'castId' },
+          { label: 'Name', key: 'name' },
+          { label: 'Role', key: 'role' },
+          { label: 'Character', key: 'characterName' },
+          { label: 'Email ID', key: 'email' },
+          { label: 'Phone Number', key: 'phone' },
+          { label: 'Per Day Cost', key: 'perDayFee', isCurrency: true },
+          { label: 'Working Days', key: 'daysScheduled' }
+        ];
+      case 'HOD':
+      case 'Technical Crew':
+        return [
+          { label: 'Crew ID', key: 'crewId' },
+          { label: 'Name', key: 'name' },
+          { label: 'Role', key: 'role' },
+          { label: 'Department', key: 'department' },
+          { label: 'Email ID', key: 'email' },
+          { label: 'Phone Number', key: 'phone' },
+          { label: 'Working Days', key: 'daysScheduled' },
+          { label: 'Daily Rate', key: 'price', isCurrency: true }
+        ];
+      case 'Travel':
+        return [
+          { label: 'Travel ID', key: 'travelId' },
+          { label: 'Passenger/Group Name', key: 'name' },
+          { label: 'Travel Details', key: 'travel' },
+          { label: 'Lodging & Boarding', key: 'lodgingAndBoarding' },
+          { label: 'Costumes', key: 'costumes' },
+          { label: 'Catering', key: 'catering' },
+          { label: 'Vehicles', key: 'vehicles' },
+          { label: 'Total Price', key: 'price', isCurrency: true }
+        ];
+      case 'Vendors':
+        return [
+          { label: 'Vendor ID', key: 'vendorId' },
+          { label: 'Name', key: 'name' },
+          { label: 'Equipments', key: 'equipments' },
+          { label: 'Email ID', key: 'email' },
+          { label: 'Contact Number', key: 'contact' },
+          { label: 'Price', key: 'price', isCurrency: true }
+        ];
+      case 'Finance':
+        return [
+          { label: 'Finance ID', key: 'financeId' },
+          { label: 'Expense Name', key: 'itemName' },
+          { label: 'Category', key: 'category' },
+          { label: 'Email ID', key: 'email' },
+          { label: 'Phone Number', key: 'phone' },
+          { label: 'Per Day Cost', key: 'perDayCost', isCurrency: true },
+          { label: 'Working Days', key: 'workingDays' },
+          { label: 'Total Cost', key: 'total', isCostCalc: true }
+        ];
+      default:
+        return [
+          { label: 'ID', key: 'id' },
+          { label: 'Name', key: 'name' }
+        ];
+    }
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', height: '100%' }}>
       <div className="module-controls">
@@ -163,54 +227,77 @@ const ModuleList = ({ activeModule, selectedItemId, setSelectedItemId, onAddNewC
             </p>
           </div>
         ) : (
-          <div className="items-grid">
-            {filteredItems.map(item => {
-              const name = getItemName(item);
-              const subtitle = getItemSubtitle(item);
-              const status = getStatus(item);
-              const cost = calculateItemCost(activeModule, item);
-              const isSelected = selectedItemId === item.id;
-
-              return (
-                <div
-                  key={item.id}
-                  className={`item-card ${isSelected ? 'selected' : ''}`}
-                  onClick={() => setSelectedItemId(item.id)}
-                >
-                  <div className="item-card-header">
-                    <div className="item-avatar">
-                      {getInitials(name)}
-                    </div>
-
-                    <div className="item-title-wrapper">
-                      <h4 className="item-title">{name}</h4>
-                      <p
-                        className="item-subtitle"
-                        dangerouslySetInnerHTML={{ __html: subtitle }}
-                      ></p>
-                    </div>
-                  </div>
-
-                  <div className="item-card-stats">
-                    <div className="item-card-stat">
-                      <span className="stat-label">Status</span>
-                      <div>
-                        <span className={`badge ${status.toLowerCase().replace(' ', '-')}`}>
-                          {status}
-                        </span>
-                      </div>
-                    </div>
-
-                    {activeModule !== 'Documents' && (
-                      <div className="item-card-stat" style={{ textAlign: 'right' }}>
-                        <span className="stat-label">Financials</span>
-                        <div className="stat-value">{formatCurrency(cost)}</div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+          <div className="table-responsive" style={{
+            overflowX: 'auto',
+            background: 'rgba(255, 255, 255, 0.02)',
+            borderRadius: '12px',
+            border: '1px solid var(--glass-border)',
+            boxShadow: 'var(--glass-shadow)'
+          }}>
+            <table className="module-data-table" style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              fontSize: '13px',
+              textAlign: 'left'
+            }}>
+              <thead>
+                <tr style={{
+                  borderBottom: '1px solid var(--glass-border)',
+                  background: 'rgba(92, 113, 94, 0.12)'
+                }}>
+                  {getTableColumns().map((col, idx) => (
+                    <th key={idx} style={{
+                      padding: '12px 16px',
+                      fontWeight: '800',
+                      color: 'hsl(var(--text-primary))',
+                      fontSize: '11px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}>
+                      {col.label}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {filteredItems.map(item => {
+                  const isSelected = selectedItemId === item.id;
+                  return (
+                    <tr
+                      key={item.id}
+                      onClick={() => setSelectedItemId(item.id)}
+                      style={{
+                        borderBottom: '1px solid rgba(255,255,255,0.05)',
+                        cursor: 'pointer',
+                        background: isSelected ? 'rgba(92, 113, 94, 0.18)' : 'transparent',
+                        transition: 'var(--transition-smooth)'
+                      }}
+                      className="table-row-hover"
+                    >
+                      {getTableColumns().map((col, idx) => {
+                        let val = item[col.key];
+                        if (col.isCostCalc) {
+                          val = calculateItemCost(activeModule, item);
+                        }
+                        return (
+                          <td key={idx} style={{
+                            padding: '12px 16px',
+                            color: isSelected ? '#5c715e' : 'hsl(var(--text-secondary))',
+                            fontWeight: col.isCostCalc || col.isCurrency || col.key === 'name' || col.key === 'itemName' ? '700' : 'normal'
+                          }}>
+                            {col.isCurrency || col.isCostCalc ? (
+                              typeof val === 'number' ? formatCurrency(val) : val
+                            ) : (
+                              val || 'N/A'
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         )}
       </div>

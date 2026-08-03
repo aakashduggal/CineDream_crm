@@ -3,6 +3,7 @@ import { ProductionProvider, ProductionContext } from './context/ProductionConte
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
+import BudgetTopsheet from './components/BudgetTopsheet';
 import ModuleList from './components/ModuleList';
 import DetailView from './components/DetailView';
 import ItemForm from './components/ItemForm';
@@ -103,6 +104,8 @@ function MainAppContent() {
 
           {activeModule === 'Finance' && financeSubTab === 'dashboard' ? (
             <Dashboard />
+          ) : activeModule === 'Dashboard' ? (
+            <BudgetTopsheet />
           ) : (
             <div className="single-pane-wrapper">
               {selectedItemId ? (
