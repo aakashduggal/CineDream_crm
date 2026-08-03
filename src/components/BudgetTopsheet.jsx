@@ -288,14 +288,14 @@ const BudgetTopsheet = () => {
       }}>
         <div>
           <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '150px' }}>Production House</span><span>CineDreams Productions Private Limited</span></div>
-          <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '150px' }}>Project Title</span><span>YEH DIL BEWAJAH (PROMO TEASER)</span></div>
+          <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '150px' }}>Project Title</span><span>Maikhana Express</span></div>
           <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '150px' }}>Shooting Dates</span><span>{metadata.startDate} to {metadata.endDate}</span></div>
           <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '150px' }}>Shoot Days</span><span>30-35 Days</span></div>
         </div>
         <div>
           <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '180px' }}>Producer</span><span>MR. JAYANTH SINHA</span></div>
           <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '180px' }}>Director</span><span>MR. JAYANTH SINHA</span></div>
-          <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '180px' }}>Executive Production</span><span>MR. Vasu Bhandari</span></div>
+          <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '180px' }}>Executive Producer</span><span>MR. Vasu Bhandari</span></div>
           <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '180px' }}>Locations</span><span>DELHI NCR</span></div>
         </div>
       </div>
