@@ -1,462 +1,216 @@
-import React, { useContext, useState } from 'react';
-import { ProductionContext } from '../../context/ProductionContext';
+import React from 'react';
 
 const BudgetTopsheet = () => {
-  const { data, metadata } = useContext(ProductionContext);
-  
-  const [overrides, setOverrides] = useState(() => {
-    const saved = localStorage.getItem('cinedream_topsheet_overrides');
-    return saved ? JSON.parse(saved) : {};
-  });
-
-  const handleOverrideChange = (type, index, field, value) => {
-    setOverrides(prev => {
-      const currentOverride = { ...(prev[`${type}_${index}`] || {}) };
-      if (value === '' || value === null) {
-        delete currentOverride[field];
-      } else {
-        currentOverride[field] = value;
-      }
-      const newOverrides = { ...prev, [`${type}_${index}`]: currentOverride };
-      localStorage.setItem('cinedream_topsheet_overrides', JSON.stringify(newOverrides));
-      return newOverrides;
-    });
-  };
-
-  const formatCurrencyValue = (val) => {
-    if (typeof val === 'string') return val;
+  const formatCurrency = (val) => {
     return new Intl.NumberFormat('en-IN', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
     }).format(val);
   };
 
-  // Helper resolvers for dynamic data calculation from Context Arrays
-  
-  // 1. Camera & Equipment (Look up in data.Equipment)
-  const cameraEq = data.Equipment?.find(e => 
-    e.name?.toLowerCase().includes('camera') || 
-    e.name?.toLowerCase().includes('venice') ||
-    e.model?.toLowerCase().includes('camera') || 
-    e.model?.toLowerCase().includes('venice')
-  );
-  const cameraTotal = cameraEq ? (Number(cameraEq.rentalCostPerDay || 0) * Number(cameraEq.daysRented || 0)) : 175000;
-  const cameraDays = cameraEq ? Number(cameraEq.daysRented || 5) : 5;
-  const cameraPerDay = cameraEq ? Number(cameraEq.rentalCostPerDay || 35000) : 35000;
+  const projectInfo = {
+    title: "Zara Tasweer Se Tu",
+    format: "Feature Film (Hindi / Regional Dialect)",
+    budget: 685000000,
+    schedule: "35 Days (Single Location / Tier-2 Town & Semi-Rural Bihar Setup)",
+  };
 
-  // 2. Lights & Equipment (Look up in data.Equipment)
-  const lightsEq = data.Equipment?.find(e => 
-    (e.name?.toLowerCase().includes('light') || 
-     e.name?.toLowerCase().includes('grip') || 
-     e.name?.toLowerCase().includes('dolly') ||
-     e.name?.toLowerCase().includes('drone') ||
-     e.model?.toLowerCase().includes('light') ||
-     e.model?.toLowerCase().includes('grip') ||
-     e.model?.toLowerCase().includes('dolly') ||
-     e.model?.toLowerCase().includes('drone')) &&
-    e.id !== cameraEq?.id
-  );
-  const lightsTotal = lightsEq ? (Number(lightsEq.rentalCostPerDay || 0) * Number(lightsEq.daysRented || 0)) : 200000;
-  const lightsDays = lightsEq ? Number(lightsEq.daysRented || 5) : 5;
-  const lightsPerDay = lightsEq ? Number(lightsEq.rentalCostPerDay || 40000) : 40000;
-
-  // Filter remaining non-mapped equipments
-  const extraEquipments = (data.Equipment || []).filter(e => 
-    e.id !== cameraEq?.id && e.id !== lightsEq?.id
-  );
-
-  // 3. DOP & Staff
-  const dopCrew = data.HOD?.find(h => 
-    h.role?.toLowerCase().includes('dop') || 
-    h.role?.toLowerCase().includes('photography')
-  );
-  const dopTotal = dopCrew ? (Number(dopCrew.price || 0) * Number(dopCrew.daysScheduled || 0)) : 100000;
-
-  // 4. Cast (4)
-  const castList = (data.Actors || []).filter(a => 
-    !a.role?.toLowerCase().includes('extra') && 
-    !a.role?.toLowerCase().includes('talent')
-  );
-  const castTotal = castList.length > 0 
-    ? castList.reduce((sum, a) => sum + (Number(a.perDayFee || 0) * Number(a.daysScheduled || 0)), 0) 
-    : 400000;
-
-  // 5. Local Transportation & Food
-  const localTrans = data.Travel?.find(t => 
-    t.travel?.toLowerCase().includes('local') || 
-    t.vehicles?.toLowerCase().includes('innova') ||
-    t.catering?.toLowerCase().includes('food')
-  );
-  const transTotal = localTrans ? Number(localTrans.price || 0) : 100000;
-  const transDays = metadata.shootingDays || 5;
-  const transPerDay = transTotal / transDays;
-
-  // 6. Travelling cost to Delhi
-  const travelDelhi = data.Travel?.find(t => 
-    t.travel?.toLowerCase().includes('delhi') || 
-    t.travel?.toLowerCase().includes('flight') || 
-    t.travel?.toLowerCase().includes('train')
-  );
-  const travelDelhiTotal = travelDelhi ? Number(travelDelhi.price || 0) : 200000;
-
-  // 7. Hotels
-  const hotelArr = data.Travel?.find(t => 
-    t.lodgingAndBoarding?.toLowerCase().includes('hotel') || 
-    t.lodgingAndBoarding?.toLowerCase().includes('room')
-  );
-  const hotelTotal = hotelArr ? Number(hotelArr.price || 0) : 180000;
-  const hotelDays = 6;
-  const hotelPerDay = hotelTotal / hotelDays;
-
-  // 8. Production Manager & Staff
-  const pmCrew = data.HOD?.find(h => 
-    h.role?.toLowerCase().includes('production manager') || 
-    h.role?.toLowerCase().includes('pm')
-  );
-  const pmTotal = pmCrew ? (Number(pmCrew.price || 0) * Number(pmCrew.daysScheduled || 0)) : 35000;
-
-  // 9. Extra Talent (15)
-  const extrasList = (data.Actors || []).filter(a => 
-    a.role?.toLowerCase().includes('extra') || 
-    a.role?.toLowerCase().includes('talent')
-  );
-  const extrasTotal = extrasList.length > 0 
-    ? extrasList.reduce((sum, a) => sum + (Number(a.perDayFee || 0) * Number(a.daysScheduled || 0)), 0) 
-    : 15000;
-
-  // 10. Art Director & Team
-  const artCrew = data.HOD?.find(h => 
-    h.role?.toLowerCase().includes('art') || 
-    h.role?.toLowerCase().includes('designer')
-  );
-  const artTotal = artCrew ? (Number(artCrew.price || 0) * Number(artCrew.daysScheduled || 0)) : 20000;
-
-  // 11. Sound
-  const soundCrew = data.HOD?.find(h => h.role?.toLowerCase().includes('sound')) || 
-                    data['Technical Crew']?.find(c => c.role?.toLowerCase().includes('sound'));
-  const soundTotal = soundCrew ? (Number(soundCrew.price || 0) * Number(soundCrew.daysScheduled || 0)) : 8000;
-
-  // 12. Makeup & Hair
-  const makeupCrew = data['Technical Crew']?.find(c => 
-    c.role?.toLowerCase().includes('makeup') || 
-    c.role?.toLowerCase().includes('hair')
-  );
-  const makeupTotal = makeupCrew ? (Number(makeupCrew.price || 0) * Number(makeupCrew.daysScheduled || 0)) : 10000;
-
-  // 13. (EXTRA) Locations
-  const locVend = data.Vendors?.find(v => 
-    v.description?.toLowerCase().includes('location') || 
-    v.name?.toLowerCase().includes('location')
-  );
-  const locTotal = locVend ? Number(locVend.price || 0) : 200000;
-
-  // 14. Property
-  const propVend = data.Vendors?.find(v => 
-    v.equipments?.toLowerCase().includes('prop') || 
-    v.description?.toLowerCase().includes('prop')
-  );
-  const propTotal = propVend ? Number(propVend.price || 0) : 20000;
-
-  // 15. Wardrobe Co-ordinator & Costumes
-  const costumesCrew = data['Technical Crew']?.find(c => 
-    c.role?.toLowerCase().includes('wardrobe') || 
-    c.role?.toLowerCase().includes('costume')
-  );
-  const costumesTotal = costumesCrew ? (Number(costumesCrew.price || 0) * Number(costumesCrew.daysScheduled || 0)) : 25000;
-
-  // 16. Director & Direction Team
-  const dirCrew = data['Technical Crew']?.find(c => 
-    c.role?.toLowerCase().includes('director') || 
-    c.role?.toLowerCase().includes('ad')
-  );
-  const dirTotal = dirCrew ? (Number(dirCrew.price || 0) * Number(dirCrew.daysScheduled || 0)) : 70000;
-
-  // Assemble dynamic production items
-  const productionExpenses = [
-    { no: '1.', name: 'Camera & Equipment (Sony Venice)', perDay: cameraPerDay, days: cameraDays, total: cameraTotal },
-    { no: '2.', name: 'Lights & Equipment (Dolly Panther, Drone)', perDay: lightsPerDay, days: lightsDays, total: lightsTotal },
-    { no: '3.', name: 'DOP & Staff', perDay: 'PACKAGE', days: 'PACKAGE', total: dopTotal },
-    { no: '4.', name: `Cast (${castList.length || 4})`, perDay: 'PACKAGE', days: 'PACKAGE', total: castTotal },
-    { no: '5.', name: 'Local Transportation & Food', perDay: 'PACKAGE', days: transDays, total: transTotal },
-    { no: '6.', name: 'Travelling cost to Delhi (8000 per Person)', perDay: 'PACKAGE', days: 'PACKAGE', total: travelDelhiTotal },
-    { no: '7.', name: 'Hotels (10 Rooms x 3000)', perDay: hotelPerDay, days: hotelDays, total: hotelTotal },
-    { no: '8.', name: 'Production Manager & Production Staff (3)', perDay: 'PACKAGE', days: 'PACKAGE', total: pmTotal },
-    { no: '9.', name: `Extra Talent (${extrasList.length ? extrasList.reduce((sum, e) => sum + (Number(e.daysScheduled) || 0), 0) : 15})`, perDay: extrasList[0] ? Number(extrasList[0].perDayFee) : 500, days: extrasList[0] ? Number(extrasList[0].daysScheduled) : 2, total: extrasTotal },
-    { no: '10.', name: 'Art Director & Team', perDay: artCrew ? Number(artCrew.price) : 5000, days: artCrew ? Number(artCrew.daysScheduled) : 4, total: artTotal },
-    { no: '11.', name: 'Sound', perDay: soundCrew ? Number(soundCrew.price) : 2000, days: soundCrew ? Number(soundCrew.daysScheduled) : 4, total: soundTotal },
-    { no: '12.', name: 'Makeup & Hair', perDay: makeupCrew ? Number(makeupCrew.price) : 2500, days: makeupCrew ? Number(makeupCrew.daysScheduled) : 4, total: makeupTotal },
-    { no: '13. (EXTRA)', name: 'Locations (+ Electricity)', perDay: locVend ? Number(locVend.price) / 4 : 50000, days: 4, total: locTotal },
-    { no: '14.', name: 'Property', perDay: 'PACKAGE', days: 'PACKAGE', total: propTotal },
-    { no: '15.', name: 'Wardrobe Co-ordinator & Costumes', perDay: 'PACKAGE', days: 'PACKAGE', total: costumesTotal },
-    { no: '16.', name: 'Director & Direction Team (3)', perDay: 'PACKAGE', days: 'PACKAGE', total: dirTotal }
+  const summaryData = [
+    { id: 'A', name: 'Above The Line (ATL)', budget: 185000000, share: 27.0, focus: 'Director, Script & Key Cast (Mid-tier/Indie ensembles)', color: '#bc2e5c' },
+    { id: 'B', name: 'Below The Line (BTL) – Production', budget: 255000000, share: 37.2, focus: 'Line Production, Camera, Crew, Catering, Locations', color: '#3d8cd5' },
+    { id: 'C', name: 'BTL – Post-Production', budget: 85000000, share: 12.4, focus: 'Editing, Sound Design, DI Color, Music Scoring', color: '#5e2ca5' },
+    { id: 'D', name: 'Marketing & Public Relations (P&A)', budget: 110000000, share: 16.1, focus: 'Digital Campaigns, Trailer/Posters, PR, City Tour', color: '#e67e22' },
+    { id: 'E', name: 'Legal, Insurance & Contingency', budget: 50000000, share: 7.3, focus: 'Insurance, Legal Clearance, 5% Unforeseen Reserve', color: '#2c3e50' },
   ];
 
-  // Append extra equipments dynamically!
-  extraEquipments.forEach((eq, index) => {
-    productionExpenses.push({
-      no: `${17 + index}.`,
-      name: eq.name + (eq.model ? ` (${eq.model})` : ''),
-      perDay: Number(eq.rentalCostPerDay || 0),
-      days: Number(eq.daysRented || 0),
-      total: Number(eq.rentalCostPerDay || 0) * Number(eq.daysRented || 0)
-    });
-  });
-
-  // Dynamic Post Production Lookup
-  const editFin = data.Finance?.find(f => f.category?.toLowerCase().includes('edit'));
-  const editTotal = editFin ? (Number(editFin.perDayCost || 0) * Number(editFin.workingDays || 0)) : 15000;
-
-  const scoreFin = data.Finance?.find(f => f.category?.toLowerCase().includes('music') || f.category?.toLowerCase().includes('score'));
-  const scoreTotal = scoreFin ? (Number(scoreFin.perDayCost || 0) * Number(scoreFin.workingDays || 0)) : 12000;
-
-  const animFin = data.Finance?.find(f => f.category?.toLowerCase().includes('grading') || f.category?.toLowerCase().includes('di'));
-  const animTotal = animFin ? (Number(animFin.perDayCost || 0) * Number(animFin.workingDays || 0)) : 15000;
-
-  const vfxFin = data.Finance?.find(f => f.category?.toLowerCase().includes('vfx') || f.category?.toLowerCase().includes('cgi'));
-  const vfxTotal = vfxFin ? (Number(vfxFin.perDayCost || 0) * Number(vfxFin.workingDays || 0)) : 15000;
-
-  const postProductionExpenses = [
-    { no: '1.', name: 'Film Editing', perDay: 'PACKAGE', days: 'PACKAGE', total: editTotal },
-    { no: '2.', name: 'Music & Post Production Sound (Foley)', perDay: 'PACKAGE', days: 'PACKAGE', total: scoreTotal },
-    { no: '3.', name: 'Animation & DI', perDay: 'PACKAGE', days: 'PACKAGE', total: animTotal },
-    { no: '4.', name: 'Visual Effects', perDay: 'PACKAGE', days: 'PACKAGE', total: vfxTotal }
-  ];
-
-  const applyOverrides = (arr, type) => arr.map((exp, index) => {
-    const override = overrides[`${type}_${index}`] || {};
-    const perDay = override.perDay !== undefined ? override.perDay : exp.perDay;
-    const days = override.days !== undefined ? override.days : exp.days;
-    let total = exp.total;
-    if (override.total !== undefined) {
-      total = override.total;
-    } else if (override.perDay !== undefined || override.days !== undefined) {
-      if (perDay !== 'PACKAGE' && days !== 'PACKAGE' && !isNaN(perDay) && !isNaN(days)) {
-        total = Number(perDay || 0) * Number(days || 0);
-      }
+  const breakdownData = [
+    {
+      category: 'A. Above The Line (ATL)',
+      total: 185000000,
+      color: '#bc2e5c',
+      items: [
+        { name: 'Story, Screenplay & Rights', amount: 25000000, desc: 'Script Purchase, Screenplay & Dialogue Commission' },
+        { name: 'Director & Direction Team Fees', amount: 45000000, desc: "Director's Fee + Associate & Chief Assistant Director" },
+        { name: 'Cast (Principal & Supporting Ensembles)', amount: 95000000, desc: 'Lead Actor (Peter Pandey), Lead Actress (Mohini), Key Character Roles (Guddu, Nalini, Pandit Ji, Dr. Kamal, Family Ensembles)' },
+        { name: 'Producers & Development Overhead', amount: 20000000, desc: 'Line Producer setup, story rights clearing, initial development pool' },
+      ]
+    },
+    {
+      category: 'B. Production / Below The Line (BTL)',
+      total: 255000000,
+      color: '#3d8cd5',
+      items: [
+        { name: 'Production Crew & Personnel (35 Days Shoot)', amount: 55000000, desc: 'DoP, Gaffer, Key Grip, Art Director, Costume Designer, Sync Sound Engineer, Focus Puller, PAs' },
+        { name: 'Camera, Lighting & Grip Equipment', amount: 38000000, desc: 'ARRI/RED Camera packages, Anamorphic prime lenses, basic lighting truck, generator vans' },
+        { name: 'Art Department, Props & Set Dressing', amount: 35000000, desc: 'Cheka ceremony set modifications, local film set props (Shivji/snake setup), home interiors' },
+        { name: 'Location Fees & Local Permits', amount: 22000000, desc: 'House rentals, outdoor shoot permissions, local liaison fees' },
+        { name: 'Travel, Lodging & Logistics', amount: 45000000, desc: 'Hotel/homestay bookings for 35 days, local transport, vehicle rentals' },
+        { name: 'Food, Catering & Craft Services', amount: 20000000, desc: 'Full meal services for crew/cast across pre-production and principal photography' },
+        { name: 'Costumes, Hair & Makeup', amount: 25000000, desc: 'Colorism/shade modification FX makeup (Nalini/Mohini key scenes), wardrobe units' },
+        { name: 'Background Extras & Day Players', amount: 15000000, desc: 'Wedding crowd, police station sequence, media crowd' },
+      ]
+    },
+    {
+      category: 'C. Post-Production',
+      total: 85000000,
+      color: '#5e2ca5',
+      items: [
+        { name: 'Picture Editing', amount: 18000000, desc: 'Senior Editor, Assistant Editors, Offline/Online Suite Rentals' },
+        { name: 'Sound Design, Dubbing (ADR) & Mixing', amount: 22000000, desc: 'Foley, dialogue cleanup, Atmos final mix' },
+        { name: 'Color Grading (DI)', amount: 15000000, desc: 'Senior Colorist & DI Facility Days' },
+        { name: 'Original Soundtrack & Music Composition', amount: 20000000, desc: 'Original background score, song arrangement, mixing' },
+        { name: 'VFX, Titles & Mastering', amount: 10000000, desc: 'Cosmetic cleanups, subtitle tracks, DCP generation, archival masters' },
+      ]
+    },
+    {
+      category: 'D. Marketing, PR & Promotions (P&A)',
+      total: 110000000,
+      color: '#e67e22',
+      items: [
+        { name: 'Digital & Social Media Marketing', amount: 45000000, desc: 'Influencer outreach, targeted digital ad spend, clip/reels distribution' },
+        { name: 'Public Relations (PR) & Press Conferences', amount: 25000000, desc: 'Agency retainers, trailer launch event, media kits' },
+        { name: 'Posters, Key Art & Trailer Cut', amount: 15000000, desc: 'Trailer editor, poster designer, asset localized variations' },
+        { name: 'Press/City Tours & Pre-release Screenings', amount: 25000000, desc: 'Talent travel for press junkets, select festival screeners' },
+      ]
+    },
+    {
+      category: 'E. Contingency, Legal & Insurance',
+      total: 50000000,
+      color: '#2c3e50',
+      items: [
+        { name: 'Production & Errors/Omissions (E&O) Insurance', amount: 15000000, desc: '' },
+        { name: 'Legal Fees & Contract Clearances', amount: 10000000, desc: '' },
+        { name: 'Emergency Reserve / Contingency Buffer (~5%)', amount: 25000000, desc: '' },
+      ]
     }
-    return { ...exp, perDay, days, total, originalIndex: index };
-  });
+  ];
 
-  const finalProductionExpenses = applyOverrides(productionExpenses, 'prod');
-  const finalPostProductionExpenses = applyOverrides(postProductionExpenses, 'post');
-
-  const totalProduction = finalProductionExpenses.reduce((sum, item) => sum + Number(item.total || 0), 0);
-  const totalPostProduction = finalPostProductionExpenses.reduce((sum, item) => sum + Number(item.total || 0), 0);
-  const totalBoth = totalProduction + totalPostProduction;
-  const contingency = totalBoth * 0.10;
-  const grandTotal = totalBoth + contingency;
+  const pitchHighlights = [
+    { title: 'High Production Value-to-Cost Ratio', desc: 'Single-region location setup minimizes transit costs, maximizing on-screen visual value.' },
+    { title: 'Commercial Satire Appeal', desc: 'Combines accessible comedy with strong social commentary, targeting both multiplex audiences and OTT platforms.' },
+    { title: 'Controlled Risk Profile', desc: 'The allocated ₹1.10 Cr promotional budget guarantees strong digital visibility while keeping the production budget tight at ₹3.40 Cr total for BTL and Post.' },
+  ];
 
   return (
     <div className="topsheet-container" style={{
-      background: 'white',
+      background: '#ffffff',
       color: '#333',
-      padding: '24px',
-      borderRadius: '12px',
-      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
-      fontFamily: 'system-ui, -apple-system, sans-serif',
-      maxWidth: '1000px',
+      padding: '32px',
+      borderRadius: '16px',
+      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+      fontFamily: 'system-ui, sans-serif',
+      maxWidth: '1200px',
       margin: '0 auto',
-      overflowX: 'auto'
+      border: '1px solid #eee'
     }}>
-      {/* Topsheet Header Bar */}
+      {/* Hero Header */}
       <div style={{
-        backgroundColor: '#2c3e50',
+        background: 'linear-gradient(135deg, #1c2520 0%, #2a3a30 100%)',
+        padding: '32px',
+        borderRadius: '12px',
+        marginBottom: '32px',
         color: 'white',
-        padding: '16px 20px',
-        fontWeight: 'bold',
-        fontSize: '20px',
-        letterSpacing: '0.5px',
-        fontFamily: 'monospace',
-        marginBottom: '20px',
-        borderRadius: '4px 4px 0 0'
+        position: 'relative'
       }}>
-        BUDGET TOPSHEET
-      </div>
-
-      {/* Meta Specs Grid Block */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-        gap: '24px',
-        border: '1px solid #ddd',
-        padding: '16px 20px',
-        backgroundColor: '#f8f9fa',
-        fontSize: '13px',
-        lineHeight: '1.8',
-        marginBottom: '20px',
-        borderRadius: '4px'
-      }}>
-        <div>
-          <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '150px' }}>Production House</span><span>CineDreams Productions Private Limited</span></div>
-          <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '150px' }}>Project Title</span><span>Maikhana Express</span></div>
-          <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '150px' }}>Shooting Dates</span><span>{metadata.startDate} to {metadata.endDate}</span></div>
-          <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '150px' }}>Shoot Days</span><span>30-35 Days</span></div>
-        </div>
-        <div>
-          <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '180px' }}>Producer</span><span>MR. JAYANTH SINHA</span></div>
-          <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '180px' }}>Director</span><span>MR. JAYANTH SINHA</span></div>
-          <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '180px' }}>Executive Producer</span><span>MR. Vasu Bhandari</span></div>
-          <div style={{ display: 'flex' }}><span style={{ fontWeight: 'bold', width: '180px' }}>Locations</span><span>DELHI NCR</span></div>
+        <h1 style={{ fontSize: '32px', fontWeight: '800', margin: '0 0 16px 0' }}>
+          Production Budget Top Sheet
+        </h1>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
+          <div>
+            <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.7 }}>Project Title</div>
+            <div style={{ fontSize: '18px', fontWeight: '600', color: '#4ade80' }}>{projectInfo.title}</div>
+          </div>
+          <div>
+            <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.7 }}>Format</div>
+            <div style={{ fontSize: '15px', fontWeight: '500' }}>{projectInfo.format}</div>
+          </div>
+          <div>
+            <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.7 }}>Shooting Schedule</div>
+            <div style={{ fontSize: '14px', fontWeight: '500' }}>{projectInfo.schedule}</div>
+          </div>
+          <div>
+            <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.7 }}>Target Total Budget</div>
+            <div style={{ fontSize: '24px', fontWeight: '800', color: '#4ade80' }}>{formatCurrency(projectInfo.budget)}</div>
+          </div>
         </div>
       </div>
 
-      {/* Production Expenses Table */}
-      <div style={{ overflowX: 'auto', width: '100%', marginBottom: '24px', border: '1px solid #333', borderRadius: '4px', WebkitOverflowScrolling: 'touch' }}>
-        <table style={{
-          width: '100%',
-          borderCollapse: 'collapse',
-          fontSize: '12px',
-          textAlign: 'left',
-          minWidth: '650px'
-        }}>
+      {/* Summary Section */}
+      <h2 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '20px' }}>Budget Summary</h2>
+      
+      <div style={{ display: 'grid', gap: '16px', marginBottom: '48px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #eee', borderRadius: '12px', overflow: 'hidden' }}>
           <thead>
-            <tr style={{ backgroundColor: '#bc2e5c', color: 'white', fontWeight: 'bold' }}>
-              <th style={{ padding: '8px 12px', border: '1px solid #333', width: '40px' }}></th>
-              <th style={{ padding: '8px 12px', border: '1px solid #333' }}>PRODUCTION EXPENSES</th>
-              <th style={{ padding: '8px 12px', border: '1px solid #333', width: '120px', textAlign: 'center' }}>PER DAY COST</th>
-              <th style={{ padding: '8px 12px', border: '1px solid #333', width: '120px', textAlign: 'center' }}>TOTAL DAYS</th>
-              <th style={{ padding: '8px 12px', border: '1px solid #333', width: '220px', textAlign: 'right' }}>TOTAL COST</th>
+            <tr style={{ background: '#f5f5f5', borderBottom: '2px solid #ddd' }}>
+              <th style={{ padding: '16px 24px', textAlign: 'left', fontSize: '14px', color: '#555' }}>Category</th>
+              <th style={{ padding: '16px 24px', textAlign: 'left', fontSize: '14px', color: '#555' }}>Key Focus Areas</th>
+              <th style={{ padding: '16px 24px', textAlign: 'right', fontSize: '14px', color: '#555' }}>Budget Allocation</th>
+              <th style={{ padding: '16px 24px', textAlign: 'right', fontSize: '14px', color: '#555' }}>Share (%)</th>
             </tr>
           </thead>
           <tbody>
-            {finalProductionExpenses.map((exp, index) => (
-              <tr key={index} style={{ backgroundColor: index % 2 === 0 ? 'white' : '#fcfcfc' }}>
-                <td style={{ padding: '6px 12px', border: '1px solid #333', textAlign: 'center', fontWeight: 'bold' }}>{exp.no}</td>
-                <td style={{ padding: '6px 12px', border: '1px solid #333', fontWeight: '500' }}>{exp.name}</td>
-                <td style={{ padding: '6px 12px', border: '1px solid #333', textAlign: 'center' }}>
-                  <input 
-                    type="text" 
-                    value={exp.perDay}
-                    onChange={(e) => handleOverrideChange('prod', exp.originalIndex, 'perDay', e.target.value)}
-                    style={{ width: '80px', textAlign: 'center', border: '1px solid #ccc', padding: '4px', borderRadius: '4px' }}
-                  />
+            {summaryData.map((item, idx) => (
+              <tr key={item.id} style={{ borderBottom: idx !== summaryData.length - 1 ? '1px solid #eee' : 'none', background: idx % 2 === 0 ? '#fff' : '#fafafa' }}>
+                <td style={{ padding: '16px 24px', verticalAlign: 'top' }}>
+                  <div style={{ fontSize: '15px', fontWeight: '700', color: item.color }}>{item.name}</div>
                 </td>
-                <td style={{ padding: '6px 12px', border: '1px solid #333', textAlign: 'center' }}>
-                  <input 
-                    type="text" 
-                    value={exp.days}
-                    onChange={(e) => handleOverrideChange('prod', exp.originalIndex, 'days', e.target.value)}
-                    style={{ width: '60px', textAlign: 'center', border: '1px solid #ccc', padding: '4px', borderRadius: '4px' }}
-                  />
+                <td style={{ padding: '16px 24px', verticalAlign: 'top', color: '#666', fontSize: '13px', maxWidth: '300px' }}>
+                  {item.focus}
                 </td>
-                <td style={{ padding: '6px 12px', border: '1px solid #333', textAlign: 'right', fontWeight: 'bold' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    <span style={{ fontWeight: 'normal', color: '#666', marginRight: '4px' }}>₹</span>
-                    <input 
-                      type="number" 
-                      value={exp.total}
-                      onChange={(e) => handleOverrideChange('prod', exp.originalIndex, 'total', e.target.value === '' ? '' : Number(e.target.value))}
-                      style={{ width: '100px', textAlign: 'right', border: '1px solid #ccc', padding: '4px', borderRadius: '4px', fontWeight: 'bold' }}
-                    />
+                <td style={{ padding: '16px 24px', verticalAlign: 'top', textAlign: 'right', fontSize: '16px', fontWeight: '700' }}>
+                  {formatCurrency(item.budget)}
+                </td>
+                <td style={{ padding: '16px 24px', verticalAlign: 'top', textAlign: 'right' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px' }}>
+                    <div style={{ fontSize: '14px', fontWeight: '600', color: item.color }}>{item.share}%</div>
+                    <div style={{ width: '80px', height: '6px', background: '#e0e0e0', borderRadius: '3px', overflow: 'hidden' }}>
+                      <div style={{ width: `${item.share}%`, height: '100%', background: item.color, borderRadius: '3px' }}></div>
+                    </div>
                   </div>
                 </td>
               </tr>
             ))}
-            <tr style={{ backgroundColor: '#eef2f7', fontWeight: 'bold' }}>
-              <td style={{ padding: '8px 12px', border: '1px solid #333' }}></td>
-              <td style={{ padding: '8px 12px', border: '1px solid #333', textAlign: 'center' }} colSpan={3}>Total Production</td>
-              <td style={{ padding: '8px 12px', border: '1px solid #333', textAlign: 'right', fontSize: '13px' }}>
-                <span style={{ float: 'left', color: '#666' }}>₹</span>
-                {formatCurrencyValue(totalProduction)}
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>
 
-      {/* Post Production Expenses Table */}
-      <div style={{ overflowX: 'auto', width: '100%', marginBottom: '20px', border: '1px solid #333', borderRadius: '4px', WebkitOverflowScrolling: 'touch' }}>
-        <table style={{
-          width: '100%',
-          borderCollapse: 'collapse',
-          fontSize: '12px',
-          textAlign: 'left',
-          minWidth: '650px'
-        }}>
-          <thead>
-            <tr style={{ backgroundColor: '#5e2ca5', color: 'white', fontWeight: 'bold' }}>
-              <th style={{ padding: '8px 12px', border: '1px solid #333', width: '40px' }}></th>
-              <th style={{ padding: '8px 12px', border: '1px solid #333' }}>POST-PRODUCTION EXPENSES</th>
-              <th style={{ padding: '8px 12px', border: '1px solid #333', width: '120px', textAlign: 'center' }}></th>
-              <th style={{ padding: '8px 12px', border: '1px solid #333', width: '120px', textAlign: 'center' }}></th>
-              <th style={{ padding: '8px 12px', border: '1px solid #333', width: '220px', textAlign: 'right' }}></th>
-            </tr>
-          </thead>
-          <tbody>
-            {finalPostProductionExpenses.map((exp, index) => (
-              <tr key={index} style={{ backgroundColor: 'white' }}>
-                <td style={{ padding: '6px 12px', border: '1px solid #333', textAlign: 'center', fontWeight: 'bold' }}>{exp.no}</td>
-                <td style={{ padding: '6px 12px', border: '1px solid #333', fontWeight: '500' }}>{exp.name}</td>
-                <td style={{ padding: '6px 12px', border: '1px solid #333', textAlign: 'center' }}>
-                  <input 
-                    type="text" 
-                    value={exp.perDay}
-                    onChange={(e) => handleOverrideChange('post', exp.originalIndex, 'perDay', e.target.value)}
-                    style={{ width: '80px', textAlign: 'center', border: '1px solid #ccc', padding: '4px', borderRadius: '4px' }}
-                  />
-                </td>
-                <td style={{ padding: '6px 12px', border: '1px solid #333', textAlign: 'center' }}>
-                  <input 
-                    type="text" 
-                    value={exp.days}
-                    onChange={(e) => handleOverrideChange('post', exp.originalIndex, 'days', e.target.value)}
-                    style={{ width: '60px', textAlign: 'center', border: '1px solid #ccc', padding: '4px', borderRadius: '4px' }}
-                  />
-                </td>
-                <td style={{ padding: '6px 12px', border: '1px solid #333', textAlign: 'right', fontWeight: 'bold' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    <span style={{ fontWeight: 'normal', color: '#666', marginRight: '4px' }}>₹</span>
-                    <input 
-                      type="number" 
-                      value={exp.total}
-                      onChange={(e) => handleOverrideChange('post', exp.originalIndex, 'total', e.target.value === '' ? '' : Number(e.target.value))}
-                      style={{ width: '100px', textAlign: 'right', border: '1px solid #ccc', padding: '4px', borderRadius: '4px', fontWeight: 'bold' }}
-                    />
-                  </div>
-                </td>
-              </tr>
-            ))}
-            <tr style={{ backgroundColor: '#eef2f7', fontWeight: 'bold' }}>
-              <td style={{ padding: '8px 12px', border: '1px solid #333' }}></td>
-              <td style={{ padding: '8px 12px', border: '1px solid #333', textAlign: 'center' }} colSpan={3}>Total Post Production</td>
-              <td style={{ padding: '8px 12px', border: '1px solid #333', textAlign: 'right', fontSize: '13px' }}>
-                <span style={{ float: 'left', color: '#666' }}>₹</span>
-                {formatCurrencyValue(totalPostProduction)}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      {/* Departmental Breakdown */}
+      <h2 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '24px' }}>Departmental Line-Item Breakdown</h2>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        {breakdownData.map((section, idx) => (
+          <div key={idx} style={{ border: '1px solid #eee', borderRadius: '12px', overflow: 'hidden' }}>
+            <div style={{ background: '#f5f5f5', padding: '16px 24px', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between' }}>
+              <h3 style={{ margin: 0, fontSize: '16px', fontWeight: '700', color: section.color }}>{section.category}</h3>
+              <div style={{ fontSize: '18px', fontWeight: '800' }}>{formatCurrency(section.total)}</div>
+            </div>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <tbody>
+                {section.items.map((item, itemIdx) => (
+                  <tr key={itemIdx} style={{ borderBottom: itemIdx !== section.items.length - 1 ? '1px solid #eee' : 'none' }}>
+                    <td style={{ padding: '16px 24px' }}>
+                      <div style={{ fontSize: '14px', fontWeight: '600', marginBottom: '4px' }}>{item.name}</div>
+                      <div style={{ fontSize: '12px', color: '#777' }}>{item.desc}</div>
+                    </td>
+                    <td style={{ padding: '16px 24px', textAlign: 'right', fontWeight: '600' }}>{formatCurrency(item.amount)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
       </div>
 
-      {/* Summary Totals Block */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        fontSize: '12px'
-      }}>
-        <div style={{ width: '100%', maxWidth: '400px', border: '1px solid #333', borderTop: 'none' }}>
-          <div style={{ display: 'flex', borderBottom: '1px solid #333' }}>
-            <span style={{ flex: 1, padding: '6px 12px', fontWeight: 'bold', backgroundColor: '#f5f5f5', textAlign: 'right' }}>TOTAL</span>
-            <span style={{ width: '180px', padding: '6px 12px', fontWeight: 'bold', textAlign: 'right', borderLeft: '1px solid #333' }}>
-              <span style={{ float: 'left', fontWeight: 'normal', color: '#666' }}>₹</span>
-              {formatCurrencyValue(totalBoth)}
-            </span>
+      {/* Financial Pitch Highlights */}
+      <h2 style={{ fontSize: '22px', fontWeight: '700', margin: '48px 0 24px 0' }}>Financial Pitch Highlights</h2>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+        {pitchHighlights.map((pitch, idx) => (
+          <div key={idx} style={{ background: '#f9f9f9', padding: '24px', borderRadius: '12px', border: '1px solid #eee' }}>
+            <h4 style={{ margin: '0 0 12px 0', fontSize: '16px', fontWeight: '700' }}>{pitch.title}</h4>
+            <p style={{ margin: 0, fontSize: '13px', lineHeight: '1.6', color: '#555' }}>{pitch.desc}</p>
           </div>
-          <div style={{ display: 'flex', borderBottom: '1px solid #333' }}>
-            <span style={{ flex: 1, padding: '6px 12px', fontWeight: 'bold', backgroundColor: '#f5f5f5', textAlign: 'right' }}>10% CONTINGENCY</span>
-            <span style={{ width: '180px', padding: '6px 12px', fontWeight: 'bold', textAlign: 'right', borderLeft: '1px solid #333' }}>
-              <span style={{ float: 'left', fontWeight: 'normal', color: '#666' }}>₹</span>
-              {formatCurrencyValue(contingency)}
-            </span>
-          </div>
-          <div style={{ display: 'flex', backgroundColor: '#2c3e50', color: 'white' }}>
-            <span style={{ flex: 1, padding: '8px 12px', fontWeight: 'bold', textAlign: 'right' }}>GRAND TOTAL</span>
-            <span style={{ width: '180px', padding: '8px 12px', fontWeight: 'bold', textAlign: 'right', borderLeft: '1px solid #333', fontSize: '14px' }}>
-              <span style={{ float: 'left', fontWeight: 'normal', color: 'rgba(255,255,255,0.7)' }}>₹</span>
-              {formatCurrencyValue(grandTotal)}
-            </span>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

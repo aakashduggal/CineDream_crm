@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect } from 'react';
 export const ProductionContext = createContext();
 
 const INITIAL_METADATA = {
-  projectName: "CINEDREAM CRM",
+  projectName: "PRODUCTION CRM",
   genre: "Promo Teaser / Drama",
   director: "MR. JAYANTH SINHA",
   budgetLimit: 2500000, // ₹25,00,000 Target Cap
@@ -443,13 +443,13 @@ export const ProductionProvider = ({ children }) => {
   });
 
   const [metadata, setMetadata] = useState(() => {
-    const saved = localStorage.getItem('cinedream_crm_metadata');
+    const saved = localStorage.getItem('production_crm_metadata');
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (parsed.projectName !== "CINEDREAM CRM" || parsed.version !== 14) {
-        localStorage.removeItem('cinedream_crm_data');
-        localStorage.removeItem('cinedream_crm_metadata');
-        localStorage.removeItem('cinedream_crm_logs');
+      if (parsed.projectName !== "PRODUCTION CRM" || parsed.version !== 14) {
+        localStorage.removeItem('production_crm_data');
+        localStorage.removeItem('production_crm_metadata');
+        localStorage.removeItem('production_crm_logs');
         return INITIAL_METADATA;
       }
       const sessionUser = sessionStorage.getItem('cinedream_crm_auth');
@@ -467,7 +467,7 @@ export const ProductionProvider = ({ children }) => {
     const savedMetadata = localStorage.getItem('cinedream_crm_metadata');
     if (savedMetadata) {
       const parsedMeta = JSON.parse(savedMetadata);
-      if (parsedMeta.projectName !== "CINEDREAM CRM" || parsedMeta.version !== 14) {
+      if (parsedMeta.projectName !== "PRODUCTION CRM" || parsedMeta.version !== 14) {
         return INITIAL_MOCK_DATA;
       }
     }
@@ -479,7 +479,7 @@ export const ProductionProvider = ({ children }) => {
     const savedMetadata = localStorage.getItem('cinedream_crm_metadata');
     if (savedMetadata) {
       const parsedMeta = JSON.parse(savedMetadata);
-      if (parsedMeta.projectName !== "CINEDREAM CRM" || parsedMeta.version !== 14) {
+      if (parsedMeta.projectName !== "PRODUCTION CRM" || parsedMeta.version !== 14) {
         return INITIAL_AUDIT_LOG;
       }
     }

@@ -39,7 +39,7 @@ const Login = ({ onLoginSuccess }) => {
 
       <div className="login-card">
         <div className="login-card-header">
-          <h2>CINEDREAM CRM</h2>
+          <h2>PRODUCTION CRM</h2>
           <p>Film Production & Budget Planner Portal</p>
         </div>
 

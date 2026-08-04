@@ -27,22 +27,7 @@ const Header = ({ onMenuClick }) => {
         </div>
       </div>
 
-      <div className="header-summary">
-        <div className="header-metric">
-          <span>Target Cap</span>
-          <p>{formatCurrency(metadata.budgetLimit)}</p>
-        </div>
-        <div className="header-metric highlight">
-          <span>Est. Cost</span>
-          <p>{formatCurrency(budgetSummary.grandTotal)}</p>
-        </div>
-        <div className="header-metric">
-          <span>Remaining</span>
-          <p style={{ color: budgetSummary.remainingBudget < 0 ? 'hsl(var(--color-rose))' : 'hsl(var(--color-emerald))' }}>
-            {formatCurrency(budgetSummary.remainingBudget)}
-          </p>
-        </div>
-      </div>
+
     </header>
   );
 };

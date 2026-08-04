@@ -24,7 +24,7 @@ const Sidebar = ({ activeModule, setActiveModule, isSidebarOpen, setIsSidebarOpe
     <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
       <div className="sidebar-brand">
         <h1 className="sidebar-logo">
-          <span>🎬</span> CINEDREAM<span>CRM</span>
+          <span>🎬</span> PRODUCTION<span>CRM</span>
         </h1>
         <button className="sidebar-close-btn" onClick={() => setIsSidebarOpen(false)} title="Close Menu">
           ✕
