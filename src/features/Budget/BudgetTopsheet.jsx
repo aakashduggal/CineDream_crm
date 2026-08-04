@@ -19,75 +19,75 @@ const BudgetTopsheet = () => {
     executiveProducer: "MR. Vasu Bhandari",
     locations: "DELHI NCR",
     format: "Feature Film (Hindi / Regional Dialect)",
-    budget: 685000000,
+    budget: 68500000,
   };
 
   const summaryData = [
-    { id: 'A', name: 'Above The Line (ATL)', budget: 185000000, share: 27.0, focus: 'Director, Script & Key Cast (Mid-tier/Indie ensembles)', color: '#bc2e5c' },
-    { id: 'B', name: 'Below The Line (BTL) – Production', budget: 255000000, share: 37.2, focus: 'Line Production, Camera, Crew, Catering, Locations', color: '#3d8cd5' },
-    { id: 'C', name: 'BTL – Post-Production', budget: 85000000, share: 12.4, focus: 'Editing, Sound Design, DI Color, Music Scoring', color: '#5e2ca5' },
-    { id: 'D', name: 'Marketing & Public Relations (P&A)', budget: 110000000, share: 16.1, focus: 'Digital Campaigns, Trailer/Posters, PR, City Tour', color: '#e67e22' },
-    { id: 'E', name: 'Legal, Insurance & Contingency', budget: 50000000, share: 7.3, focus: 'Insurance, Legal Clearance, 5% Unforeseen Reserve', color: '#2c3e50' },
+    { id: 'A', name: 'Above The Line (ATL)', budget: 18500000, share: 27.0, focus: 'Director, Script & Key Cast (Mid-tier/Indie ensembles)', color: '#bc2e5c' },
+    { id: 'B', name: 'Below The Line (BTL) – Production', budget: 25500000, share: 37.2, focus: 'Line Production, Camera, Crew, Catering, Locations', color: '#3d8cd5' },
+    { id: 'C', name: 'BTL – Post-Production', budget: 8500000, share: 12.4, focus: 'Editing, Sound Design, DI Color, Music Scoring', color: '#5e2ca5' },
+    { id: 'D', name: 'Marketing & Public Relations (P&A)', budget: 11000000, share: 16.1, focus: 'Digital Campaigns, Trailer/Posters, PR, City Tour', color: '#e67e22' },
+    { id: 'E', name: 'Legal, Insurance & Contingency', budget: 5000000, share: 7.3, focus: 'Insurance, Legal Clearance, 5% Unforeseen Reserve', color: '#2c3e50' },
   ];
 
   const breakdownData = [
     {
       category: 'A. Above The Line (ATL)',
-      total: 185000000,
+      total: 18500000,
       color: '#bc2e5c',
       items: [
-        { name: 'Story, Screenplay & Rights', amount: 25000000, desc: 'Script Purchase, Screenplay & Dialogue Commission' },
-        { name: 'Director & Direction Team Fees', amount: 45000000, desc: "Director's Fee + Associate & Chief Assistant Director" },
-        { name: 'Cast (Principal & Supporting Ensembles)', amount: 95000000, desc: 'Lead Actor (Peter Pandey), Lead Actress (Mohini), Key Character Roles (Guddu, Nalini, Pandit Ji, Dr. Kamal, Family Ensembles)' },
-        { name: 'Producers & Development Overhead', amount: 20000000, desc: 'Line Producer setup, story rights clearing, initial development pool' },
+        { name: 'Story, Screenplay & Rights', amount: 2500000, desc: 'Script Purchase, Screenplay & Dialogue Commission' },
+        { name: 'Director & Direction Team Fees', amount: 4500000, desc: "Director's Fee + Associate & Chief Assistant Director" },
+        { name: 'Cast (Principal & Supporting Ensembles)', amount: 9500000, desc: 'Lead Actor (Peter Pandey), Lead Actress (Mohini), Key Character Roles (Guddu, Nalini, Pandit Ji, Dr. Kamal, Family Ensembles)' },
+        { name: 'Producers & Development Overhead', amount: 2000000, desc: 'Line Producer setup, story rights clearing, initial development pool' },
       ]
     },
     {
       category: 'B. Production / Below The Line (BTL)',
-      total: 255000000,
+      total: 25500000,
       color: '#3d8cd5',
       items: [
-        { name: 'Production Crew & Personnel (35 Days Shoot)', amount: 55000000, desc: 'DoP, Gaffer, Key Grip, Art Director, Costume Designer, Sync Sound Engineer, Focus Puller, PAs' },
-        { name: 'Camera, Lighting & Grip Equipment', amount: 38000000, desc: 'ARRI/RED Camera packages, Anamorphic prime lenses, basic lighting truck, generator vans' },
-        { name: 'Art Department, Props & Set Dressing', amount: 35000000, desc: 'Cheka ceremony set modifications, local film set props (Shivji/snake setup), home interiors' },
-        { name: 'Location Fees & Local Permits', amount: 22000000, desc: 'House rentals, outdoor shoot permissions, local liaison fees' },
-        { name: 'Travel, Lodging & Logistics', amount: 45000000, desc: 'Hotel/homestay bookings for 35 days, local transport, vehicle rentals' },
-        { name: 'Food, Catering & Craft Services', amount: 20000000, desc: 'Full meal services for crew/cast across pre-production and principal photography' },
-        { name: 'Costumes, Hair & Makeup', amount: 25000000, desc: 'Colorism/shade modification FX makeup (Nalini/Mohini key scenes), wardrobe units' },
-        { name: 'Background Extras & Day Players', amount: 15000000, desc: 'Wedding crowd, police station sequence, media crowd' },
+        { name: 'Production Crew & Personnel (35 Days Shoot)', amount: 5500000, desc: 'DoP, Gaffer, Key Grip, Art Director, Costume Designer, Sync Sound Engineer, Focus Puller, PAs' },
+        { name: 'Camera, Lighting & Grip Equipment', amount: 3800000, desc: 'ARRI/RED Camera packages, Anamorphic prime lenses, basic lighting truck, generator vans' },
+        { name: 'Art Department, Props & Set Dressing', amount: 3500000, desc: 'Cheka ceremony set modifications, local film set props (Shivji/snake setup), home interiors' },
+        { name: 'Location Fees & Local Permits', amount: 2200000, desc: 'House rentals, outdoor shoot permissions, local liaison fees' },
+        { name: 'Travel, Lodging & Logistics', amount: 4500000, desc: 'Hotel/homestay bookings for 35 days, local transport, vehicle rentals' },
+        { name: 'Food, Catering & Craft Services', amount: 2000000, desc: 'Full meal services for crew/cast across pre-production and principal photography' },
+        { name: 'Costumes, Hair & Makeup', amount: 2500000, desc: 'Colorism/shade modification FX makeup (Nalini/Mohini key scenes), wardrobe units' },
+        { name: 'Background Extras & Day Players', amount: 1500000, desc: 'Wedding crowd, police station sequence, media crowd' },
       ]
     },
     {
       category: 'C. Post-Production',
-      total: 85000000,
+      total: 8500000,
       color: '#5e2ca5',
       items: [
-        { name: 'Picture Editing', amount: 18000000, desc: 'Senior Editor, Assistant Editors, Offline/Online Suite Rentals' },
-        { name: 'Sound Design, Dubbing (ADR) & Mixing', amount: 22000000, desc: 'Foley, dialogue cleanup, Atmos final mix' },
-        { name: 'Color Grading (DI)', amount: 15000000, desc: 'Senior Colorist & DI Facility Days' },
-        { name: 'Original Soundtrack & Music Composition', amount: 20000000, desc: 'Original background score, song arrangement, mixing' },
-        { name: 'VFX, Titles & Mastering', amount: 10000000, desc: 'Cosmetic cleanups, subtitle tracks, DCP generation, archival masters' },
+        { name: 'Picture Editing', amount: 1800000, desc: 'Senior Editor, Assistant Editors, Offline/Online Suite Rentals' },
+        { name: 'Sound Design, Dubbing (ADR) & Mixing', amount: 2200000, desc: 'Foley, dialogue cleanup, Atmos final mix' },
+        { name: 'Color Grading (DI)', amount: 1500000, desc: 'Senior Colorist & DI Facility Days' },
+        { name: 'Original Soundtrack & Music Composition', amount: 2000000, desc: 'Original background score, song arrangement, mixing' },
+        { name: 'VFX, Titles & Mastering', amount: 1000000, desc: 'Cosmetic cleanups, subtitle tracks, DCP generation, archival masters' },
       ]
     },
     {
       category: 'D. Marketing, PR & Promotions (P&A)',
-      total: 110000000,
+      total: 11000000,
       color: '#e67e22',
       items: [
-        { name: 'Digital & Social Media Marketing', amount: 45000000, desc: 'Influencer outreach, targeted digital ad spend, clip/reels distribution' },
-        { name: 'Public Relations (PR) & Press Conferences', amount: 25000000, desc: 'Agency retainers, trailer launch event, media kits' },
-        { name: 'Posters, Key Art & Trailer Cut', amount: 15000000, desc: 'Trailer editor, poster designer, asset localized variations' },
-        { name: 'Press/City Tours & Pre-release Screenings', amount: 25000000, desc: 'Talent travel for press junkets, select festival screeners' },
+        { name: 'Digital & Social Media Marketing', amount: 4500000, desc: 'Influencer outreach, targeted digital ad spend, clip/reels distribution' },
+        { name: 'Public Relations (PR) & Press Conferences', amount: 2500000, desc: 'Agency retainers, trailer launch event, media kits' },
+        { name: 'Posters, Key Art & Trailer Cut', amount: 1500000, desc: 'Trailer editor, poster designer, asset localized variations' },
+        { name: 'Press/City Tours & Pre-release Screenings', amount: 2500000, desc: 'Talent travel for press junkets, select festival screeners' },
       ]
     },
     {
       category: 'E. Contingency, Legal & Insurance',
-      total: 50000000,
+      total: 5000000,
       color: '#2c3e50',
       items: [
-        { name: 'Production & Errors/Omissions (E&O) Insurance', amount: 15000000, desc: '' },
-        { name: 'Legal Fees & Contract Clearances', amount: 10000000, desc: '' },
-        { name: 'Emergency Reserve / Contingency Buffer (~5%)', amount: 25000000, desc: '' },
+        { name: 'Production & Errors/Omissions (E&O) Insurance', amount: 1500000, desc: '' },
+        { name: 'Legal Fees & Contract Clearances', amount: 1000000, desc: '' },
+        { name: 'Emergency Reserve / Contingency Buffer (~5%)', amount: 2500000, desc: '' },
       ]
     }
   ];
@@ -141,6 +141,7 @@ const BudgetTopsheet = () => {
           
           {infoGridItem('Shooting Dates', projectInfo.shootingDates)}
           {infoGridItem('Shoot Days', projectInfo.shootDays)}
+          {infoGridItem('Target Total Budget', '₹6,85,000,000 (INR 6.85 Crore)', true)}
         </div>
       </div>
 

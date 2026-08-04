@@ -4,6 +4,7 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import Header from '../../components/Header/Header';
 import Dashboard from '../../features/Budget/Dashboard';
 import BudgetTopsheet from '../../features/Budget/BudgetTopsheet';
+import DetailedBudget from '../../features/Budget/DetailedBudget';
 import ModuleList from '../../features/CoreViews/ModuleList';
 import DetailView from '../../features/CoreViews/DetailView';
 import ItemForm from '../../features/CoreForms/ItemForm';
@@ -106,6 +107,8 @@ function MainLayout() {
             <Dashboard onEditClick={handleEditClick} onAddNewClick={handleAddNewClick} />
           ) : activeModule === 'Dashboard' ? (
             <BudgetTopsheet />
+          ) : activeModule === 'DetailedBudget' ? (
+            <DetailedBudget />
           ) : (
             <div className="single-pane-wrapper">
               {selectedItemId ? (

@@ -400,6 +400,33 @@ const INITIAL_AUDIT_LOG = [
   }
 ];
 
+const INITIAL_DETAILED_BUDGET = {
+  production: [
+    { id: 1, name: "Camera & Equipment (Sony Venice)", cost: "35000", days: "5", total: "175000" },
+    { id: 2, name: "Lights & Equipment (Dolly Panther, Drone)", cost: "40000", days: "5", total: "200000" },
+    { id: 3, name: "DOP & Staff", cost: "PACKAGE", days: "PACKAGE", total: "100000" },
+    { id: 4, name: "Cast (4)", cost: "PACKAGE", days: "PACKAGE", total: "400000" },
+    { id: 5, name: "Local Transportation & Food", cost: "PACKAGE", days: "5", total: "100000" },
+    { id: 6, name: "Travelling cost to Delhi (8000 per Person)", cost: "PACKAGE", days: "PACKAGE", total: "200000" },
+    { id: 7, name: "Hotels (10 Rooms x 3000)", cost: "30000", days: "6", total: "180000" },
+    { id: 8, name: "Production Manager & Production Staff (3)", cost: "PACKAGE", days: "PACKAGE", total: "35000" },
+    { id: 9, name: "Extra Talent (15)", cost: "500", days: "2", total: "15000" },
+    { id: 10, name: "Art Director & Team", cost: "5000", days: "4", total: "20000" },
+    { id: 11, name: "Sound", cost: "2000", days: "4", total: "8000" },
+    { id: 12, name: "Makeup & Hair", cost: "2500", days: "4", total: "10000" },
+    { id: 13, name: "(EXTRA) Locations (+ Electricity)", cost: "50000", days: "4", total: "200000" },
+    { id: 14, name: "Property", cost: "PACKAGE", days: "PACKAGE", total: "20000" },
+    { id: 15, name: "Wardrobe Co-ordinator & Costumes", cost: "PACKAGE", days: "PACKAGE", total: "25000" },
+    { id: 16, name: "Director & Direction Team (3)", cost: "PACKAGE", days: "PACKAGE", total: "70000" }
+  ],
+  postProduction: [
+    { id: 1, name: "Film Editing", cost: "PACKAGE", days: "PACKAGE", total: "15000" },
+    { id: 2, name: "Music & Post Production Sound (Foley)", cost: "PACKAGE", days: "PACKAGE", total: "12000" },
+    { id: 3, name: "Animation & DI", cost: "PACKAGE", days: "PACKAGE", total: "15000" },
+    { id: 4, name: "Visual Effects", cost: "PACKAGE", days: "PACKAGE", total: "15000" }
+  ]
+};
+
 // Helper to calculate cost for a single item
 export const calculateItemCost = (module, item) => {
   switch (module) {
@@ -476,15 +503,20 @@ export const ProductionProvider = ({ children }) => {
   });
 
   const [auditLogs, setAuditLogs] = useState(() => {
-    const savedMetadata = localStorage.getItem('cinedream_crm_metadata');
+    const savedMetadata = localStorage.getItem('production_crm_metadata');
     if (savedMetadata) {
       const parsedMeta = JSON.parse(savedMetadata);
       if (parsedMeta.projectName !== "PRODUCTION CRM" || parsedMeta.version !== 14) {
         return INITIAL_AUDIT_LOG;
       }
     }
-    const saved = localStorage.getItem('cinedream_crm_logs');
+    const saved = localStorage.getItem('production_crm_logs');
     return saved ? JSON.parse(saved) : INITIAL_AUDIT_LOG;
+  });
+
+  const [detailedBudget, setDetailedBudget] = useState(() => {
+    const saved = localStorage.getItem('production_crm_detailed_budget');
+    return saved ? JSON.parse(saved) : INITIAL_DETAILED_BUDGET;
   });
 
   useEffect(() => {
@@ -496,8 +528,9 @@ export const ProductionProvider = ({ children }) => {
   }, [data]);
 
   useEffect(() => {
-    localStorage.setItem('cinedream_crm_logs', JSON.stringify(auditLogs));
-  }, [auditLogs]);
+    localStorage.setItem('production_crm_logs', JSON.stringify(auditLogs));
+    localStorage.setItem('production_crm_detailed_budget', JSON.stringify(detailedBudget));
+  }, [data, metadata, auditLogs, detailedBudget]);
 
   // Reactive Finance Calculations
   const getBudgetSummary = () => {
@@ -659,6 +692,27 @@ export const ProductionProvider = ({ children }) => {
     setIsAuthenticated(false);
   };
 
+  const updateDetailedBudgetItem = (section, itemId, field, value) => {
+    setDetailedBudget(prev => {
+      const updatedSection = prev[section].map(item => {
+        if (item.id === itemId) {
+          const updatedItem = { ...item, [field]: value };
+          // Auto calculate total if cost and days are numeric
+          if (field === 'cost' || field === 'days') {
+            const costNum = parseFloat(updatedItem.cost);
+            const daysNum = parseFloat(updatedItem.days);
+            if (!isNaN(costNum) && !isNaN(daysNum)) {
+              updatedItem.total = (costNum * daysNum).toString();
+            }
+          }
+          return updatedItem;
+        }
+        return item;
+      });
+      return { ...prev, [section]: updatedSection };
+    });
+  };
+
   return (
     <ProductionContext.Provider
       value={{
@@ -673,7 +727,9 @@ export const ProductionProvider = ({ children }) => {
         updateBudgetLimit,
         isAuthenticated,
         login,
-        logout
+        logout,
+        detailedBudget,
+        updateDetailedBudgetItem
       }}
     >
       {children}
