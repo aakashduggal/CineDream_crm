@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { ProductionContext, calculateItemCost } from '../context/ProductionContext';
+import { ProductionContext, calculateItemCost } from '../../context/ProductionContext';
 
 const ModuleList = ({ activeModule, selectedItemId, setSelectedItemId, onAddNewClick }) => {
   const { data } = useContext(ProductionContext);

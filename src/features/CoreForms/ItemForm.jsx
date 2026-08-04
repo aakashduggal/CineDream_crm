@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { ProductionContext } from '../context/ProductionContext';
+import { ProductionContext } from '../../context/ProductionContext';
 
 const getDefaultsForModule = (activeModule) => {
   const common = {

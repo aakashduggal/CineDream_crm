@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ProductionContext } from '../context/ProductionContext';
+import { ProductionContext } from '../../context/ProductionContext';
 
 const Header = ({ onMenuClick }) => {
   const { metadata, budgetSummary } = useContext(ProductionContext);

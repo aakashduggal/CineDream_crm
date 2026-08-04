@@ -5,12 +5,12 @@ export const ProductionContext = createContext();
 const INITIAL_METADATA = {
   projectName: "CINEDREAM CRM",
   genre: "Promo Teaser / Drama",
-  director: "MR. MANAN PRATAP SINGH",
+  director: "MR. JAYANTH SINHA",
   budgetLimit: 2500000, // ₹25,00,000 Target Cap
   shootingDays: 5,
   startDate: "2026-08-15",
   endDate: "2026-08-20",
-  currentUser: "Mr. Manoj Kumar (Production Manager)",
+  currentUser: "MR. JAYANTH SINHA",
   version: 14
 };
 
@@ -456,6 +456,8 @@ export const ProductionProvider = ({ children }) => {
       if (sessionUser) {
         parsed.currentUser = sessionUser;
       }
+      parsed.director = "MR. JAYANTH SINHA";
+      localStorage.setItem('cinedream_crm_metadata', JSON.stringify(parsed));
       return parsed;
     }
     return INITIAL_METADATA;

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ProductionContext, calculateItemCost } from '../context/ProductionContext';
+import { ProductionContext, calculateItemCost } from '../../context/ProductionContext';
 
 const DetailView = ({ activeModule, selectedItemId, setSelectedItemId, onEditClick }) => {
   const { data, deleteItem } = useContext(ProductionContext);
