@@ -10,7 +10,7 @@ const BudgetTopsheet = () => {
   };
 
   const projectInfo = {
-    title: "Zara Tasweer Se Tu",
+    title: "Maikhana Express",
     format: "Feature Film (Hindi / Regional Dialect)",
     budget: 685000000,
     schedule: "35 Days (Single Location / Tier-2 Town & Semi-Rural Bihar Setup)",
@@ -100,7 +100,7 @@ const BudgetTopsheet = () => {
       borderRadius: '16px',
       boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
       fontFamily: 'system-ui, sans-serif',
-      maxWidth: '1200px',
+      maxWidth: '100%',
       margin: '0 auto',
       border: '1px solid #eee'
     }}>

@@ -20,10 +20,6 @@ const Header = ({ onMenuClick }) => {
         </button>
         <div className="header-project">
           <h1>{metadata.projectName}</h1>
-          <p>
-            <span className="project-status"></span>
-            <span>In Production &bull; {metadata.genre} &bull; Dir: {metadata.director}</span>
-          </p>
         </div>
       </div>
 
