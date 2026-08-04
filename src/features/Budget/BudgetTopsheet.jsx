@@ -10,10 +10,16 @@ const BudgetTopsheet = () => {
   };
 
   const projectInfo = {
+    productionHouse: "CineDreams Productions Private Limited",
     title: "Maikhana Express",
+    shootingDates: "2026-08-15 to 2026-08-20",
+    shootDays: "30–35 Days",
+    producer: "MR. JAYANTH SINHA",
+    director: "MR. JAYANTH SINHA",
+    executiveProducer: "MR. Vasu Bhandari",
+    locations: "DELHI NCR",
     format: "Feature Film (Hindi / Regional Dialect)",
     budget: 685000000,
-    schedule: "35 Days (Single Location / Tier-2 Town & Semi-Rural Bihar Setup)",
   };
 
   const summaryData = [
@@ -92,6 +98,13 @@ const BudgetTopsheet = () => {
     { title: 'Controlled Risk Profile', desc: 'The allocated ₹1.10 Cr promotional budget guarantees strong digital visibility while keeping the production budget tight at ₹3.40 Cr total for BTL and Post.' },
   ];
 
+  const infoGridItem = (label, value, highlight = false) => (
+    <div>
+      <div style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.5px', color: '#666' }}>{label}</div>
+      <div style={{ fontSize: highlight ? '14px' : '13px', fontWeight: highlight ? '700' : '500', color: highlight ? '#16a34a' : '#222' }}>{value}</div>
+    </div>
+  );
+
   return (
     <div className="topsheet-container" style={{
       background: '#ffffff',
@@ -106,33 +119,28 @@ const BudgetTopsheet = () => {
     }}>
       {/* Hero Header */}
       <div style={{
-        background: 'linear-gradient(135deg, #1c2520 0%, #2a3a30 100%)',
-        padding: '32px',
-        borderRadius: '12px',
-        marginBottom: '32px',
-        color: 'white',
-        position: 'relative'
+        background: '#fcfcfc',
+        padding: '24px',
+        borderRadius: '8px',
+        marginBottom: '24px',
+        color: '#333',
+        border: '1px solid #eee'
       }}>
-        <h1 style={{ fontSize: '32px', fontWeight: '800', margin: '0 0 16px 0' }}>
+        <h1 style={{ fontSize: '20px', fontWeight: '700', margin: '0 0 16px 0' }}>
           Production Budget Top Sheet
         </h1>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
-          <div>
-            <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.7 }}>Project Title</div>
-            <div style={{ fontSize: '18px', fontWeight: '600', color: '#4ade80' }}>{projectInfo.title}</div>
-          </div>
-          <div>
-            <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.7 }}>Format</div>
-            <div style={{ fontSize: '15px', fontWeight: '500' }}>{projectInfo.format}</div>
-          </div>
-          <div>
-            <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.7 }}>Shooting Schedule</div>
-            <div style={{ fontSize: '14px', fontWeight: '500' }}>{projectInfo.schedule}</div>
-          </div>
-          <div>
-            <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.7 }}>Target Total Budget</div>
-            <div style={{ fontSize: '24px', fontWeight: '800', color: '#4ade80' }}>{formatCurrency(projectInfo.budget)}</div>
-          </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px' }}>
+          {infoGridItem('Project Title', projectInfo.title, true)}
+          {infoGridItem('Production House', projectInfo.productionHouse)}
+          {infoGridItem('Director', projectInfo.director)}
+          {infoGridItem('Producer', projectInfo.producer)}
+          
+          {infoGridItem('Executive Producer', projectInfo.executiveProducer)}
+          {infoGridItem('Format', projectInfo.format)}
+          {infoGridItem('Locations', projectInfo.locations)}
+          
+          {infoGridItem('Shooting Dates', projectInfo.shootingDates)}
+          {infoGridItem('Shoot Days', projectInfo.shootDays)}
         </div>
       </div>
 
